@@ -1,0 +1,35 @@
+# Xcode
+#
+# gitignore
+
+# Build generated
+build/
+DerivedData/
+
+# Various settings
+*.pbxuser
+*.xcworkspace
+xcuserdata/
+*.xccheckout
+
+# Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+Gemfile.lock
+fastlane/README.md
