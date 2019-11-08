@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name         = 'PusherMainView'
   spec.version      = '0.1.0'
-  spec.license      = { :type => 'MIT', :file => 'LICENSE' }
+  spec.license      = { :type => 'MIT', :file => '../LICENSE' }
   spec.authors      = 'Rakuten Ecosystem Mobile'
   spec.summary      = 'PusherMainView Framework for macOS'
   spec.source_files = 'PusherMainView/*.swift'

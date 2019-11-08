@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name         = 'APNS'
   spec.version      = '0.1.0'
-  spec.license      = { :type => 'MIT', :file => 'LICENSE' }
+  spec.license      = { :type => 'MIT', :file => '../LICENSE' }
   spec.authors      = 'Rakuten Ecosystem Mobile'
   spec.summary      = 'APNS Framework for macOS'
   spec.source_files = 'APNS/*.swift'
