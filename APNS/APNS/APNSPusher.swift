@@ -3,15 +3,23 @@ import Security
 import Foundation
 import CupertinoJWT
 
-public protocol APNSPusherDelegate: class {
-    func apns(_ APNS: APNSPusher, didReceiveStatus statusCode: Int, reason: String, forID ID: String?)
-    func apns(_ APNS: APNSPusher, didFailWithError error: Error)
+public enum APNSPusherType {
+    case none, certificate(identity: SecIdentity), token(keyID: String, teamID: String, p8: String)
 }
 
-public final class APNSPusher: NSObject {
-    public enum APNSPusherType {
-        case none, certificate(identity: SecIdentity), token(keyID: String, teamID: String, p8: String)
-    }
+public protocol APNSPushable {
+    var type: APNSPusherType { get set }
+    var identity: SecIdentity? { get }
+    func pushPayload(_ payload: Dictionary<String, Any>,
+                     toToken token: String,
+                     withTopic topic: String?,
+                     priority: Int,
+                     collapseID: String?,
+                     inSandbox sandbox: Bool,
+                     completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void)
+}
+
+public final class APNSPusher: NSObject, APNSPushable {
     public var type: APNSPusherType {
         didSet {
             switch type {
@@ -28,7 +36,6 @@ public final class APNSPusher: NSObject {
             }
         }
     }
-    public weak var delegate: APNSPusherDelegate?
     private var _identity: SecIdentity?
     private var session: URLSession?
     
@@ -63,7 +70,8 @@ public final class APNSPusher: NSObject {
                             withTopic topic: String?,
                             priority: Int,
                             collapseID: String?,
-                            inSandbox sandbox: Bool) {
+                            inSandbox sandbox: Bool,
+                            completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void){
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
             return
         }
@@ -98,21 +106,15 @@ public final class APNSPusher: NSObject {
         
         session?.dataTask(with: request, completionHandler: { (data, response, error) in
             guard let r = response as? HTTPURLResponse else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.delegate?.apns(strongSelf, didFailWithError: NSError(domain: "unknown error", code: 0, userInfo: nil))
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "unknown error", code: 0, userInfo: nil)))
                 }
                 return
             }
             
             if let error = error {
-                DispatchQueue.main.async { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.delegate?.apns(strongSelf, didFailWithError: error as NSError)
+                DispatchQueue.main.async {
+                    completion(.failure(error as NSError))
                 }
                 return
             }
@@ -122,11 +124,8 @@ public final class APNSPusher: NSObject {
                 let dict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments),
                 let json = dict as? [String: Any],
                 let reason = json["reason"] as? String {
-                DispatchQueue.main.async { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.delegate?.apns(strongSelf, didReceiveStatus: r.statusCode, reason: reason, forID: nil)
+                DispatchQueue.main.async {
+                    completion(.success((statusCode: r.statusCode, reason: reason, ID: nil)))
                 }
             }
         }).resume()

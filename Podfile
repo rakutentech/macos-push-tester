@@ -7,5 +7,5 @@ use_frameworks!
 
 target 'pusher' do
     pod 'APNS', :path => 'APNS/', :testspecs => ['APNSTests']
-    pod 'PusherMainView', :path => 'PusherMainView/'
+    pod 'PusherMainView', :path => 'PusherMainView/', :testspecs => ['PusherMainViewTests']
 end
