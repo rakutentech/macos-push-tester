@@ -14,7 +14,7 @@ public final class PusherViewController: NSViewController {
     // MARK: - Init
     
     required init?(coder: NSCoder) {
-        pusherInteractor = PusherInteractor()
+        pusherInteractor = PusherInteractor(apnsPusher: APNSPusher(), router: Router())
         super.init(coder: coder)
         pusherInteractor.delegate = self
     }
@@ -80,12 +80,12 @@ public final class PusherViewController: NSViewController {
     }
     
     @IBAction func sendPush(_ sender: Any) {
-        pusherInteractor.pushPayload(payloadTextView.string,
-                                     toToken: deviceTokenTextField.stringValue,
-                                     withTopic: "com.rakuten.tech.mobile.pushsample",
-                                     priority: 10,
-                                     collapseID: apnsCollapseIdTextField.stringValue,
-                                     inSandbox: sandBoxCheckBox.state.rawValue == 1)
+        pusherInteractor.push(payloadTextView.string,
+                              toToken: deviceTokenTextField.stringValue,
+                              withTopic: "com.rakuten.tech.mobile.pushsample",
+                              priority: 10,
+                              collapseID: apnsCollapseIdTextField.stringValue,
+                              inSandbox: sandBoxCheckBox.state.rawValue == 1) { _ in }
     }
     
     @IBAction func selectDevice(_ sender: Any) {

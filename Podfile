@@ -8,5 +8,5 @@ platform :macos, "10.14"
 
 target 'pusher' do
     pod 'APNS', :path => 'APNS/', :testspecs => ['APNSTests']
-    pod 'PusherMainView', :path => 'PusherMainView/'
+    pod 'PusherMainView', :path => 'PusherMainView/', :testspecs => ['PusherMainViewTests']
 end

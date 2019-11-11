@@ -26,27 +26,27 @@ protocol PusherInteracting: class {
     func present(actionType: ActionType)
     func updateIdentity(_ identity: SecIdentity)
     func updateAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
-    func pushPayload(_ payloadString: String,
-                     toToken deviceToken: String,
-                     withTopic topic: String?,
-                     priority: Int,
-                     collapseID: String?,
-                     inSandbox sandbox: Bool)
+    func push(_ payloadString: String,
+              toToken deviceToken: String,
+              withTopic topic: String?,
+              priority: Int,
+              collapseID: String?,
+              inSandbox sandbox: Bool,
+              completion:@escaping (Bool) -> Void)
     func cancelSelectingAuthToken()
     func selectDevice(_ device: APNSServiceDevice)
 }
 
 final class PusherInteractor: NSObject {
-    private let apnsPusher: APNSPusher
+    private var apnsPusher: APNSPushable
     private let router: Routing
     public private(set) var authToken: AuthToken?
     weak var delegate: PusherInteractable?
     
-    override init() {
-        router = Router()
-        apnsPusher = APNSPusher()
+    init(apnsPusher: APNSPushable, router: Routing) {
+        self.apnsPusher = apnsPusher
+        self.router = router
         super.init()
-        apnsPusher.delegate = self
         
         guard let keyID = PreferenceManager.stringForKey("keyID"), let teamID = PreferenceManager.stringForKey("teamID"), let p8FileURLString = PreferenceManager.stringForKey("p8FileURLString") else {
             return
@@ -82,29 +82,34 @@ extension PusherInteractor: PusherInteracting {
         PreferenceManager.setString(p8FileURL.absoluteString, forKey: "p8FileURLString")
     }
     
-    func pushPayload(_ payloadString: String,
-                     toToken deviceToken: String,
-                     withTopic topic: String?,
-                     priority: Int,
-                     collapseID: String?,
-                     inSandbox sandbox: Bool) {
+    func push(_ payloadString: String,
+              toToken deviceToken: String,
+              withTopic topic: String?,
+              priority: Int,
+              collapseID: String?,
+              inSandbox sandbox: Bool,
+              completion:@escaping (Bool) -> Void) {
         if case .none = apnsPusher.type {
             router.show(message: "Please select an APNS method", window: NSApplication.shared.windows.first)
+            completion(false)
             return
         }
         
         if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
             router.show(message: "Please select an APNS Certificate", window: NSApplication.shared.windows.first)
+            completion(false)
             return
         }
         
         guard deviceToken.count > 0 else {
             router.show(message: "Please enter a Device Token", window: NSApplication.shared.windows.first)
+            completion(false)
             return
         }
         
         guard let data = payloadString.data(using: .utf8),
             let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> else {
+                completion(false)
                 return
         }
         
@@ -113,7 +118,22 @@ extension PusherInteractor: PusherInteracting {
                                 withTopic: topic,
                                 priority: priority,
                                 collapseID: collapseID,
-                                inSandbox: sandbox)
+                                inSandbox: sandbox,
+                                completion: { [weak self] result in
+                                    guard let self = self else {
+                                        return
+                                    }
+                                    
+                                    switch result {
+                                    case .failure(let error):
+                                        self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
+                                        completion(false)
+                                        
+                                    case .success(_, let reason, _):
+                                        self.router.show(message: reason, window: NSApplication.shared.windows.first)
+                                        completion(true)
+                                    }
+        })
     }
     
     func cancelSelectingAuthToken() {
@@ -122,15 +142,5 @@ extension PusherInteractor: PusherInteracting {
     
     func selectDevice(_ device: APNSServiceDevice) {
         delegate?.didSelectDevicetoken(device.token)
-    }
-}
-
-extension PusherInteractor: APNSPusherDelegate {
-    public func apns(_ APNS: APNSPusher, didReceiveStatus statusCode: Int, reason: String, forID ID: String?) {
-        router.show(message: reason, window: NSApplication.shared.windows.first)
-    }
-    
-    public func apns(_ APNS: APNSPusher, didFailWithError error: Error) {
-        router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
     }
 }
