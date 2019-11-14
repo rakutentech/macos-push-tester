@@ -1,7 +1,7 @@
 import Foundation
 
-struct PreferenceManager {
-    static func stringForKey(_ key: String) -> String? {
+enum PreferenceManager {
+    static func string(for key: String) -> String? {
         guard let service = Bundle.main.bundleIdentifier else {
             return nil
         }
@@ -24,7 +24,7 @@ struct PreferenceManager {
         return nil
     }
     
-    static func setString(_ value: String?, forKey key: String) {
+    static func set(value: String?, forKey key: String) {
         guard let service = Bundle.main.bundleIdentifier else {
             return
         }
