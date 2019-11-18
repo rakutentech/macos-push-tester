@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'APNS'
   spec.homepage     = 'https://github.com/rakutentech/macos-push-tester'
   spec.source       = { :git => 'https://github.com/rakutentech/macos-push-tester.git' }
-  spec.osx.deployment_target  = '10.14'
+  spec.osx.deployment_target  = '10.13'
   spec.resources = ["PusherMainView/Base.lproj/Pusher.storyboard","PusherMainView/MainPlayground.playground"]
   spec.test_spec 'PusherMainViewTests' do |test_spec|
     test_spec.source_files = 'PusherMainViewTests/*.swift'
