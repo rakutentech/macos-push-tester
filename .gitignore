@@ -11,6 +11,7 @@ DerivedData/
 *.xcworkspace
 xcuserdata/
 *.xccheckout
+*.xcarchive
 
 # Obj-C/Swift specific
 *.hmap
@@ -33,3 +34,5 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 Gemfile.lock
 fastlane/README.md
+*.app
+*.log

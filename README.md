@@ -11,3 +11,13 @@ It can also get device tokens from any iPhone on the same wifi network.
 - 1) Run `pod install` from root folder
 - 2) Open pusher.xcworkspace*
 - 3) Build and run
+
+## How to build with Fastlane
+
+### Install fastlane
+- 1) Using RubyGems `sudo gem install fastlane -NV`
+
+- 2) Alternatively using Homebrew `brew cask install fastlane`
+
+### Run fastlane
+fastlane macos ci

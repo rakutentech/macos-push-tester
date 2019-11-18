@@ -1,0 +1,20 @@
+default_platform(:ios)
+
+platform :macos do
+  desc "Building Pusher"
+  lane :ci do
+    begin
+    sh "rm -rf ../pusher.app"
+    rescue => ex
+    UI.error(ex)
+    end
+    begin
+    sh "rm ../pusher.app.dSYM.zip"
+    rescue => ex
+    UI.error(ex)
+    end
+    xcversion(version: "10.3")
+    cocoapods
+    gym(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", build_path: "./", archive_path: "./", buildlog_path: "./", clean: true)
+  end
+end
