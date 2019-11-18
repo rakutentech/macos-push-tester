@@ -6,7 +6,7 @@ public protocol APNSServiceBrowsing: class {
 }
 
 public final class APNSServiceBrowser: NSObject {
-    public var devices: [APNSServiceDevice]
+    public private(set) var devices: [APNSServiceDevice]
     private var browser: MCNearbyServiceBrowser
     private var peerIDToDeviceMap: [MCPeerID: APNSServiceDevice]
     private var _searching: Bool

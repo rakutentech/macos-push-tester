@@ -48,7 +48,7 @@ final class PusherInteractor: NSObject {
         self.router = router
         super.init()
         
-        guard let keyID = PreferenceManager.stringForKey("keyID"), let teamID = PreferenceManager.stringForKey("teamID"), let p8FileURLString = PreferenceManager.stringForKey("p8FileURLString") else {
+        guard let keyID = PreferenceManager.string(for: "keyID"), let teamID = PreferenceManager.string(for: "teamID"), let p8FileURLString = PreferenceManager.string(for: "p8FileURLString") else {
             return
         }
         authToken = AuthToken(keyID: keyID, teamID: teamID, p8FileURLString: p8FileURLString)
@@ -77,9 +77,9 @@ extension PusherInteractor: PusherInteracting {
     func updateAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String) {
         apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
         
-        PreferenceManager.setString(keyID, forKey: "keyID")
-        PreferenceManager.setString(teamID, forKey: "teamID")
-        PreferenceManager.setString(p8FileURL.absoluteString, forKey: "p8FileURLString")
+        PreferenceManager.set(value: keyID, forKey: "keyID")
+        PreferenceManager.set(value: teamID, forKey: "teamID")
+        PreferenceManager.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
     }
     
     func push(_ payloadString: String,
