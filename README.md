@@ -1,3 +1,8 @@
+![Platform](https://img.shields.io/badge/Platform-macOS-black) 
+![Compatibility](https://img.shields.io/badge/Compatibility-macOS%20%3E%3D%2010.13-orange) 
+![Compatibility](https://img.shields.io/badge/Swift-5.0-orange.svg) 
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg) 
+
 # The macOS Pusher App
 
 The macOS Pusher App allows you to send push notifications through APNS (Apple Push Notification Service) and receive them on a device.
