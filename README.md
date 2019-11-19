@@ -20,4 +20,8 @@ It can also get device tokens from any iPhone on the same wifi network.
 - 2) Alternatively using Homebrew `brew cask install fastlane`
 
 ### Run fastlane
-fastlane macos ci
+Run `fastlane macos ci`
+
+## UI
+
+![The macOS Pusher App](preview.png)
