@@ -22,6 +22,6 @@ It can also get device tokens from any iPhone on the same wifi network.
 ### Run fastlane
 Run `fastlane macos ci`
 
-## UI
+## UI Preview
 
 ![The macOS Pusher App](preview.png)
