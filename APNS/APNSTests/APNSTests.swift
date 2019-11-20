@@ -12,11 +12,11 @@ class APNSTests: XCTestCase {
         XCTAssertNotEqual(apnsServiceDevice1, apnsServiceDevice2)
         
         apnsServiceDevice1 = APNSServiceDevice(displayName: "John iPhone 001", token: "0123456789")
-        apnsServiceDevice2 = APNSServiceDevice(displayName: "John iPhone 002", token: "0123456781")
+        apnsServiceDevice2 = APNSServiceDevice(displayName: "John iPhone 002", token: "0123456789")
         XCTAssertNotEqual(apnsServiceDevice1, apnsServiceDevice2)
         
         apnsServiceDevice1 = APNSServiceDevice(displayName: "John iPhone 001", token: "0123456789")
-        apnsServiceDevice2 = APNSServiceDevice(displayName: "John iPhone 001", token: "0123456781")
+        apnsServiceDevice2 = APNSServiceDevice(displayName: "John iPhone 002", token: "0123456781")
         XCTAssertNotEqual(apnsServiceDevice1, apnsServiceDevice2)
     }
 }

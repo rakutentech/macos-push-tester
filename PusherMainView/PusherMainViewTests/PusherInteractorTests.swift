@@ -3,25 +3,18 @@ import APNS
 @testable import PusherMainView
 
 class APNSPusherMock: APNSPushable {
-    var statusCode = 0
+    private var result: Result<(statusCode: Int, reason: String, ID: String?), Error>
     var type: APNSPusherType
     var identity: SecIdentity?
     
-    init(statusCode: Int, type: APNSPusherType) {
-        self.statusCode = statusCode
+    init(result: Result<(statusCode: Int, reason: String, ID: String?), Error>, type: APNSPusherType) {
+        self.result = result
         self.type = type
         identity = nil
     }
     
     func pushPayload(_ payload: Dictionary<String, Any>, toToken token: String, withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void) {
-        if statusCode == 200 {
-            completion(.success((statusCode, "", nil)))
-            
-        } else {
-            completion(.failure(NSError(domain: "com.pusher.error",
-                                        code: statusCode,
-                                        userInfo: nil)))
-        }
+        completion(result)
     }
 }
 
@@ -43,7 +36,7 @@ class PusherInteractorTests: XCTestCase {
     func testPush() {
         // Push Success
         
-        PusherInteractor(apnsPusher: APNSPusherMock(statusCode: 200,
+        PusherInteractor(apnsPusher: APNSPusherMock(result: .success((200, "", nil)),
                                                     type: .token(keyID: "keyID",
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
@@ -59,7 +52,9 @@ class PusherInteractorTests: XCTestCase {
         
         // Push Error
         
-        PusherInteractor(apnsPusher: APNSPusherMock(statusCode: 400,
+        PusherInteractor(apnsPusher: APNSPusherMock(result:.failure(NSError(domain: "com.pusher.error",
+        code: 400,
+        userInfo: nil)),
                                                     type: .token(keyID: "keyID",
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
