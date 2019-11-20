@@ -91,30 +91,14 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
-- 4) Add this extension to convert deviceToken to `String`
+- 4) Add this `Data` extension to convert deviceToken to `String`
 
 ```swift
 import Foundation
 
-public extension String {
-    var hexadecimal: Data? {
-        var data = Data(capacity: count / 2)
-        
-        guard let regex = try? NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive) else {
-            return nil
-        }
-        
-        regex.enumerateMatches(in: self, range: NSRange(startIndex..., in: self)) { match, _, _ in
-            if let match = match {
-                let byteString = (self as NSString).substring(with: match.range)
-                if let num = UInt8(byteString, radix: 16) {
-                    data.append(num)
-                }
-            }
-        }
-        
-        guard data.count > 0 else { return nil }
-        return data
+extension Data {
+    var hexadecimal: String {
+        map { String(format: "%02x", $0) }.joined()
     }
 }
 ```
