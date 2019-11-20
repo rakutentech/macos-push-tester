@@ -1,5 +1,4 @@
 import Cocoa
-import Security
 import Foundation
 import CupertinoJWT
 
@@ -73,14 +72,20 @@ public final class APNSPusher: NSObject, APNSPushable {
                             inSandbox sandbox: Bool,
                             completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void){
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
+            completion(.failure(NSError(domain: "URL error", code: 0, userInfo: nil)))
+            return
+        }
+        
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
+            completion(.failure(NSError(domain: "Payload error", code: 0, userInfo: nil)))
             return
         }
         
         var request = URLRequest(url: url)
         
-        request.httpMethod = "POST";
+        request.httpMethod = "POST"
         
-        request.httpBody = try? JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions.prettyPrinted)
+        request.httpBody = httpBody
         
         if let topic = topic {
             request.addValue(topic, forHTTPHeaderField: "apns-topic")
