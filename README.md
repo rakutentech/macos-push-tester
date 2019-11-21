@@ -37,32 +37,23 @@ import MultipeerConnectivity
 
 public final class DeviceAdvertiser: NSObject {
     private var nearbyServiceAdvertiser: MCNearbyServiceAdvertiser?
-    private var deviceTokenString: String?
     private let serviceType: String
     
     public init(serviceType: String) {
         self.serviceType = serviceType
         super.init()
     }
-    
-    public func setDeviceToken(_ deviceToken: String?) {
-        deviceTokenString = deviceToken
-        advertise()
-    }
-    
-    private func advertise() {
+
+    public func setDeviceToken(_ deviceToken: String) {
         if let advertiser = nearbyServiceAdvertiser {
             advertiser.stopAdvertisingPeer()
         }
-        
-        guard let tokenString = deviceTokenString else {
-            return
-        }
+
         let peerID = MCPeerID(displayName: UIDevice.current.name)
         
         nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(
             peer: peerID,
-            discoveryInfo: ["token": tokenString],
+            discoveryInfo: ["token": deviceToken, "appID": Bundle.main.bundleIdentifier ?? ""],
             serviceType: serviceType
         )
         
@@ -72,7 +63,10 @@ public final class DeviceAdvertiser: NSObject {
 }
 
 extension DeviceAdvertiser: MCNearbyServiceAdvertiserDelegate {
-    public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+    public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, 
+                            didReceiveInvitationFromPeer peerID: MCPeerID, 
+                            withContext context: Data?, 
+                            invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         invitationHandler(false, MCSession())
     }
 }

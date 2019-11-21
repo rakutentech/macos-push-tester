@@ -16,7 +16,7 @@ struct AuthToken: Codable {
 }
 
 protocol PusherInteractable: class {
-    func didSelectDevicetoken(_ deviceToken: String)
+    func didSelectDevicetoken(_ deviceToken: String, appBundleID: String)
     func didCancelSelectingAuthToken()
 }
 
@@ -141,6 +141,6 @@ extension PusherInteractor: PusherInteracting {
     }
     
     func selectDevice(_ device: APNSServiceDevice) {
-        delegate?.didSelectDevicetoken(device.token)
+        delegate?.didSelectDevicetoken(device.token, appBundleID: device.appID)
     }
 }
