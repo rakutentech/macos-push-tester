@@ -124,23 +124,25 @@ public final class APNSPusher: NSObject, APNSPushable {
                 return
             }
             
-            if let data = data,
-                r.statusCode != 200,
-                let dict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments),
-                let json = dict as? [String: Any],
-                let reason = json["reason"] as? String {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: reason])))
-                }
-                
-            } else if r.statusCode != 200 {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: HTTPURLResponse.localizedString(forStatusCode: r.statusCode)])))
-                }
-                
-            } else {
+            switch r.statusCode {
+            case 200:
                 DispatchQueue.main.async {
                     completion(.success(HTTPURLResponse.localizedString(forStatusCode: r.statusCode)))
+                }
+                
+            default:
+                if let data = data,
+                    let dict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments),
+                    let json = dict as? [String: Any],
+                    let reason = json["reason"] as? String {
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: reason])))
+                    }
+                    
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: HTTPURLResponse.localizedString(forStatusCode: r.statusCode)])))
+                    }
                 }
             }
         }).resume()
