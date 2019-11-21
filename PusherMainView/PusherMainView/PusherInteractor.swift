@@ -27,8 +27,8 @@ protocol PusherInteracting: class {
     func updateIdentity(_ identity: SecIdentity)
     func updateAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
     func push(_ payloadString: String,
-              toToken deviceToken: String,
-              withTopic topic: String?,
+              to deviceToken: String,
+              appBundleID: String?,
               priority: Int,
               collapseID: String?,
               inSandbox sandbox: Bool,
@@ -83,8 +83,8 @@ extension PusherInteractor: PusherInteracting {
     }
     
     func push(_ payloadString: String,
-              toToken deviceToken: String,
-              withTopic topic: String?,
+              to deviceToken: String,
+              appBundleID: String?,
               priority: Int,
               collapseID: String?,
               inSandbox sandbox: Bool,
@@ -107,6 +107,12 @@ extension PusherInteractor: PusherInteracting {
             return
         }
         
+        guard let appBundleID = appBundleID, appBundleID.count > 0 else {
+            router.show(message: "Please enter an app bundle ID", window: NSApplication.shared.windows.first)
+            completion(false)
+            return
+        }
+        
         guard let data = payloadString.data(using: .utf8),
             let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> else {
                 completion(false)
@@ -114,25 +120,25 @@ extension PusherInteractor: PusherInteracting {
         }
         
         apnsPusher.pushPayload(payload,
-                                toToken: deviceToken,
-                                withTopic: topic,
-                                priority: priority,
-                                collapseID: collapseID,
-                                inSandbox: sandbox,
-                                completion: { [weak self] result in
-                                    guard let self = self else {
-                                        return
-                                    }
+                               to: deviceToken,
+                               withTopic: appBundleID,
+                               priority: priority,
+                               collapseID: collapseID,
+                               inSandbox: sandbox,
+                               completion: { [weak self] result in
+                                guard let self = self else {
+                                    return
+                                }
+                                
+                                switch result {
+                                case .failure(let error):
+                                    self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
+                                    completion(false)
                                     
-                                    switch result {
-                                    case .failure(let error):
-                                        self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
-                                        completion(false)
-                                        
-                                    case .success(_, let reason, _):
-                                        self.router.show(message: reason, window: NSApplication.shared.windows.first)
-                                        completion(true)
-                                    }
+                                case .success(_, let reason, _):
+                                    self.router.show(message: reason, window: NSApplication.shared.windows.first)
+                                    completion(true)
+                                }
         })
     }
     

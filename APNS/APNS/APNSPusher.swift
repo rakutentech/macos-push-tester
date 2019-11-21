@@ -10,7 +10,7 @@ public protocol APNSPushable {
     var type: APNSPusherType { get set }
     var identity: SecIdentity? { get }
     func pushPayload(_ payload: Dictionary<String, Any>,
-                     toToken token: String,
+                     to token: String,
                      withTopic topic: String?,
                      priority: Int,
                      collapseID: String?,
@@ -65,7 +65,7 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     
     public func pushPayload(_ payload: Dictionary<String, Any>,
-                            toToken token: String,
+                            to token: String,
                             withTopic topic: String?,
                             priority: Int,
                             collapseID: String?,

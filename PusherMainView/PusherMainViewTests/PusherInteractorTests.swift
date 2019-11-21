@@ -13,7 +13,7 @@ class APNSPusherMock: APNSPushable {
         identity = nil
     }
     
-    func pushPayload(_ payload: Dictionary<String, Any>, toToken token: String, withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void) {
+    func pushPayload(_ payload: Dictionary<String, Any>, to token: String, withTopic appBundleID: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void) {
         completion(result)
     }
 }
@@ -41,8 +41,8 @@ class PusherInteractorTests: XCTestCase {
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
                          router: RouterMock()).push(#"{"":""}"#,
-                                                    toToken: "1234",
-                                                    withTopic: nil,
+                                                    to: "1234",
+                                                    appBundleID: "com.myapp",
                                                     priority: 0,
                                                     collapseID: nil,
                                                     inSandbox: true,
@@ -59,8 +59,8 @@ class PusherInteractorTests: XCTestCase {
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
                          router: RouterMock()).push(#"{"":""}"#,
-                                                    toToken: "1234",
-                                                    withTopic: nil,
+                                                    to: "1234",
+                                                    appBundleID: nil,
                                                     priority: 0,
                                                     collapseID: nil,
                                                     inSandbox: true,

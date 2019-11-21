@@ -82,8 +82,8 @@ public final class PusherViewController: NSViewController {
     
     @IBAction func sendPush(_ sender: Any) {
         pusherInteractor.push(payloadTextView.string,
-                              toToken: deviceTokenTextField.stringValue,
-                              withTopic: appBundleIDTextField.stringValue,
+                              to: deviceTokenTextField.stringValue,
+                              appBundleID: appBundleIDTextField.stringValue,
                               priority: 10,
                               collapseID: apnsCollapseIdTextField.stringValue,
                               inSandbox: sandBoxCheckBox.state.rawValue == 1) { _ in }
