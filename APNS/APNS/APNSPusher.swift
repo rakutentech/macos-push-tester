@@ -15,7 +15,7 @@ public protocol APNSPushable {
                      priority: Int,
                      collapseID: String?,
                      inSandbox sandbox: Bool,
-                     completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void)
+                     completion: @escaping (Result<String, Error>) -> Void)
 }
 
 public final class APNSPusher: NSObject, APNSPushable {
@@ -70,14 +70,14 @@ public final class APNSPusher: NSObject, APNSPushable {
                             priority: Int,
                             collapseID: String?,
                             inSandbox sandbox: Bool,
-                            completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void){
+                            completion: @escaping (Result<String, Error>) -> Void){
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
-            completion(.failure(NSError(domain: "URL error", code: 0, userInfo: nil)))
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL error"])))
             return
         }
         
         guard let httpBody = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
-            completion(.failure(NSError(domain: "Payload error", code: 0, userInfo: nil)))
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Payload error"])))
             return
         }
         
@@ -112,7 +112,7 @@ public final class APNSPusher: NSObject, APNSPushable {
         session?.dataTask(with: request, completionHandler: { (data, response, error) in
             guard let r = response as? HTTPURLResponse else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "unknown error", code: 0, userInfo: nil)))
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
                 }
                 return
             }
@@ -130,7 +130,17 @@ public final class APNSPusher: NSObject, APNSPushable {
                 let json = dict as? [String: Any],
                 let reason = json["reason"] as? String {
                 DispatchQueue.main.async {
-                    completion(.success((statusCode: r.statusCode, reason: reason, ID: nil)))
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: reason])))
+                }
+                
+            } else if r.statusCode != 200 {
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: HTTPURLResponse.localizedString(forStatusCode: r.statusCode)])))
+                }
+                
+            } else {
+                DispatchQueue.main.async {
+                    completion(.success(HTTPURLResponse.localizedString(forStatusCode: r.statusCode)))
                 }
             }
         }).resume()

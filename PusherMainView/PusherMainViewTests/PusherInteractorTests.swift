@@ -3,17 +3,17 @@ import APNS
 @testable import PusherMainView
 
 class APNSPusherMock: APNSPushable {
-    private var result: Result<(statusCode: Int, reason: String, ID: String?), Error>
+    private var result: Result<String, Error>
     var type: APNSPusherType
     var identity: SecIdentity?
     
-    init(result: Result<(statusCode: Int, reason: String, ID: String?), Error>, type: APNSPusherType) {
+    init(result: Result<String, Error>, type: APNSPusherType) {
         self.result = result
         self.type = type
         identity = nil
     }
     
-    func pushPayload(_ payload: Dictionary<String, Any>, to token: String, withTopic appBundleID: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<(statusCode: Int, reason: String, ID: String?), Error>) -> Void) {
+    func pushPayload(_ payload: Dictionary<String, Any>, to token: String, withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<String, Error>) -> Void) {
         completion(result)
     }
 }
@@ -36,7 +36,7 @@ class PusherInteractorTests: XCTestCase {
     func testPush() {
         // Push Success
         
-        PusherInteractor(apnsPusher: APNSPusherMock(result: .success((200, "", nil)),
+        PusherInteractor(apnsPusher: APNSPusherMock(result: .success("OK"),
                                                     type: .token(keyID: "keyID",
                                                                  teamID: "teamID",
                                                                  p8: "p8")),

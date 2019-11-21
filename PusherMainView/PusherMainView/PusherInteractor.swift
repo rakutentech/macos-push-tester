@@ -135,8 +135,7 @@ extension PusherInteractor: PusherInteracting {
                                     self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
                                     completion(false)
                                     
-                                case .success(_, let reason, _):
-                                    self.router.show(message: reason, window: NSApplication.shared.windows.first)
+                                case .success(_):
                                     completion(true)
                                 }
         })
