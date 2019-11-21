@@ -4,6 +4,7 @@ import APNS
 
 public final class PusherViewController: NSViewController {
     @IBOutlet private var deviceTokenTextField: NSTextField!
+    @IBOutlet private var appBundleIDTextField: NSTextField!
     @IBOutlet private var apnsCollapseIdTextField: NSTextField!
     @IBOutlet private var payloadTextView: NSTextView!
     @IBOutlet private var sandBoxCheckBox: NSButton!
@@ -34,7 +35,7 @@ public final class PusherViewController: NSViewController {
         super.viewDidLoad()
         
         deviceTokenTextField.placeholderString = "Enter a device token"
-        
+        appBundleIDTextField.placeholderString = "Enter your app bundle ID"
         apnsCollapseIdTextField.placeholderString = "Enter apns-collapse-id"
         
         payloadTextView.isRichText = false
@@ -82,7 +83,7 @@ public final class PusherViewController: NSViewController {
     @IBAction func sendPush(_ sender: Any) {
         pusherInteractor.push(payloadTextView.string,
                               toToken: deviceTokenTextField.stringValue,
-                              withTopic: "com.rakuten.tech.mobile.pushsample",
+                              withTopic: appBundleIDTextField.stringValue,
                               priority: 10,
                               collapseID: apnsCollapseIdTextField.stringValue,
                               inSandbox: sandBoxCheckBox.state.rawValue == 1) { _ in }

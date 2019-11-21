@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="XfG-lQ-9wD">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -113,8 +114,16 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-ym-vza" userLabel="App Bundle ID Text Field">
+                                <rect key="frame" x="10" y="137" width="460" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="T3F-rN-9Zx">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="blG-ra-9fI">
-                                <rect key="frame" x="203" y="153" width="75" height="18"/>
+                                <rect key="frame" x="203" y="101" width="75" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="EEE-GB-DYi"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="Uig-qc-baY"/>
@@ -146,29 +155,33 @@
                             <constraint firstItem="Nvz-5c-Eka" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="8ve-Qc-XEC"/>
                             <constraint firstAttribute="trailing" secondItem="Nvz-5c-Eka" secondAttribute="trailing" constant="10" id="D6p-16-Bwq"/>
                             <constraint firstItem="8SA-5i-DSf" firstAttribute="top" secondItem="Nvz-5c-Eka" secondAttribute="bottom" constant="10" id="DpI-LJ-Fti"/>
-                            <constraint firstItem="blG-ra-9fI" firstAttribute="top" secondItem="8SA-5i-DSf" secondAttribute="bottom" constant="10" id="HER-ZR-QOF"/>
+                            <constraint firstAttribute="trailing" secondItem="pzN-ym-vza" secondAttribute="trailing" constant="10" id="F7q-3R-AXh"/>
                             <constraint firstAttribute="trailing" secondItem="8SA-5i-DSf" secondAttribute="trailing" constant="10" id="ICP-ll-jmi"/>
                             <constraint firstItem="9fc-I7-7eG" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="JD1-TW-Tcu"/>
                             <constraint firstItem="f46-vh-scI" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="30" id="Jnl-07-jDC"/>
                             <constraint firstItem="9fc-I7-7eG" firstAttribute="top" secondItem="f46-vh-scI" secondAttribute="bottom" constant="14" id="JoO-HG-aR9"/>
                             <constraint firstItem="8vp-KJ-t7U" firstAttribute="top" secondItem="qxe-qT-Lqe" secondAttribute="bottom" id="MGw-PM-d8i"/>
+                            <constraint firstItem="pzN-ym-vza" firstAttribute="top" secondItem="8SA-5i-DSf" secondAttribute="bottom" constant="20" id="MyQ-OE-YKR"/>
                             <constraint firstItem="blG-ra-9fI" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Uco-mH-kPu"/>
                             <constraint firstItem="8vp-KJ-t7U" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="VeR-s3-36U"/>
                             <constraint firstItem="f46-vh-scI" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="14" id="XAQ-NW-no2"/>
                             <constraint firstAttribute="trailing" secondItem="9fc-I7-7eG" secondAttribute="trailing" constant="10" id="Yh8-ZG-Kx6"/>
                             <constraint firstItem="ttU-Tn-M4j" firstAttribute="top" secondItem="f46-vh-scI" secondAttribute="top" id="fAe-Qf-8UY"/>
+                            <constraint firstItem="pzN-ym-vza" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="fOe-pj-kVa"/>
                             <constraint firstItem="bbN-sK-axC" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="fWJ-SE-JR0"/>
                             <constraint firstItem="ttU-Tn-M4j" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f46-vh-scI" secondAttribute="trailing" constant="8" symbolic="YES" id="gDj-Hr-8Iv"/>
                             <constraint firstItem="qxe-qT-Lqe" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="j9i-T7-7a2"/>
                             <constraint firstItem="N5F-K5-Nss" firstAttribute="centerY" secondItem="8SA-5i-DSf" secondAttribute="centerY" id="nu8-kB-zbp"/>
                             <constraint firstItem="qxe-qT-Lqe" firstAttribute="top" secondItem="9fc-I7-7eG" secondAttribute="bottom" constant="4" id="oKk-rF-51k"/>
                             <constraint firstItem="8SA-5i-DSf" firstAttribute="leading" secondItem="N5F-K5-Nss" secondAttribute="trailing" constant="4" id="pHk-Dh-A3d"/>
+                            <constraint firstItem="blG-ra-9fI" firstAttribute="top" secondItem="pzN-ym-vza" secondAttribute="bottom" constant="20" id="sUq-dS-QBx"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="apnsAuthTokenRadioButton" destination="ttU-Tn-M4j" id="4Td-oc-58F"/>
                         <outlet property="apnsCertificateRadioButton" destination="f46-vh-scI" id="5b4-1W-erI"/>
                         <outlet property="apnsCollapseIdTextField" destination="8SA-5i-DSf" id="kpv-5m-8qL"/>
+                        <outlet property="appBundleIDTextField" destination="pzN-ym-vza" id="Rd2-AO-xKT"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="F1t-lv-PLD"/>
                         <outlet property="payloadTextView" destination="OgG-Ak-can" id="sR4-xB-tKA"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="BNx-MA-bP2"/>
