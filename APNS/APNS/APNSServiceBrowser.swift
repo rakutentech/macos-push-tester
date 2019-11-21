@@ -42,10 +42,12 @@ public final class APNSServiceBrowser: NSObject {
 
 extension APNSServiceBrowser: MCNearbyServiceBrowserDelegate {
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        guard let token = info?["token"] else {
+        guard let token = info?["token"], let appID = info?["appID"] else {
             return
         }
-        let device = APNSServiceDevice(displayName: peerID.displayName, token: token)
+        let device = APNSServiceDevice(displayName: peerID.displayName,
+                                       token: token,
+                                       appID: appID)
         DispatchQueue.main.async {
             self.devices.insert(device, at: self.devices.count)
             self.peerIDToDeviceMap[peerID] = device

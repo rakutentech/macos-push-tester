@@ -95,8 +95,9 @@ public final class PusherViewController: NSViewController {
 }
 
 extension PusherViewController: PusherInteractable {
-    func didSelectDevicetoken(_ device: String) {
+    func didSelectDevicetoken(_ device: String, appBundleID: String) {
         deviceTokenTextField.stringValue = device
+        appBundleIDTextField.stringValue = appBundleID
     }
     
     func didCancelSelectingAuthToken() {
