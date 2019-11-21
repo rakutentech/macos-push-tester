@@ -60,7 +60,7 @@ class PusherInteractorTests: XCTestCase {
                                                                  p8: "p8")),
                          router: RouterMock()).push(#"{"":""}"#,
                                                     to: "1234",
-                                                    appBundleID: nil,
+                                                    appBundleID: "com.myapp",
                                                     priority: 0,
                                                     collapseID: nil,
                                                     inSandbox: true,
