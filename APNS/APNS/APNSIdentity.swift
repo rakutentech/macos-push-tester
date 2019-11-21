@@ -1,6 +1,6 @@
 import Foundation
 
-public final class APNSIdentityManager: NSObject {
+public enum APNSIdentity {
     public static func identities() -> [Any] {
         guard let kCFBooleanTrueNotNil = kCFBooleanTrue else {
             return []

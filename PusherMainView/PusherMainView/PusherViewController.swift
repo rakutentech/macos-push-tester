@@ -60,7 +60,7 @@ public final class PusherViewController: NSViewController {
                           modalDelegate: self,
                           didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
                           contextInfo: nil,
-                          identities: APNSIdentityManager.identities(),
+                          identities: APNSIdentity.identities(),
                           message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
     }
     
