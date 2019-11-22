@@ -41,7 +41,7 @@ public enum APNSIdentity {
                 cert1 = nil
                 cert2 = nil
                 
-                return (name1 as NSString).compare(name2 as String) == .orderedAscending
+                return (name1 as String).compare(name2 as String) == .orderedAscending
         }
         
         return filtered
