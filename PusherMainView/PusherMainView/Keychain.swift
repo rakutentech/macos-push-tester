@@ -1,6 +1,6 @@
 import Foundation
 
-enum PreferenceManager {
+enum Keychain {
     static func string(for key: String) -> String? {
         guard let service = Bundle.main.bundleIdentifier else {
             return nil
