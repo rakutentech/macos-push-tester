@@ -128,7 +128,7 @@
                                     <constraint firstAttribute="height" constant="14" id="EEE-GB-DYi"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="Uig-qc-baY"/>
                                 </constraints>
-                                <buttonCell key="cell" type="check" title="Sandbox" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wrh-SG-FTA">
+                                <buttonCell key="cell" type="check" title="Sandbox" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wrh-SG-FTA">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
