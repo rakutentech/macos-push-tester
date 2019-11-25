@@ -4,9 +4,10 @@ import APNS
 
 public final class PusherViewController: NSViewController {
     @IBOutlet private var deviceTokenTextField: NSTextField!
-    @IBOutlet private var appBundleIDTextField: NSTextField!
     @IBOutlet private var apnsCollapseIdTextField: NSTextField!
     @IBOutlet private var payloadTextView: NSTextView!
+    @IBOutlet private var appBundleIDTextField: NSTextField!
+    @IBOutlet private var priorityTextField: NSTextField!
     @IBOutlet private var sandBoxCheckBox: NSButton!
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
@@ -35,8 +36,11 @@ public final class PusherViewController: NSViewController {
         super.viewDidLoad()
         
         deviceTokenTextField.placeholderString = "Enter a device token"
+        apnsCollapseIdTextField.placeholderString = "Enter APNS Collapse ID"
         appBundleIDTextField.placeholderString = "Enter your app bundle ID"
-        apnsCollapseIdTextField.placeholderString = "Enter apns-collapse-id"
+        priorityTextField.placeholderString = "Enter APNS priority"
+        
+        priorityTextField.stringValue = "10"
         
         payloadTextView.isRichText = false
         payloadTextView.isAutomaticTextCompletionEnabled = false
@@ -60,7 +64,7 @@ public final class PusherViewController: NSViewController {
                           modalDelegate: self,
                           didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
                           contextInfo: nil,
-                          identities: APNSIdentityManager.identities(),
+                          identities: APNSIdentity.identities(),
                           message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
     }
     
@@ -82,9 +86,9 @@ public final class PusherViewController: NSViewController {
     
     @IBAction func sendPush(_ sender: Any) {
         pusherInteractor.push(payloadTextView.string,
-                              toToken: deviceTokenTextField.stringValue,
-                              withTopic: appBundleIDTextField.stringValue,
-                              priority: 10,
+                              to: deviceTokenTextField.stringValue,
+                              appBundleID: appBundleIDTextField.stringValue,
+                              priority: priorityTextField?.integerValue ?? 10,
                               collapseID: apnsCollapseIdTextField.stringValue,
                               inSandbox: sandBoxCheckBox.state.rawValue == 1) { _ in }
     }

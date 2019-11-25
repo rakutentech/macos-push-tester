@@ -1,6 +1,6 @@
 import Foundation
 
-public final class APNSIdentityManager: NSObject {
+public enum APNSIdentity {
     public static func identities() -> [Any] {
         guard let kCFBooleanTrueNotNil = kCFBooleanTrue else {
             return []
@@ -41,7 +41,7 @@ public final class APNSIdentityManager: NSObject {
                 cert1 = nil
                 cert2 = nil
                 
-                return (name1 as NSString).compare(name2 as String) == .orderedAscending
+                return (name1 as String).compare(name2 as String) == .orderedAscending
         }
         
         return filtered
