@@ -75,36 +75,37 @@ public final class PusherViewController: NSViewController {
         }
         
         willChangeValue(forKey: "identityName")
-        pusherInteractor.updateIdentity(identity.takeUnretainedValue() as SecIdentity)
+        pusherInteractor.dispatch(actionType: .updateIdentity(identity: identity.takeUnretainedValue() as SecIdentity))
         didChangeValue(forKey: "identityName")
     }
     
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
         apnsCertificateRadioButton.state = .off
-        pusherInteractor.present(actionType: .authToken(fromViewController: self))
+        pusherInteractor.dispatch(actionType: .authToken(fromViewController: self))
     }
     
     @IBAction func sendPush(_ sender: Any) {
-        pusherInteractor.push(payloadTextView.string,
-                              to: deviceTokenTextField.stringValue,
-                              appBundleID: appBundleIDTextField.stringValue,
-                              priority: priorityTextField?.integerValue ?? 10,
-                              collapseID: apnsCollapseIdTextField.stringValue,
-                              inSandbox: sandBoxCheckBox.state.rawValue == 1) { _ in }
+        pusherInteractor.dispatch(actionType: .push(payloadTextView.string,
+                                                    deviceToken: deviceTokenTextField.stringValue,
+                                                    appBundleID: appBundleIDTextField.stringValue,
+                                                    priority: priorityTextField?.integerValue ?? 10,
+                                                    collapseID: apnsCollapseIdTextField.stringValue,
+                                                    sandbox: sandBoxCheckBox.state.rawValue == 1) { _ in })
     }
     
     @IBAction func selectDevice(_ sender: Any) {
-        pusherInteractor.present(actionType: .devicesList(fromViewController: self))
+        pusherInteractor.dispatch(actionType: .devicesList(fromViewController: self))
     }
 }
 
 extension PusherViewController: PusherInteractable {
-    func didSelectDevicetoken(_ device: String, appBundleID: String) {
-        deviceTokenTextField.stringValue = device
-        appBundleIDTextField.stringValue = appBundleID
-    }
-    
-    func didCancelSelectingAuthToken() {
-        apnsAuthTokenRadioButton.state = .off
+    func didDispatch(dispatchedAction: DispatchedAction) {
+        switch dispatchedAction {
+        case .didSelectDevicetoken(let deviceToken, let appBundleID):
+            deviceTokenTextField.stringValue = deviceToken
+            appBundleIDTextField.stringValue = appBundleID
+        case .didCancelSelectingAuthToken:
+            apnsAuthTokenRadioButton.state = .off
+        }
     }
 }

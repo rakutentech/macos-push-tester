@@ -36,38 +36,38 @@ final class AuthTokenViewcontroller: NSViewController {
     // MARK:- Actions
     
     @IBAction private func didTapOpenP8Button(_ sender: Any) {
-        pusherInteractor?.present(actionType: .browsingFiles(fromViewController: self, completion: { (p8FileURL) in
+        pusherInteractor?.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { (p8FileURL) in
             self.p8FileURL = p8FileURL
             self.p8Label.stringValue = "\(p8FileURL)"
         }))
     }
     
     @IBAction private func didTapCancelButton(_ sender: Any) {
-        pusherInteractor?.cancelSelectingAuthToken()
+        pusherInteractor?.dispatch(actionType: .selectAuthToken)
         dismiss(self)
     }
     
     @IBAction private func didTapValidateButton(_ sender: Any) {
         guard teamIDTextField.stringValue.count > 0 else {
-            pusherInteractor?.present(actionType: .alert(message: "Please enter Team ID", fromWindow: view.window))
+            pusherInteractor?.dispatch(actionType: .alert(message: "Please enter Team ID", fromWindow: view.window))
             return
         }
         
         guard keyIDTextField.stringValue.count > 0 else {
-            pusherInteractor?.present(actionType: .alert(message: "Please enter Key ID", fromWindow: view.window))
+            pusherInteractor?.dispatch(actionType: .alert(message: "Please enter Key ID", fromWindow: view.window))
             return
         }
         
         guard let p8FileURL = p8FileURL,
             let p8String = try? String(contentsOf: p8FileURL, encoding: .utf8) else {
-                pusherInteractor?.present(actionType: .alert(message: "p8 file is incorrect", fromWindow: view.window))
+                pusherInteractor?.dispatch(actionType: .alert(message: "p8 file is incorrect", fromWindow: view.window))
                 return
         }
         
-        pusherInteractor?.saveAuthToken(teamID: teamIDTextField.stringValue,
-                                        keyID: keyIDTextField.stringValue,
-                                        p8FileURL: p8FileURL,
-                                        p8: p8String)
+        pusherInteractor?.dispatch(actionType: .saveAuthToken(teamID: teamIDTextField.stringValue,
+                                                              keyID: keyIDTextField.stringValue,
+                                                              p8FileURL: p8FileURL,
+                                                              p8: p8String))
         dismiss(self)
     }
 }

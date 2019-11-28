@@ -81,7 +81,7 @@ extension DevicesViewController: NSTableViewDelegate {
             return
         }
         let device = apnsServiceBrowser.devices[tableView.selectedRow]
-        pusherInteractor?.selectDevice(device)
+        pusherInteractor?.dispatch(actionType: .selectDevice(device: device))
         dismiss(self)
     }
 }

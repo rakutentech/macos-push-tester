@@ -2,11 +2,26 @@ import Foundation
 import APNS
 
 enum ActionType {
-    case none
     case devicesList(fromViewController: NSViewController)
     case authToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)
+    case selectDevice(device: APNSServiceDevice)
+    case selectAuthToken
+    case saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
+    case updateIdentity(identity: SecIdentity)
+    case push(_ payloadString: String,
+        deviceToken: String,
+        appBundleID: String?,
+        priority: Int,
+        collapseID: String?,
+        sandbox: Bool,
+        completion:(Bool) -> Void)
+}
+
+enum DispatchedAction {
+    case didSelectDevicetoken(_ deviceToken: String, appBundleID: String)
+    case didCancelSelectingAuthToken
 }
 
 struct AuthToken: Codable {
@@ -16,25 +31,13 @@ struct AuthToken: Codable {
 }
 
 protocol PusherInteractable: class {
-    func didSelectDevicetoken(_ deviceToken: String, appBundleID: String)
-    func didCancelSelectingAuthToken()
+    func didDispatch(dispatchedAction: DispatchedAction)
 }
 
 protocol PusherInteracting: class {
     var delegate: PusherInteractable? { get set }
     var authToken: AuthToken? { get }
-    func present(actionType: ActionType)
-    func updateIdentity(_ identity: SecIdentity)
-    func saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
-    func push(_ payloadString: String,
-              to deviceToken: String,
-              appBundleID: String?,
-              priority: Int,
-              collapseID: String?,
-              inSandbox sandbox: Bool,
-              completion:@escaping (Bool) -> Void)
-    func cancelSelectingAuthToken()
-    func selectDevice(_ device: APNSServiceDevice)
+    func dispatch(actionType: ActionType)
 }
 
 final class PusherInteractor: NSObject {
@@ -58,37 +61,8 @@ final class PusherInteractor: NSObject {
         }
         authToken = AuthToken(keyID: keyID, teamID: teamID, p8FileURLString: p8FileURLString)
     }
-}
-
-extension PusherInteractor: PusherInteracting {
-    func present(actionType: ActionType) {
-        switch actionType {
-        case .devicesList(let fromViewController):
-            router.presentDevicesList(from: fromViewController, pusherInteractor: self)
-        case .authToken(let fromViewController):
-            updateAuthToken()
-            router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
-        case .alert(let message, let window):
-            router.show(message: message, window: window)
-        case .browsingFiles(let fromViewController, let completion):
-            router.browseFiles(from: fromViewController, completion: completion)
-        case .none: ()
-        }
-    }
     
-    func updateIdentity(_ identity: SecIdentity) {
-        apnsPusher.type = .certificate(identity: identity)
-    }
-    
-    func saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String) {
-        apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
-        
-        Keychain.set(value: keyID, forKey: "keyID")
-        Keychain.set(value: teamID, forKey: "teamID")
-        Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
-    }
-    
-    func push(_ payloadString: String,
+    private func push(_ payloadString: String,
               to deviceToken: String,
               appBundleID: String?,
               priority: Int,
@@ -146,12 +120,45 @@ extension PusherInteractor: PusherInteracting {
                                 }
         })
     }
-    
-    func cancelSelectingAuthToken() {
-        delegate?.didCancelSelectingAuthToken()
-    }
-    
-    func selectDevice(_ device: APNSServiceDevice) {
-        delegate?.didSelectDevicetoken(device.token, appBundleID: device.appID)
+}
+
+extension PusherInteractor: PusherInteracting {
+    func dispatch(actionType: ActionType) {
+        switch actionType {
+        case .devicesList(let fromViewController):
+            router.presentDevicesList(from: fromViewController, pusherInteractor: self)
+        case .authToken(let fromViewController):
+            updateAuthToken()
+            router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
+        case .alert(let message, let window):
+            router.show(message: message, window: window)
+        case .browsingFiles(let fromViewController, let completion):
+            router.browseFiles(from: fromViewController, completion: completion)
+        case .selectDevice(let device):
+            delegate?.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
+        case .selectAuthToken:
+            delegate?.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
+        case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
+            apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
+            Keychain.set(value: keyID, forKey: "keyID")
+            Keychain.set(value: teamID, forKey: "teamID")
+            Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
+        case .updateIdentity(let identity):
+            apnsPusher.type = .certificate(identity: identity)
+        case .push(let payloadString,
+                   let deviceToken,
+                   let appBundleID,
+                   let priority,
+                   let collapseID,
+                   let sandbox,
+                   let completion):
+            push(payloadString,
+                 to: deviceToken,
+                 appBundleID: appBundleID,
+                 priority: priority,
+                 collapseID: collapseID,
+                 inSandbox: sandbox,
+                 completion: completion)
+        }
     }
 }
