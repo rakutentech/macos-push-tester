@@ -25,7 +25,7 @@ protocol PusherInteracting: class {
     var authToken: AuthToken? { get }
     func present(actionType: ActionType)
     func updateIdentity(_ identity: SecIdentity)
-    func updateAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
+    func saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
     func push(_ payloadString: String,
               to deviceToken: String,
               appBundleID: String?,
@@ -47,8 +47,13 @@ final class PusherInteractor: NSObject {
         self.apnsPusher = apnsPusher
         self.router = router
         super.init()
-        
-        guard let keyID = Keychain.string(for: "keyID"), let teamID = Keychain.string(for: "teamID"), let p8FileURLString = Keychain.string(for: "p8FileURLString") else {
+        updateAuthToken()
+    }
+    
+    private func updateAuthToken() {
+        guard let keyID = Keychain.string(for: "keyID"),
+            let teamID = Keychain.string(for: "teamID"),
+            let p8FileURLString = Keychain.string(for: "p8FileURLString") else {
             return
         }
         authToken = AuthToken(keyID: keyID, teamID: teamID, p8FileURLString: p8FileURLString)
@@ -61,6 +66,7 @@ extension PusherInteractor: PusherInteracting {
         case .devicesList(let fromViewController):
             router.presentDevicesList(from: fromViewController, pusherInteractor: self)
         case .authToken(let fromViewController):
+            updateAuthToken()
             router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
         case .alert(let message, let window):
             router.show(message: message, window: window)
@@ -74,7 +80,7 @@ extension PusherInteractor: PusherInteracting {
         apnsPusher.type = .certificate(identity: identity)
     }
     
-    func updateAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String) {
+    func saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String) {
         apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
         
         Keychain.set(value: keyID, forKey: "keyID")

@@ -64,10 +64,10 @@ final class AuthTokenViewcontroller: NSViewController {
                 return
         }
         
-        pusherInteractor?.updateAuthToken(teamID: teamIDTextField.stringValue,
-                                          keyID: keyIDTextField.stringValue,
-                                          p8FileURL: p8FileURL,
-                                          p8: p8String)
+        pusherInteractor?.saveAuthToken(teamID: teamIDTextField.stringValue,
+                                        keyID: keyIDTextField.stringValue,
+                                        p8FileURL: p8FileURL,
+                                        p8: p8String)
         dismiss(self)
     }
 }
