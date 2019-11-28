@@ -30,27 +30,36 @@ struct AuthToken: Codable {
     public let p8FileURLString: String
 }
 
-protocol PusherInteractable: class {
+protocol PusherInteractable where Self: NSViewController {
     func didDispatch(dispatchedAction: DispatchedAction)
 }
 
-protocol PusherInteracting: class {
-    var delegate: PusherInteractable? { get set }
+protocol PusherInteracting {
     var authToken: AuthToken? { get }
+    func subscribe(_ pusherInteractable: PusherInteractable)
+    func unsubscribe(_ pusherInteractable: PusherInteractable)
     func dispatch(actionType: ActionType)
 }
 
-final class PusherInteractor: NSObject {
+final class PusherInteractor {
     private var apnsPusher: APNSPushable
     private let router: Routing
     public private(set) var authToken: AuthToken?
-    weak var delegate: PusherInteractable?
+    private var subscribers: [PusherInteractable] = []
     
     init(apnsPusher: APNSPushable, router: Routing) {
         self.apnsPusher = apnsPusher
         self.router = router
-        super.init()
         updateAuthToken()
+        #if DEBUG
+        print("\(PusherInteractor.self) init")
+        #endif
+    }
+    
+    deinit {
+        #if DEBUG
+        print("\(PusherInteractor.self) deinit")
+        #endif
     }
     
     private func updateAuthToken() {
@@ -123,6 +132,17 @@ final class PusherInteractor: NSObject {
 }
 
 extension PusherInteractor: PusherInteracting {
+    func subscribe(_ pusherInteractable: PusherInteractable) {
+        subscribers.append(pusherInteractable)
+    }
+    
+    func unsubscribe(_ pusherInteractable: PusherInteractable) {
+        guard let index = subscribers.firstIndex(where: { pusherInteractable == $0 }) else {
+            return
+        }
+        subscribers.remove(at: index)
+    }
+    
     func dispatch(actionType: ActionType) {
         switch actionType {
         case .devicesList(let fromViewController):
@@ -135,9 +155,13 @@ extension PusherInteractor: PusherInteracting {
         case .browsingFiles(let fromViewController, let completion):
             router.browseFiles(from: fromViewController, completion: completion)
         case .selectDevice(let device):
-            delegate?.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
+            subscribers.forEach({ (delegate) in
+                delegate.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
+            })
         case .selectAuthToken:
-            delegate?.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
+            subscribers.forEach({ (delegate) in
+                delegate.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
+            })
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
             Keychain.set(value: keyID, forKey: "keyID")
@@ -160,5 +184,15 @@ extension PusherInteractor: PusherInteracting {
                  inSandbox: sandbox,
                  completion: completion)
         }
+    }
+}
+
+extension PusherInteractor: Hashable {
+    static func == (lhs: PusherInteractor, rhs: PusherInteractor) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self)
     }
 }

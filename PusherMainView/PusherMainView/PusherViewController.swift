@@ -18,7 +18,17 @@ public final class PusherViewController: NSViewController {
     required init?(coder: NSCoder) {
         pusherInteractor = PusherInteractor(apnsPusher: APNSPusher(), router: Router())
         super.init(coder: coder)
-        pusherInteractor.delegate = self
+        pusherInteractor.subscribe(self)
+        #if DEBUG
+        print("\(self.className) init")
+        #endif
+    }
+    
+    deinit {
+        pusherInteractor.unsubscribe(self)
+        #if DEBUG
+        print("\(self.className) deinit")
+        #endif
     }
     
     public static func create() -> PusherViewController? {

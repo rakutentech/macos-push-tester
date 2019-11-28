@@ -10,6 +10,15 @@ final class AuthTokenViewcontroller: NSViewController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        #if DEBUG
+        print("\(self.className) init")
+        #endif
+    }
+    
+    deinit {
+        #if DEBUG
+        print("\(self.className) deinit")
+        #endif
     }
     
     static func create(pusherInteractor: PusherInteracting) -> AuthTokenViewcontroller? {
@@ -44,7 +53,7 @@ final class AuthTokenViewcontroller: NSViewController {
     
     @IBAction private func didTapCancelButton(_ sender: Any) {
         pusherInteractor?.dispatch(actionType: .selectAuthToken)
-        dismiss(self)
+        presentingViewController?.dismiss(self)
     }
     
     @IBAction private func didTapValidateButton(_ sender: Any) {
@@ -68,6 +77,6 @@ final class AuthTokenViewcontroller: NSViewController {
                                                               keyID: keyIDTextField.stringValue,
                                                               p8FileURL: p8FileURL,
                                                               p8: p8String))
-        dismiss(self)
+        presentingViewController?.dismiss(self)
     }
 }
