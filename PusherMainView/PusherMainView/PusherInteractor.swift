@@ -155,12 +155,12 @@ extension PusherInteractor: PusherInteracting {
         case .browsingFiles(let fromViewController, let completion):
             router.browseFiles(from: fromViewController, completion: completion)
         case .selectDevice(let device):
-            subscribers.forEach({ (delegate) in
-                delegate.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
+            subscribers.forEach({ (subscriber) in
+                subscriber.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
             })
         case .selectAuthToken:
-            subscribers.forEach({ (delegate) in
-                delegate.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
+            subscribers.forEach({ (subscriber) in
+                subscriber.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
             })
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
