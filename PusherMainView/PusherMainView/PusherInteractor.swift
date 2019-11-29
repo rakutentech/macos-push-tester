@@ -186,13 +186,3 @@ extension PusherInteractor: PusherInteracting {
         }
     }
 }
-
-extension PusherInteractor: Hashable {
-    static func == (lhs: PusherInteractor, rhs: PusherInteractor) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
-    }
-}
