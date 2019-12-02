@@ -30,6 +30,9 @@ struct RouterMock: Routing {
     
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (URL) -> Void) {
     }
+    
+    func dismiss(from fromViewController: NSViewController) {
+    }
 }
 
 class PusherInteractorTests: XCTestCase {
