@@ -30,6 +30,9 @@ struct RouterMock: Routing {
     
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (URL) -> Void) {
     }
+    
+    func dismiss(from fromViewController: NSViewController) {
+    }
 }
 
 class PusherInteractorTests: XCTestCase {
@@ -40,15 +43,15 @@ class PusherInteractorTests: XCTestCase {
                                                     type: .token(keyID: "keyID",
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
-                         router: RouterMock()).push(#"{"":""}"#,
-                                                    to: "1234",
-                                                    appBundleID: "com.myapp",
-                                                    priority: 0,
-                                                    collapseID: nil,
-                                                    inSandbox: true,
-                                                    completion: { success in
-                                                        XCTAssertTrue(success)
-                         })
+                         router: RouterMock()).dispatch(actionType: .push(#"{"":""}"#,
+                                                                          deviceToken: "1234",
+                                                                          appBundleID: "com.myapp",
+                                                                          priority: 0,
+                                                                          collapseID: nil,
+                                                                          sandbox: true,
+                                                                          completion: { success in
+                                                                            XCTAssertTrue(success)
+                         }))
         
         // Push Error
         
@@ -58,14 +61,14 @@ class PusherInteractorTests: XCTestCase {
                                                     type: .token(keyID: "keyID",
                                                                  teamID: "teamID",
                                                                  p8: "p8")),
-                         router: RouterMock()).push(#"{"":""}"#,
-                                                    to: "1234",
-                                                    appBundleID: "com.myapp",
-                                                    priority: 0,
-                                                    collapseID: nil,
-                                                    inSandbox: true,
-                                                    completion: { success in
-                                                        XCTAssertFalse(success)
-                         })
+                         router: RouterMock()).dispatch(actionType: .push(#"{"":""}"#,
+                                                                          deviceToken: "1234",
+                                                                          appBundleID: "com.myapp",
+                                                                          priority: 0,
+                                                                          collapseID: nil,
+                                                                          sandbox: true,
+                                                                          completion: { success in
+                                                                            XCTAssertFalse(success)
+                         }))
     }
 }

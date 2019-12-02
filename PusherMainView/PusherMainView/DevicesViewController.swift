@@ -9,6 +9,9 @@ final class DevicesViewController: NSViewController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         apnsServiceBrowser.delegate = self
+        #if DEBUG
+        print("\(self.className) init")
+        #endif
     }
     
     static func create(pusherInteractor: PusherInteracting) -> DevicesViewController? {
@@ -22,6 +25,9 @@ final class DevicesViewController: NSViewController {
     }
     
     deinit {
+        #if DEBUG
+        print("\(self.className) deinit")
+        #endif
         apnsServiceBrowser.searching = false
     }
     
@@ -46,7 +52,7 @@ final class DevicesViewController: NSViewController {
     // MARK:- Actions
     
     @IBAction private func didTapCloseButton(_ sender: Any) {
-        dismiss(self)
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 
@@ -81,8 +87,8 @@ extension DevicesViewController: NSTableViewDelegate {
             return
         }
         let device = apnsServiceBrowser.devices[tableView.selectedRow]
-        pusherInteractor?.selectDevice(device)
-        dismiss(self)
+        pusherInteractor?.dispatch(actionType: .selectDevice(device: device))
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 

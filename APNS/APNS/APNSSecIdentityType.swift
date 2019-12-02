@@ -1,15 +1,12 @@
 import Foundation
 import Security
 
-enum APNSSecIdentity {
+enum APNSSecIdentityType: String {
     // http://www.apple.com/certificateauthority/Apple_WWDR_CPS
-    static let developmentCustomExtension = "1.2.840.113635.100.6.3.1"
-    static let productionCustomExtension = "1.2.840.113635.100.6.3.2"
-    static let universalCustomExtension = "1.2.840.113635.100.6.3.6"
-    
-    enum APNSSecIdentityType: Int {
-        case invalid, development, production, universal
-    }
+    case invalid = ""
+    case development = "1.2.840.113635.100.6.3.1"
+    case production = "1.2.840.113635.100.6.3.2"
+    case universal = "1.2.840.113635.100.6.3.6"
     
     private static func values(for identity: SecIdentity) -> [String: Any]? {
         var certificate: SecCertificate?
@@ -21,9 +18,9 @@ enum APNSSecIdentity {
         }
         
         let keys: NSArray = [
-            developmentCustomExtension,
-            productionCustomExtension,
-            universalCustomExtension,
+            APNSSecIdentityType.development.rawValue,
+            APNSSecIdentityType.production.rawValue,
+            APNSSecIdentityType.universal.rawValue,
         ]
         
         let values: [String: Any]? = SecCertificateCopyValues(cert, keys, nil) as? [String: Any]
@@ -38,13 +35,13 @@ enum APNSSecIdentity {
             return .invalid
         }
         
-        if (values[developmentCustomExtension] != nil) && (values[productionCustomExtension] != nil) {
+        if (values[APNSSecIdentityType.development.rawValue] != nil) && (values[APNSSecIdentityType.production.rawValue] != nil) {
             return .universal
             
-        } else if (values[developmentCustomExtension]) != nil {
+        } else if (values[APNSSecIdentityType.development.rawValue]) != nil {
             return .development
             
-        } else if (values[productionCustomExtension]) != nil {
+        } else if (values[APNSSecIdentityType.production.rawValue]) != nil {
             return .production
             
         } else {
