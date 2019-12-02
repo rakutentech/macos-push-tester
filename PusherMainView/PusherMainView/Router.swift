@@ -5,6 +5,7 @@ protocol Routing {
     func presentAuthTokenAlert(from fromViewController: NSViewController, pusherInteractor: PusherInteracting)
     func show(message: String, window: NSWindow?)
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (_ p8FileURL: URL) -> Void)
+    func dismiss(from fromViewController: NSViewController)
 }
 
 struct Router {
@@ -49,6 +50,10 @@ extension Router: Routing {
                 completion(p8fileURL)
             }
         }
+    }
+    
+    func dismiss(from fromViewController: NSViewController) {
+        fromViewController.presentingViewController?.dismiss(fromViewController)
     }
 }
 

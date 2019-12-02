@@ -1,14 +1,12 @@
 import Foundation
 import Security
 
-enum APNSSecIdentity {
+enum APNSSecIdentityType: String {
     // http://www.apple.com/certificateauthority/Apple_WWDR_CPS
-    enum APNSSecIdentityType: String {
-        case invalid = ""
-        case development = "1.2.840.113635.100.6.3.1"
-        case production = "1.2.840.113635.100.6.3.2"
-        case universal = "1.2.840.113635.100.6.3.6"
-    }
+    case invalid = ""
+    case development = "1.2.840.113635.100.6.3.1"
+    case production = "1.2.840.113635.100.6.3.2"
+    case universal = "1.2.840.113635.100.6.3.6"
     
     private static func values(for identity: SecIdentity) -> [String: Any]? {
         var certificate: SecCertificate?

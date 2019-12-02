@@ -22,7 +22,7 @@ public enum APNSIdentity {
         
         // Allow only identities with APNS certificate
         
-        let filtered = result.filter { APNSSecIdentity.type(for: $0) != .invalid }.sorted { (id1, id2) -> Bool in
+        let filtered = result.filter { APNSSecIdentityType.type(for: $0) != .invalid }.sorted { (id1, id2) -> Bool in
                 var cert1: SecCertificate?
                 var cert2: SecCertificate?
                 

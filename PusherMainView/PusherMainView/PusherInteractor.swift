@@ -1,15 +1,25 @@
 import Foundation
 import APNS
 
+struct PusherState {
+    var deviceTokenString: String
+    var appID: String
+    var certificateRadioState: NSControl.StateValue
+    var authTokenRadioState: NSControl.StateValue
+}
+
 enum ActionType {
     case devicesList(fromViewController: NSViewController)
     case authToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)
     case selectDevice(device: APNSServiceDevice)
-    case selectAuthToken
+    case cancelAuthToken
     case saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
+    case chooseIdentity
+    case cancelIdentity
     case updateIdentity(identity: SecIdentity)
+    case dismiss(fromViewController: NSViewController)
     case push(_ payloadString: String,
         deviceToken: String,
         appBundleID: String?,
@@ -31,7 +41,7 @@ struct AuthToken: Codable {
 }
 
 protocol PusherInteractable where Self: NSViewController {
-    func didDispatch(dispatchedAction: DispatchedAction)
+    func newState(state: PusherState)
 }
 
 protocol PusherInteracting {
@@ -46,6 +56,10 @@ final class PusherInteractor {
     private let router: Routing
     public private(set) var authToken: AuthToken?
     private var subscribers: [PusherInteractable] = []
+    private var state: PusherState = PusherState(deviceTokenString: "",
+                                                 appID: "",
+                                                 certificateRadioState: .off,
+                                                 authTokenRadioState: .off)
     
     init(apnsPusher: APNSPushable, router: Routing) {
         self.apnsPusher = apnsPusher
@@ -150,25 +164,40 @@ extension PusherInteractor: PusherInteracting {
         case .authToken(let fromViewController):
             updateAuthToken()
             router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
+            
+            state.certificateRadioState = .off
+            subscribers.forEach { $0.newState(state: state) }
         case .alert(let message, let window):
             router.show(message: message, window: window)
         case .browsingFiles(let fromViewController, let completion):
             router.browseFiles(from: fromViewController, completion: completion)
         case .selectDevice(let device):
-            subscribers.forEach({ (subscriber) in
-                subscriber.didDispatch(dispatchedAction: .didSelectDevicetoken(device.token, appBundleID: device.appID))
-            })
-        case .selectAuthToken:
-            subscribers.forEach({ (subscriber) in
-                subscriber.didDispatch(dispatchedAction: .didCancelSelectingAuthToken)
-            })
+            state.deviceTokenString = device.token
+            state.appID = device.appID
+            subscribers.forEach { $0.newState(state: state) }
+        case .cancelAuthToken:
+            state.authTokenRadioState = .off
+            subscribers.forEach { $0.newState(state: state) }
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
             Keychain.set(value: keyID, forKey: "keyID")
             Keychain.set(value: teamID, forKey: "teamID")
             Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
+            state.authTokenRadioState = .on
+            subscribers.forEach { $0.newState(state: state) }
+        case .dismiss(let fromViewController):
+            router.dismiss(from: fromViewController)
+        case .chooseIdentity:
+            state.certificateRadioState = .off
+            subscribers.forEach { $0.newState(state: state) }
+        case .cancelIdentity:
+            state.certificateRadioState = .off
+            subscribers.forEach { $0.newState(state: state) }
         case .updateIdentity(let identity):
             apnsPusher.type = .certificate(identity: identity)
+            
+            state.certificateRadioState = .on
+            subscribers.forEach { $0.newState(state: state) }
         case .push(let payloadString,
                    let deviceToken,
                    let appBundleID,

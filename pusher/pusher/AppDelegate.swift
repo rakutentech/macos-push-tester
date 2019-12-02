@@ -11,7 +11,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        #if DEBUG
+        print("App should terminate after last window closed")
+        #endif
         return true
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        #if DEBUG
+        print("App will terminate")
+        #endif
     }
 }
 

@@ -52,8 +52,8 @@ final class AuthTokenViewcontroller: NSViewController {
     }
     
     @IBAction private func didTapCancelButton(_ sender: Any) {
-        pusherInteractor?.dispatch(actionType: .selectAuthToken)
-        presentingViewController?.dismiss(self)
+        pusherInteractor?.dispatch(actionType: .cancelAuthToken)
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
     
     @IBAction private func didTapValidateButton(_ sender: Any) {
@@ -77,6 +77,6 @@ final class AuthTokenViewcontroller: NSViewController {
                                                               keyID: keyIDTextField.stringValue,
                                                               p8FileURL: p8FileURL,
                                                               p8: p8String))
-        presentingViewController?.dismiss(self)
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }

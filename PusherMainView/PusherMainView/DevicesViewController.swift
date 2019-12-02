@@ -52,7 +52,7 @@ final class DevicesViewController: NSViewController {
     // MARK:- Actions
     
     @IBAction private func didTapCloseButton(_ sender: Any) {
-        presentingViewController?.dismiss(self)
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 
@@ -88,7 +88,7 @@ extension DevicesViewController: NSTableViewDelegate {
         }
         let device = apnsServiceBrowser.devices[tableView.selectedRow]
         pusherInteractor?.dispatch(actionType: .selectDevice(device: device))
-        presentingViewController?.dismiss(self)
+        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 

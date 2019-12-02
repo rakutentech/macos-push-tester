@@ -66,7 +66,7 @@ public final class PusherViewController: NSViewController {
     // MARK: - Actions
     
     @IBAction func chooseIdentity(_ sender: Any) {
-        apnsAuthTokenRadioButton.state = .off
+        pusherInteractor.dispatch(actionType: .chooseIdentity)
         
         let panel = SFChooseIdentityPanel.shared()
         panel?.setAlternateButtonTitle("Cancel")
@@ -80,7 +80,7 @@ public final class PusherViewController: NSViewController {
     
     @objc func chooseIdentityPanelDidEnd(_ sheet: NSWindow, returnCode: Int, contextInfo: Any) {
         guard returnCode == NSApplication.ModalResponse.OK.rawValue, let identity = SFChooseIdentityPanel.shared()?.identity() else {
-            apnsCertificateRadioButton.state = .off
+            pusherInteractor.dispatch(actionType: .cancelIdentity)
             return
         }
         
@@ -90,7 +90,6 @@ public final class PusherViewController: NSViewController {
     }
     
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
-        apnsCertificateRadioButton.state = .off
         pusherInteractor.dispatch(actionType: .authToken(fromViewController: self))
     }
     
@@ -109,13 +108,10 @@ public final class PusherViewController: NSViewController {
 }
 
 extension PusherViewController: PusherInteractable {
-    func didDispatch(dispatchedAction: DispatchedAction) {
-        switch dispatchedAction {
-        case .didSelectDevicetoken(let deviceToken, let appBundleID):
-            deviceTokenTextField.stringValue = deviceToken
-            appBundleIDTextField.stringValue = appBundleID
-        case .didCancelSelectingAuthToken:
-            apnsAuthTokenRadioButton.state = .off
-        }
+    func newState(state: PusherState) {
+        deviceTokenTextField.stringValue = state.deviceTokenString
+        appBundleIDTextField.stringValue = state.appID
+        apnsCertificateRadioButton.state = state.certificateRadioState
+        apnsAuthTokenRadioButton.state = state.authTokenRadioState
     }
 }
