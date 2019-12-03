@@ -24,13 +24,13 @@ public final class APNSPusher: NSObject, APNSPushable {
             switch type {
             case .certificate(let _identity):
                 identity = _identity
-                session = URLSession(configuration: URLSessionConfiguration.default,
-                                     delegate:self,
-                                     delegateQueue:OperationQueue.main)
+                session = URLSession(configuration: .default,
+                                     delegate: self,
+                                     delegateQueue: .main)
             case .token:
-                session = URLSession(configuration: URLSessionConfiguration.default,
-                                     delegate:nil,
-                                     delegateQueue:OperationQueue.main)
+                session = URLSession(configuration: .default,
+                                     delegate: nil,
+                                     delegateQueue: .main)
             case .none: ()
             }
         }

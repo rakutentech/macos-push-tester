@@ -10,7 +10,7 @@ struct PusherState {
 
 enum ActionType {
     case devicesList(fromViewController: NSViewController)
-    case authToken(fromViewController: NSViewController)
+    case chooseAuthToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)
     case selectDevice(device: APNSServiceDevice)
@@ -27,11 +27,6 @@ enum ActionType {
         collapseID: String?,
         sandbox: Bool,
         completion:(Bool) -> Void)
-}
-
-enum DispatchedAction {
-    case didSelectDevicetoken(_ deviceToken: String, appBundleID: String)
-    case didCancelSelectingAuthToken
 }
 
 struct AuthToken: Codable {
@@ -161,23 +156,29 @@ extension PusherInteractor: PusherInteracting {
         switch actionType {
         case .devicesList(let fromViewController):
             router.presentDevicesList(from: fromViewController, pusherInteractor: self)
-        case .authToken(let fromViewController):
+            
+        case .alert(let message, let window):
+            router.show(message: message, window: window)
+            
+        case .browsingFiles(let fromViewController, let completion):
+            router.browseFiles(from: fromViewController, completion: completion)
+            
+        case .selectDevice(let device):
+            state.deviceTokenString = device.token
+            state.appID = device.appID
+            subscribers.forEach { $0.newState(state: state) }
+            
+        case .chooseAuthToken(let fromViewController):
             updateAuthToken()
             router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
             
             state.certificateRadioState = .off
             subscribers.forEach { $0.newState(state: state) }
-        case .alert(let message, let window):
-            router.show(message: message, window: window)
-        case .browsingFiles(let fromViewController, let completion):
-            router.browseFiles(from: fromViewController, completion: completion)
-        case .selectDevice(let device):
-            state.deviceTokenString = device.token
-            state.appID = device.appID
-            subscribers.forEach { $0.newState(state: state) }
+            
         case .cancelAuthToken:
             state.authTokenRadioState = .off
             subscribers.forEach { $0.newState(state: state) }
+            
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
             Keychain.set(value: keyID, forKey: "keyID")
@@ -185,19 +186,25 @@ extension PusherInteractor: PusherInteracting {
             Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
             state.authTokenRadioState = .on
             subscribers.forEach { $0.newState(state: state) }
+            
         case .dismiss(let fromViewController):
             router.dismiss(from: fromViewController)
+            
         case .chooseIdentity:
-            state.certificateRadioState = .off
+            state.authTokenRadioState = .off
             subscribers.forEach { $0.newState(state: state) }
+            
         case .cancelIdentity:
             state.certificateRadioState = .off
             subscribers.forEach { $0.newState(state: state) }
+            
         case .updateIdentity(let identity):
             apnsPusher.type = .certificate(identity: identity)
             
             state.certificateRadioState = .on
+            state.authTokenRadioState = .off
             subscribers.forEach { $0.newState(state: state) }
+            
         case .push(let payloadString,
                    let deviceToken,
                    let appBundleID,

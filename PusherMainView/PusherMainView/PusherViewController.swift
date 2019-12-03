@@ -90,7 +90,7 @@ public final class PusherViewController: NSViewController {
     }
     
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
-        pusherInteractor.dispatch(actionType: .authToken(fromViewController: self))
+        pusherInteractor.dispatch(actionType: .chooseAuthToken(fromViewController: self))
     }
     
     @IBAction func sendPush(_ sender: Any) {
