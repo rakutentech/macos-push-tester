@@ -4,7 +4,7 @@ import APNS
 final class DevicesViewController: NSViewController {
     @IBOutlet private var tableView: NSTableView!
     private let apnsServiceBrowser = APNSServiceBrowser(serviceType: "pusher")
-    private var pusherInteractor: PusherInteracting?
+    private var pusherStore: PusherInteracting?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -14,13 +14,13 @@ final class DevicesViewController: NSViewController {
         #endif
     }
     
-    static func create(pusherInteractor: PusherInteracting) -> DevicesViewController? {
+    static func create(pusherStore: PusherInteracting) -> DevicesViewController? {
         let bundle = Bundle(for: PusherViewController.self)
         let storyboard = NSStoryboard(name: "Pusher", bundle: bundle)
         guard let viewController = storyboard.instantiateController(withIdentifier: "DevicesViewController") as? DevicesViewController else {
             return nil
         }
-        viewController.pusherInteractor = pusherInteractor
+        viewController.pusherStore = pusherStore
         return viewController
     }
     
@@ -52,7 +52,7 @@ final class DevicesViewController: NSViewController {
     // MARK:- Actions
     
     @IBAction private func didTapCloseButton(_ sender: Any) {
-        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
+        pusherStore?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 
@@ -87,8 +87,8 @@ extension DevicesViewController: NSTableViewDelegate {
             return
         }
         let device = apnsServiceBrowser.devices[tableView.selectedRow]
-        pusherInteractor?.dispatch(actionType: .selectDevice(device: device))
-        pusherInteractor?.dispatch(actionType: .dismiss(fromViewController: self))
+        pusherStore?.dispatch(actionType: .selectDevice(device: device))
+        pusherStore?.dispatch(actionType: .dismiss(fromViewController: self))
     }
 }
 
