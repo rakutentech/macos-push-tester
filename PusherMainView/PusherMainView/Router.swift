@@ -1,8 +1,8 @@
 import Foundation
 
 protocol Routing {
-    func presentDevicesList(from fromViewController: NSViewController, pusherInteractor: PusherInteracting)
-    func presentAuthTokenAlert(from fromViewController: NSViewController, pusherInteractor: PusherInteracting)
+    func presentDevicesList(from fromViewController: NSViewController, pusherStore: PusherInteracting)
+    func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting)
     func show(message: String, window: NSWindow?)
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (_ p8FileURL: URL) -> Void)
     func dismiss(from fromViewController: NSViewController)
@@ -18,15 +18,15 @@ struct Router {
 }
 
 extension Router: Routing {
-    func presentDevicesList(from fromViewController: NSViewController, pusherInteractor: PusherInteracting) {
-        guard let viewController = DevicesViewController.create(pusherInteractor: pusherInteractor) else {
+    func presentDevicesList(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
+        guard let viewController = DevicesViewController.create(pusherStore: pusherStore) else {
             return
         }
         presentAsSheet(viewController, from: fromViewController)
     }
     
-    func presentAuthTokenAlert(from fromViewController: NSViewController, pusherInteractor: PusherInteracting) {
-        guard let viewController = AuthTokenViewcontroller.create(pusherInteractor: pusherInteractor) else {
+    func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
+        guard let viewController = AuthTokenViewcontroller.create(pusherStore: pusherStore) else {
             return
         }
         presentAsSheet(viewController, from: fromViewController)

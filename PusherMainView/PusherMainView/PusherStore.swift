@@ -1,12 +1,6 @@
 import Foundation
 import APNS
-
-struct PusherState {
-    var deviceTokenString: String
-    var appID: String
-    var certificateRadioState: NSControl.StateValue
-    var authTokenRadioState: NSControl.StateValue
-}
+import SecurityInterface.SFChooseIdentityPanel
 
 enum ActionType {
     case devicesList(fromViewController: NSViewController)
@@ -16,7 +10,7 @@ enum ActionType {
     case selectDevice(device: APNSServiceDevice)
     case cancelAuthToken
     case saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
-    case chooseIdentity
+    case chooseIdentity(fromViewController: NSViewController)
     case cancelIdentity
     case updateIdentity(identity: SecIdentity)
     case dismiss(fromViewController: NSViewController)
@@ -46,9 +40,10 @@ protocol PusherInteracting {
     func dispatch(actionType: ActionType)
 }
 
-final class PusherInteractor {
+final class PusherStore {
     private var apnsPusher: APNSPushable
     private let router: Routing
+    private let reducer = PusherReducer()
     public private(set) var authToken: AuthToken?
     private var subscribers: [PusherInteractable] = []
     private var state: PusherState = PusherState(deviceTokenString: "",
@@ -61,13 +56,13 @@ final class PusherInteractor {
         self.router = router
         updateAuthToken()
         #if DEBUG
-        print("\(PusherInteractor.self) init")
+        print("\(PusherStore.self) init")
         #endif
     }
     
     deinit {
         #if DEBUG
-        print("\(PusherInteractor.self) deinit")
+        print("\(PusherStore.self) deinit")
         #endif
     }
     
@@ -140,7 +135,7 @@ final class PusherInteractor {
     }
 }
 
-extension PusherInteractor: PusherInteracting {
+extension PusherStore: PusherInteracting {
     func subscribe(_ pusherInteractable: PusherInteractable) {
         subscribers.append(pusherInteractable)
     }
@@ -155,7 +150,7 @@ extension PusherInteractor: PusherInteracting {
     func dispatch(actionType: ActionType) {
         switch actionType {
         case .devicesList(let fromViewController):
-            router.presentDevicesList(from: fromViewController, pusherInteractor: self)
+            router.presentDevicesList(from: fromViewController, pusherStore: self)
             
         case .alert(let message, let window):
             router.show(message: message, window: window)
@@ -163,47 +158,21 @@ extension PusherInteractor: PusherInteracting {
         case .browsingFiles(let fromViewController, let completion):
             router.browseFiles(from: fromViewController, completion: completion)
             
-        case .selectDevice(let device):
-            state.deviceTokenString = device.token
-            state.appID = device.appID
-            subscribers.forEach { $0.newState(state: state) }
-            
         case .chooseAuthToken(let fromViewController):
             updateAuthToken()
-            router.presentAuthTokenAlert(from: fromViewController, pusherInteractor: self)
-            
-            state.certificateRadioState = .off
-            subscribers.forEach { $0.newState(state: state) }
-            
-        case .cancelAuthToken:
-            state.authTokenRadioState = .off
-            subscribers.forEach { $0.newState(state: state) }
+            router.presentAuthTokenAlert(from: fromViewController, pusherStore: self)
             
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
             Keychain.set(value: keyID, forKey: "keyID")
             Keychain.set(value: teamID, forKey: "teamID")
             Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
-            state.authTokenRadioState = .on
-            subscribers.forEach { $0.newState(state: state) }
             
         case .dismiss(let fromViewController):
             router.dismiss(from: fromViewController)
             
-        case .chooseIdentity:
-            state.authTokenRadioState = .off
-            subscribers.forEach { $0.newState(state: state) }
-            
-        case .cancelIdentity:
-            state.certificateRadioState = .off
-            subscribers.forEach { $0.newState(state: state) }
-            
         case .updateIdentity(let identity):
             apnsPusher.type = .certificate(identity: identity)
-            
-            state.certificateRadioState = .on
-            state.authTokenRadioState = .off
-            subscribers.forEach { $0.newState(state: state) }
             
         case .push(let payloadString,
                    let deviceToken,
@@ -219,6 +188,46 @@ extension PusherInteractor: PusherInteracting {
                  collapseID: collapseID,
                  inSandbox: sandbox,
                  completion: completion)
+            
+        case .selectDevice, .cancelAuthToken: ()
+            
+        case .chooseIdentity(let fromViewController):
+            let identities = APNSIdentity.identities()
+            guard identities.count > 0 else {
+                state = reducer.reduce(actionType: .cancelIdentity, state: state)
+                subscribers.forEach { $0.newState(state: state) }
+                router.show(message: "There isn't identity.", window: NSApplication.shared.windows.first)
+                return
+            }
+            let panel = SFChooseIdentityPanel.shared()
+            panel?.setAlternateButtonTitle("Cancel")
+            panel?.beginSheet(for: fromViewController.view.window,
+                              modalDelegate: self,
+                              didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
+                              contextInfo: nil,
+                              identities: identities,
+                              message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
+            
+            case .cancelIdentity: ()
         }
+        
+        reduce(actionType: actionType)
+    }
+    
+    private func reduce(actionType: ActionType) {
+        let oldState = state
+        state = reducer.reduce(actionType: actionType, state: state)
+        if (state != oldState) {
+            subscribers.forEach { $0.newState(state: state) }
+        }
+    }
+    
+    @objc private func chooseIdentityPanelDidEnd(_ sheet: NSWindow, returnCode: Int, contextInfo: Any) {
+        guard returnCode == NSApplication.ModalResponse.OK.rawValue, let identity = SFChooseIdentityPanel.shared()?.identity() else {
+            dispatch(actionType: .cancelIdentity)
+            return
+        }
+        
+        dispatch(actionType: .updateIdentity(identity: identity.takeUnretainedValue() as SecIdentity))
     }
 }
