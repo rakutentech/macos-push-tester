@@ -13,7 +13,6 @@ platform :macos do
     rescue => ex
     UI.error(ex)
     end
-    xcversion(version: "10.3")
     cocoapods
     gym(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", build_path: "./", archive_path: "./", buildlog_path: "./", clean: true)
   end
