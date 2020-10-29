@@ -337,9 +337,10 @@
 			baseConfigurationReference = EF9D40E5DAD016E4ACC282FB /* Pods-pusher.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = pusher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -358,9 +359,10 @@
 			baseConfigurationReference = 69F83CD3B14D50F0358C02C6 /* Pods-pusher.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5J4GVGN58B;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = pusher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
