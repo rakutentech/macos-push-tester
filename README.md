@@ -103,6 +103,7 @@ extension Data {
 <key>NSBonjourServices</key>
 <array>
 	<string>_pusher._tcp</string>
+	<string>_pusher._udp</string>
 </array>
 <key>NSLocalNetworkUsageDescription</key>
 <string>To allow Pusher App to discover this device on the network.</string>
