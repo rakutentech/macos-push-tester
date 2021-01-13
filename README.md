@@ -97,6 +97,18 @@ extension Data {
 }
 ```
 
+- 5) Add the following to your targets info.plist (required for iOS 14 and above)
+
+```xml
+<key>NSBonjourServices</key>
+<array>
+	<string>_pusher._tcp</string>
+	<string>_pusher._udp</string>
+</array>
+<key>NSLocalNetworkUsageDescription</key>
+<string>To allow Pusher App to discover this device on the network.</string>
+```
+
 ## UI Preview
 
 ![The macOS Pusher App](preview.png)
