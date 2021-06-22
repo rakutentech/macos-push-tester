@@ -210,18 +210,18 @@
         <scene sceneID="wsB-0v-r0Y">
             <objects>
                 <viewController storyboardIdentifier="DevicesViewController" id="DA4-mJ-h0m" customClass="DevicesViewController" customModule="PusherMainView" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="uGH-nk-87p">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="455"/>
+                    <view key="view" id="uGH-nk-87p">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="325"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgd-OO-elu">
-                                <rect key="frame" x="0.0" y="41" width="480" height="388"/>
+                                <rect key="frame" x="0.0" y="41" width="480" height="284"/>
                                 <clipView key="contentView" id="26m-WQ-NHN">
-                                    <rect key="frame" x="1" y="0.0" width="478" height="387"/>
+                                    <rect key="frame" x="1" y="0.0" width="478" height="283"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="1Rk-it-qx1" viewBased="YES" id="qfe-2p-Vve">
-                                            <rect key="frame" x="0.0" y="0.0" width="478" height="362"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="478" height="258"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -339,6 +339,9 @@
                                         </tableView>
                                     </subviews>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="284" id="vZP-os-do4"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="56G-I6-NJX">
                                     <rect key="frame" x="1" y="422" width="478" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
