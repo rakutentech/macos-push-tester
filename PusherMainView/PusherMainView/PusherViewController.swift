@@ -10,6 +10,7 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var sandBoxCheckBox: NSButton!
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
+    @IBOutlet private var loadJSONFileButton: NSButton!
     private let pusherStore: PusherInteracting
     
     // MARK: - Init
@@ -70,6 +71,16 @@ public final class PusherViewController: NSViewController {
     
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseAuthToken(fromViewController: self))
+    }
+    
+    @IBAction func loadJSONFile(_ sender: Any) {
+        pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
+            guard let jsonString = try? String(contentsOf: jsonFileURL, encoding: .utf8) else {
+                self.pusherStore.dispatch(actionType: .alert(message: "JSON file is incorrect", fromWindow: self.view.window))
+                return
+            }
+            self.payloadTextView.string = jsonString
+        }))
     }
     
     @IBAction func sendPush(_ sender: Any) {
