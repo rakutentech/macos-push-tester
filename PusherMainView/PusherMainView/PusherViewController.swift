@@ -60,7 +60,7 @@ public final class PusherViewController: NSViewController {
     
     public override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.title = "The macOS Pusher App"
+        view.window?.title = "The macOS Push Tester App"
     }
     
     // MARK: - Actions
