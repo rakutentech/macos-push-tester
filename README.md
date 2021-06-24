@@ -5,7 +5,7 @@
 
 # The macOS Push Tester App
 
-The macOS Pusher App allows you to send push notifications through APNS (Apple Push Notification Service) and receive them on a device.
+The macOS Push Tester App allows you to send push notifications through APNS (Apple Push Notification Service) and receive them on a device.
 
 It can also get device tokens from any iPhone on the same wifi network.
 
@@ -27,7 +27,7 @@ It can also get device tokens from any iPhone on the same wifi network.
 ### Run fastlane
 Run `fastlane macos ci`
 
-## Make your iOS app discoverable by the macOS Pusher App
+## Make your iOS app discoverable by the macOS Push Tester App
 
 - 1) Add this class to your iOS app
 
@@ -111,4 +111,4 @@ extension Data {
 
 ## UI Preview
 
-![The macOS Pusher App](preview.png)
+![The macOS Push Tester App](preview.png)
