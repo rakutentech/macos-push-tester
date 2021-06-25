@@ -111,8 +111,11 @@ extension PusherViewController: PusherInteractable {
 // MARK: - NSTextFieldDelegate
 
 extension PusherViewController: NSTextFieldDelegate {
-    public func controlTextDidChange(_ obj: Notification) {
-        let deviceToken = (obj.userInfo?["NSFieldEditor"] as? NSTextView)?.string
+    public func controlTextDidChange(_ notification: Notification) {
+        guard notification.object as? NSTextField == deviceTokenTextField else {
+            return
+        }
+        let deviceToken = deviceTokenTextField.stringValue
         pusherStore.dispatch(actionType: .deviceToken(deviceToken))
     }
 }
