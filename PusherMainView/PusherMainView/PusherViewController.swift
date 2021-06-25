@@ -46,6 +46,8 @@ public final class PusherViewController: NSViewController {
         super.viewDidLoad()
         
         deviceTokenTextField.placeholderString = "Enter a device token"
+        deviceTokenTextField.delegate = self
+        
         apnsCollapseIdTextField.placeholderString = "Enter APNS Collapse ID"
         appBundleIDTextField.placeholderString = "Enter your app bundle ID"
         priorityTextField.placeholderString = "Enter APNS priority"
@@ -103,5 +105,14 @@ extension PusherViewController: PusherInteractable {
         appBundleIDTextField.stringValue = state.appID
         apnsCertificateRadioButton.state = state.certificateRadioState
         apnsAuthTokenRadioButton.state = state.authTokenRadioState
+    }
+}
+
+// MARK: - NSTextFieldDelegate
+
+extension PusherViewController: NSTextFieldDelegate {
+    public func controlTextDidChange(_ obj: Notification) {
+        let deviceToken = (obj.userInfo?["NSFieldEditor"] as? NSTextView)?.string
+        pusherStore.dispatch(actionType: .deviceToken(deviceToken))
     }
 }
