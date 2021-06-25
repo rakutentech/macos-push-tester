@@ -4,7 +4,7 @@ import SecurityInterface.SFChooseIdentityPanel
 
 enum ActionType {
     case devicesList(fromViewController: NSViewController)
-    case deviceToken(String?)
+    case deviceToken(String)
     case chooseAuthToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)

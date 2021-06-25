@@ -10,7 +10,7 @@ struct PusherReducer {
             newState.appID = device.appID
             
         case .deviceToken(let deviceToken):
-            newState.deviceTokenString = deviceToken ?? ""
+            newState.deviceTokenString = deviceToken
             
         case .chooseAuthToken:
             newState.certificateRadioState = .off
