@@ -4,6 +4,7 @@ import SecurityInterface.SFChooseIdentityPanel
 
 enum ActionType {
     case devicesList(fromViewController: NSViewController)
+    case deviceToken(String)
     case chooseAuthToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)
@@ -151,6 +152,9 @@ extension PusherStore: PusherInteracting {
         switch actionType {
         case .devicesList(let fromViewController):
             router.presentDevicesList(from: fromViewController, pusherStore: self)
+            
+        case .deviceToken(_):
+            state = reducer.reduce(actionType: actionType, state: state)
             
         case .alert(let message, let window):
             router.show(message: message, window: window)
