@@ -4,16 +4,18 @@ platform :macos do
   desc "Building Pusher"
   lane :ci do
     begin
-    sh "rm -rf ../pusher.app"
+    sh "rm -rf ../PushTester.app;rm -rf ../PushTester.app.dSYM;"
     rescue => ex
     UI.error(ex)
     end
-    begin
-    sh "rm ../pusher.app.dSYM.zip"
-    rescue => ex
-    UI.error(ex)
-    end
+
+    sh "mkdir ../DerivedData"
+
     cocoapods
-    gym(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", build_path: "./", archive_path: "./", buildlog_path: "./", clean: true)
+    build_mac_app(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", derived_data_path: "./DerivedData", skip_archive: true, clean: true)
+
+    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app ../"
+    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app.dSYM ../"
+    sh "rm -rf ../DerivedData"
   end
 end

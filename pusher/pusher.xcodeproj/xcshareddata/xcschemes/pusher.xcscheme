@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3ACF98F82320E1BC00C40BB4"
-               BuildableName = "Push Tester.app"
+               BuildableName = "PushTester.app"
                BlueprintName = "pusher"
                ReferencedContainer = "container:pusher.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3ACF98F82320E1BC00C40BB4"
-            BuildableName = "Push Tester.app"
+            BuildableName = "PushTester.app"
             BlueprintName = "pusher"
             ReferencedContainer = "container:pusher.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3ACF98F82320E1BC00C40BB4"
-            BuildableName = "Push Tester.app"
+            BuildableName = "PushTester.app"
             BlueprintName = "pusher"
             ReferencedContainer = "container:pusher.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3ACF98F82320E1BC00C40BB4"
-            BuildableName = "Push Tester.app"
+            BuildableName = "PushTester.app"
             BlueprintName = "pusher"
             ReferencedContainer = "container:pusher.xcodeproj">
          </BuildableReference>

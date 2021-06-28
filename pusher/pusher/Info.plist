@@ -26,5 +26,7 @@
 	<string>Copyright © 2019 Rakuten. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>LSApplicationCategory</key>
+	<string>public.app-category.developer-tools</string>
 </dict>
 </plist>
