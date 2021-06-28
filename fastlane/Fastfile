@@ -3,11 +3,7 @@ default_platform(:ios)
 platform :macos do
   desc "Building Pusher"
   lane :ci do
-    begin
     sh "rm -rf ../PushTester.app;rm -rf ../PushTester.app.dSYM;"
-    rescue => ex
-    UI.error(ex)
-    end
 
     sh "mkdir ../DerivedData"
 
