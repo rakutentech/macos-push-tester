@@ -18,7 +18,7 @@
 		3A590CDD2325DBC4005AA8BA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3A590CDF2325E42E005AA8BA /* Application.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Application.xib; sourceTree = "<group>"; };
 		3AA665E723223EA40011F310 /* PusherMainView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PusherMainView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3ACF98F92320E1BC00C40BB4 /* Push Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Push Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ACF98F92320E1BC00C40BB4 /* PushTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PushTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ACF98FC2320E1BC00C40BB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3ACF99002320E1BD00C40BB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ACF99052320E1BD00C40BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 		3ACF98FA2320E1BC00C40BB4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3ACF98F92320E1BC00C40BB4 /* Push Tester.app */,
+				3ACF98F92320E1BC00C40BB4 /* PushTester.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,7 +109,7 @@
 			);
 			name = pusher;
 			productName = pusher;
-			productReference = 3ACF98F92320E1BC00C40BB4 /* Push Tester.app */;
+			productReference = 3ACF98F92320E1BC00C40BB4 /* PushTester.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -349,7 +349,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.pusher;
-				PRODUCT_NAME = "Push Tester";
+				PRODUCT_NAME = PushTester;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -371,7 +371,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.pusher;
-				PRODUCT_NAME = "Push Tester";
+				PRODUCT_NAME = PushTester;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
