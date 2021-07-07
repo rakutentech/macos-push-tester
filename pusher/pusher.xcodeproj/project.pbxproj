@@ -347,7 +347,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.pusher;
 				PRODUCT_NAME = PushTester;
 				SWIFT_VERSION = 5.0;
@@ -369,7 +369,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rakuten.tech.mobile.pusher;
 				PRODUCT_NAME = PushTester;
 				SWIFT_VERSION = 5.0;
