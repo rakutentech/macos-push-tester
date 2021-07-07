@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1] - 2021-07-07
+- Build with Fastlane fix
+- Bugfix when deviceTokenTextField.string changes, the state must be updated
+- Rename the app
+
 ## [1.1.0] - 2021-06-22
 - Load a JSON File
 - Update README with mention of UDP service
