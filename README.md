@@ -2,6 +2,7 @@
 ![Compatibility](https://img.shields.io/badge/Compatibility-macOS%20%3E%3D%2010.13-orange) 
 ![Compatibility](https://img.shields.io/badge/Swift-5.0-orange.svg) 
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg) 
+![Build Status](https://app.bitrise.io/app/120aff9438a0a19e.svg?token=fX7evo54lwDdFSg5xQfkWg&branch=master)
 
 # The macOS Push Tester App
 

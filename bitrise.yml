@@ -1,0 +1,67 @@
+---
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: macos
+workflows:
+
+  primary:
+    before_run:
+    - _setup
+    steps:
+    - fastlane@2:
+        inputs:
+        - update_fastlane: 'false'
+        - lane: ci
+        title: Build & Test
+    - deploy-to-bitrise-io@1:
+        inputs:
+        - deploy_path: ./artifacts
+        - is_compress: 'true'
+    - cache-push@2:
+        inputs:
+        - cache_paths: |-
+            $BITRISE_CACHE_DIR
+            $GEM_CACHE_PATH
+        
+  _setup:
+    steps:
+    - git-clone@6:
+        inputs:
+        - update_submodules: 'no'
+        - merge_pr: 'no'
+    - cache-pull@2: {}
+    - script@1:
+        title: Bundle install
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            if [ ! -f "Gemfile" ]; then
+                echo "No Gemfile detected. Skipping..."
+                exit 0
+            fi
+            bundle install
+            RBENV_DIR="`cd $(rbenv which ruby)/../..;pwd`"
+            echo "Gem cache directory: $RBENV_DIR"
+            envman add --key GEM_CACHE_PATH --value $RBENV_DIR
+    - brew-install@0:
+        title: Install swiftlint
+        inputs:
+        - cache_enabled: 'yes'
+        - upgrade: 'no'
+        - packages: swiftlint
+    - cocoapods-install@1:
+        inputs:
+        - verbose: 'false'
+
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: pusher.xcworkspace
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: pusher
+  - opts:
+      is_expand: false
+    BITRISE_EXPORT_METHOD: none
