@@ -21,12 +21,12 @@ It can also get device tokens from any iPhone on the same wifi network.
 ## How to build with Fastlane
 
 ### Install fastlane
-- 1) Using RubyGems `sudo gem install fastlane -NV`
+- 1) Using RubyGems `sudo gem install fastlane -NV` (or simply `bundle install`)
 
 - 2) Alternatively using Homebrew `brew cask install fastlane`
 
 ### Run fastlane
-Run `fastlane macos ci`
+Run `fastlane ci`
 
 ## Make your iOS app discoverable by the macOS Push Tester App
 
