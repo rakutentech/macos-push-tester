@@ -1,17 +1,17 @@
-default_platform(:ios)
+default_platform(:mac)
 
-platform :macos do
+platform :mac do
   desc "Building Pusher"
   lane :ci do
-    sh "rm -rf ../PushTester.app;rm -rf ../PushTester.app.dSYM;"
-
+    sh "rm -rf ../artifacts"
     sh "mkdir ../DerivedData"
 
     cocoapods
     build_mac_app(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", derived_data_path: "./DerivedData", skip_archive: true, clean: true)
 
-    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app ../"
-    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app.dSYM ../"
+    sh "mkdir ../artifacts"
+    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app ../artifacts"
+    sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app.dSYM ../artifacts"
     sh "rm -rf ../DerivedData"
   end
 end

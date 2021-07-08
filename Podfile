@@ -1,6 +1,3 @@
-# Master Cocoapods repository
-source "https://github.com/CocoaPods/Specs.git"
-
 workspace "pusher.xcworkspace"
 project "pusher/pusher"
 use_frameworks!
