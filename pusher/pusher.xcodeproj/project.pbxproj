@@ -11,7 +11,6 @@
 		3A590CE02325E42E005AA8BA /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A590CDF2325E42E005AA8BA /* Application.xib */; };
 		3ACF98FD2320E1BC00C40BB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACF98FC2320E1BC00C40BB4 /* AppDelegate.swift */; };
 		3ACF99012320E1BD00C40BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ACF99002320E1BD00C40BB4 /* Assets.xcassets */; };
-		811711B0ADD709640AB11189 /* Pods_pusher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F539841233DF41B62B9843C /* Pods_pusher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,9 +22,6 @@
 		3ACF99002320E1BD00C40BB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ACF99052320E1BD00C40BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3ACF99062320E1BD00C40BB4 /* pusher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = pusher.entitlements; sourceTree = "<group>"; };
-		69F83CD3B14D50F0358C02C6 /* Pods-pusher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pusher.release.xcconfig"; path = "Target Support Files/Pods-pusher/Pods-pusher.release.xcconfig"; sourceTree = "<group>"; };
-		6F539841233DF41B62B9843C /* Pods_pusher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pusher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF9D40E5DAD016E4ACC282FB /* Pods-pusher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pusher.debug.xcconfig"; path = "Target Support Files/Pods-pusher/Pods-pusher.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,7 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				811711B0ADD709640AB11189 /* Pods_pusher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,7 +39,6 @@
 			isa = PBXGroup;
 			children = (
 				3AA665E723223EA40011F310 /* PusherMainView.framework */,
-				6F539841233DF41B62B9843C /* Pods_pusher.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -55,7 +49,6 @@
 				3ACF98FB2320E1BC00C40BB4 /* pusher */,
 				3ACF98FA2320E1BC00C40BB4 /* Products */,
 				3AA0C8072321FA580087E53E /* Frameworks */,
-				BEBDB32E37A127DF48AF4661 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,16 +73,6 @@
 			path = pusher;
 			sourceTree = "<group>";
 		};
-		BEBDB32E37A127DF48AF4661 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EF9D40E5DAD016E4ACC282FB /* Pods-pusher.debug.xcconfig */,
-				69F83CD3B14D50F0358C02C6 /* Pods-pusher.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -97,11 +80,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3ACF99092320E1BD00C40BB4 /* Build configuration list for PBXNativeTarget "pusher" */;
 			buildPhases = (
-				744CC72C5EA44B1817A06011 /* [CP] Check Pods Manifest.lock */,
 				3ACF98F52320E1BC00C40BB4 /* Sources */,
 				3ACF98F62320E1BC00C40BB4 /* Frameworks */,
 				3ACF98F72320E1BC00C40BB4 /* Resources */,
-				286EBAED4B1FC70BB2A67A48 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -161,48 +142,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		286EBAED4B1FC70BB2A67A48 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pusher/Pods-pusher-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pusher/Pods-pusher-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-pusher/Pods-pusher-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		744CC72C5EA44B1817A06011 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pusher-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3ACF98F52320E1BC00C40BB4 /* Sources */ = {
@@ -334,7 +273,6 @@
 		};
 		3ACF990A2320E1BD00C40BB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF9D40E5DAD016E4ACC282FB /* Pods-pusher.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
@@ -356,7 +294,6 @@
 		};
 		3ACF990B2320E1BD00C40BB4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69F83CD3B14D50F0358C02C6 /* Pods-pusher.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
