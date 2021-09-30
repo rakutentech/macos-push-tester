@@ -24,11 +24,11 @@ public final class APNSPusher: NSObject, APNSPushable {
             switch type {
             case .certificate(let _identity):
                 identity = _identity
-                session = URLSession(configuration: .default,
+                session = URLSession(configuration: .ephemeral,
                                      delegate: self,
                                      delegateQueue: .main)
             case .token:
-                session = URLSession(configuration: .default,
+                session = URLSession(configuration: .ephemeral,
                                      delegate: nil,
                                      delegateQueue: .main)
             case .none: ()
@@ -110,16 +110,16 @@ public final class APNSPusher: NSObject, APNSPushable {
         }
         
         session?.dataTask(with: request, completionHandler: { (data, response, error) in
-            guard let r = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
-                }
-                return
-            }
-            
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error as NSError))
+                }
+                return
+            }
+
+            guard let r = response as? HTTPURLResponse else {
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
                 }
                 return
             }
