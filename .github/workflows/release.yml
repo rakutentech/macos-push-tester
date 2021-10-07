@@ -1,0 +1,43 @@
+name: Release
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - '[0-9].[0-9]+.[0-9]+'
+jobs:
+  build-zip-upload:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build and package
+      run: |
+        bundle install
+        bundle exec fastlane ci
+        CURRENT_TAG=${GITHUB_REF#refs/tags/}
+        awk -v ver=$CURRENT_TAG '
+         /^#+ \[/ { if (p) { exit }; if ($2 == "["ver"]") { p=1; next} } p && NF
+        ' CHANGELOG.md > artifacts/releaselog.md
+        cd artifacts
+        zip -9vrX PushTester.zip PushTester.app
+    - name: create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: v${{ github.ref }} Push Tester app
+        body_path: ./artifacts/releaselog.md
+        draft: false
+        prerelease: false
+    - name: upload release asset
+      id: upload-pkg
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifacts/PushTester.zip
+        asset_name: PushTester.zip
+        asset_content_type: application/zip
