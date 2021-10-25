@@ -5,4 +5,6 @@ struct PusherState: Equatable {
     var appID: String
     var certificateRadioState: NSControl.StateValue
     var authTokenRadioState: NSControl.StateValue
+    var deviceRadioState: NSControl.StateValue
+    var simulatorRadioState: NSControl.StateValue
 }

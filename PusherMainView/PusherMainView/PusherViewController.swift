@@ -11,8 +11,12 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
     @IBOutlet private var loadJSONFileButton: NSButton!
+    @IBOutlet private var sendToDeviceButton: NSButton!
+    @IBOutlet private var sendToSimulatorButton: NSButton!
+    @IBOutlet private var deviceSettingsControls: DeviceSettingsControls!
     private let pusherStore: PusherInteracting
-    
+    private var selectedDestination = Destination.none
+
     // MARK: - Init
     
     required init?(coder: NSCoder) {
@@ -74,6 +78,21 @@ public final class PusherViewController: NSViewController {
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseAuthToken(fromViewController: self))
     }
+
+    @IBAction func chooseDestination(_ sender: Any) {
+        guard let button = sender as? NSButton else {
+            return
+        }
+        switch button {
+        case sendToDeviceButton:
+            selectedDestination = .device
+            pusherStore.dispatch(actionType: .chooseDevice)
+        case sendToSimulatorButton:
+            selectedDestination = .simualtor
+            pusherStore.dispatch(actionType: .chooseSimulator)
+        default: ()
+        }
+    }
     
     @IBAction func loadJSONFile(_ sender: Any) {
         pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
@@ -87,6 +106,7 @@ public final class PusherViewController: NSViewController {
     
     @IBAction func sendPush(_ sender: Any) {
         pusherStore.dispatch(actionType: .push(payloadTextView.string,
+                                               destination: selectedDestination,
                                                deviceToken: deviceTokenTextField.stringValue,
                                                appBundleID: appBundleIDTextField.stringValue,
                                                priority: priorityTextField?.integerValue ?? 10,
@@ -105,6 +125,9 @@ extension PusherViewController: PusherInteractable {
         appBundleIDTextField.stringValue = state.appID
         apnsCertificateRadioButton.state = state.certificateRadioState
         apnsAuthTokenRadioButton.state = state.authTokenRadioState
+        sendToDeviceButton.state = state.deviceRadioState
+        sendToSimulatorButton.state = state.simulatorRadioState
+        deviceSettingsControls.setVisible(state.deviceRadioState == .on)
     }
 }
 
@@ -117,5 +140,20 @@ extension PusherViewController: NSTextFieldDelegate {
         }
         let deviceToken = deviceTokenTextField.stringValue
         pusherStore.dispatch(actionType: .deviceToken(deviceToken))
+    }
+}
+
+@objc final class DeviceSettingsControls: NSObject {
+    @IBOutlet private weak var deviceTokenTextField: NSTextField!
+    @IBOutlet private weak var orLabel: NSTextField!
+    @IBOutlet private weak var selectDeviceButtonContainer: NSView!
+    @IBOutlet private weak var apnsButtonsContainer: NSView!
+
+    private var allControls: [NSView] {
+        [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer]
+    }
+
+    func setVisible(_ visible: Bool) {
+        allControls.forEach { $0.isHidden = !visible }
     }
 }
