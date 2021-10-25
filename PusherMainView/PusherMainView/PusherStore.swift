@@ -103,11 +103,10 @@ final class PusherStore {
 
         switch destination {
 
-        case .simulator: ()
-            // Will be implemented as a part of SDKCF-4031
-            router.show(message: "Push to the Simulator is not supported yet", window: NSApplication.shared.windows.first)
-            completion(false)
-            return
+        case .simulator:
+            apnsPusher.pushToSimulator(payload: payloadString, appBundleID: appBundleID) { [weak self] result in
+                self?.handlePushResult(result, calling: completion)
+            }
 
         case .device:
             if case .none = apnsPusher.type {
@@ -134,26 +133,26 @@ final class PusherStore {
                 return
             }
 
-            apnsPusher.pushPayload(payload,
-                                   to: deviceToken,
-                                   withTopic: appBundleID,
-                                   priority: priority,
-                                   collapseID: collapseID,
-                                   inSandbox: sandbox,
-                                   completion: { [weak self] result in
-                guard let self = self else {
-                    return
-                }
-
-                switch result {
-                case .failure(let error):
-                    self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
-                    completion(false)
-
-                case .success(_):
-                    completion(true)
-                }
+            apnsPusher.pushToDevice(deviceToken,
+                                    payload: payload,
+                                    withTopic: appBundleID,
+                                    priority: priority,
+                                    collapseID: collapseID,
+                                    inSandbox: sandbox,
+                                    completion: { [weak self] result in
+                self?.handlePushResult(result, calling: completion)
             })
+        }
+    }
+
+    private func handlePushResult(_ result: Result<String, Error>, calling completion: (Bool) -> Void) {
+        switch result {
+        case .failure(let error):
+            self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
+            completion(false)
+
+        case .success(_):
+            completion(true)
         }
     }
 }
