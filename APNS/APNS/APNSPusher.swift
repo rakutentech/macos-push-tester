@@ -152,6 +152,20 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
 
     public func pushToSimulator(payload: String, appBundleID bundleID: String, completion: @escaping (Result<String, Error>) -> Void) {
+
+        guard let payloadData = payload.data(using: .utf8), (try? JSONSerialization.jsonObject(with: payloadData)) != nil else {
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Invalid JSON format"])))
+            return
+        }
+
+        let bundleCheckResult = ShellRunner.run(command: "xcrun simctl get_app_container booted \(bundleID)")
+        if case .failure = bundleCheckResult {
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Cannot find provided bundle ID in booted simulator"])))
+            return
+        }
+
         let result = ShellRunner.run(command: "printf '\(payload)' | xcrun simctl push booted \(bundleID) -")
 
         switch result {

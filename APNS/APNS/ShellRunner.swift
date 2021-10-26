@@ -27,19 +27,19 @@ enum ShellRunner {
 
         task.waitUntilExit()
 
-        if task.terminationStatus != 0 {
+        guard task.terminationStatus == 0 else {
             let error = errorPipe.fileHandleForReading.readDataToEndOfFile()
             guard let resultString = String(data: error, encoding: .utf8) else {
                 return .failure(.unknown)
             }
             return .failure(.commandError(resultString))
-        } else {
-            let output = outputPipe.fileHandleForReading.readDataToEndOfFile()
-            guard let resultString = String(data: output, encoding: .utf8) else {
-                return .failure(.unknown)
-            }
-            return .success(resultString)
         }
+
+        let output = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        guard let resultString = String(data: output, encoding: .utf8) else {
+            return .failure(.unknown)
+        }
+        return .success(resultString)
     }
 }
 
