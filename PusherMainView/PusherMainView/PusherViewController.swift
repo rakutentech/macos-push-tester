@@ -11,14 +11,17 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
     @IBOutlet private var loadJSONFileButton: NSButton!
+    @IBOutlet private var sendToDeviceButton: NSButton!
+    @IBOutlet private var sendToSimulatorButton: NSButton!
+    @IBOutlet private var deviceSettingsControls: DeviceSettingsControls!
     private let pusherStore: PusherInteracting
-    
+    private var selectedDestination = Destination.device
+
     // MARK: - Init
     
     required init?(coder: NSCoder) {
         pusherStore = PusherStore(apnsPusher: APNSPusher(), router: Router())
         super.init(coder: coder)
-        pusherStore.subscribe(self)
         #if DEBUG
         print("\(self.className) init")
         #endif
@@ -58,6 +61,8 @@ public final class PusherViewController: NSViewController {
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
         payloadTextView.string = "{\n\t\"aps\":{\n\t\t\"alert\":\"Test\",\n\t\t\"sound\":\"default\",\n\t\t\"badge\":1\n\t}\n}"
+
+        pusherStore.subscribe(self)
     }
     
     public override func viewDidAppear() {
@@ -74,6 +79,21 @@ public final class PusherViewController: NSViewController {
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseAuthToken(fromViewController: self))
     }
+
+    @IBAction func chooseDestination(_ sender: Any) {
+        guard let button = sender as? NSButton else {
+            return
+        }
+        switch button {
+        case sendToDeviceButton:
+            selectedDestination = .device
+            pusherStore.dispatch(actionType: .chooseDevice)
+        case sendToSimulatorButton:
+            selectedDestination = .simulator
+            pusherStore.dispatch(actionType: .chooseSimulator)
+        default: ()
+        }
+    }
     
     @IBAction func loadJSONFile(_ sender: Any) {
         pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
@@ -87,6 +107,7 @@ public final class PusherViewController: NSViewController {
     
     @IBAction func sendPush(_ sender: Any) {
         pusherStore.dispatch(actionType: .push(payloadTextView.string,
+                                               destination: selectedDestination,
                                                deviceToken: deviceTokenTextField.stringValue,
                                                appBundleID: appBundleIDTextField.stringValue,
                                                priority: priorityTextField?.integerValue ?? 10,
@@ -105,6 +126,9 @@ extension PusherViewController: PusherInteractable {
         appBundleIDTextField.stringValue = state.appID
         apnsCertificateRadioButton.state = state.certificateRadioState
         apnsAuthTokenRadioButton.state = state.authTokenRadioState
+        sendToDeviceButton.state = state.deviceRadioState
+        sendToSimulatorButton.state = state.simulatorRadioState
+        deviceSettingsControls.set(visible: state.deviceRadioState == .on)
     }
 }
 
@@ -117,5 +141,24 @@ extension PusherViewController: NSTextFieldDelegate {
         }
         let deviceToken = deviceTokenTextField.stringValue
         pusherStore.dispatch(actionType: .deviceToken(deviceToken))
+    }
+}
+
+@objc final class DeviceSettingsControls: NSObject {
+    @IBOutlet private weak var deviceTokenTextField: NSTextField!
+    @IBOutlet private weak var orLabel: NSTextField!
+    @IBOutlet private weak var selectDeviceButtonContainer: NSView!
+    @IBOutlet private weak var apnsButtonsContainer: NSView!
+    @IBOutlet private weak var priorityTextField: NSTextField!
+    @IBOutlet private weak var apnsCollapseIdTextField: NSTextField!
+    @IBOutlet private weak var sandBoxCheckBox: NSButton!
+
+    private var allControls: [NSView] {
+        [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer,
+         priorityTextField, apnsCollapseIdTextField, sandBoxCheckBox]
+    }
+
+    func set(visible: Bool) {
+        allControls.forEach { $0.isHidden = !visible }
     }
 }

@@ -31,7 +31,15 @@ struct PusherReducer {
             
         case .updateIdentity:
             newState.certificateRadioState = .on
-            
+
+        case .chooseDevice:
+            newState.simulatorRadioState = .off
+            newState.deviceRadioState = .on
+
+        case .chooseSimulator:
+            newState.simulatorRadioState = .on
+            newState.deviceRadioState = .off
+
         default: ()
         }
         
