@@ -37,6 +37,26 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E9D850DFBA9BDBCAF3985403F288B35B"
+               BuildableName = "APNS-Unit-APNSTests.xctest"
+               BlueprintName = "APNS-Unit-APNSTests"
+               ReferencedContainer = "container:../Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D2E792CE3C96D63653C456BE2F301DF"
+               BuildableName = "PusherMainView-Unit-PusherMainViewTests.xctest"
+               BlueprintName = "PusherMainView-Unit-PusherMainViewTests"
+               ReferencedContainer = "container:../Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
