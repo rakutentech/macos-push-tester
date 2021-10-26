@@ -30,7 +30,6 @@ enum ActionType {
 enum Destination {
     case device
     case simulator
-    case none
 }
 
 struct AuthToken: Codable {
@@ -60,7 +59,7 @@ final class PusherStore {
                                                  appID: "",
                                                  certificateRadioState: .off,
                                                  authTokenRadioState: .off,
-                                                 deviceRadioState: .off,
+                                                 deviceRadioState: .on,
                                                  simulatorRadioState: .off)
 
     init(apnsPusher: APNSPushable, router: Routing) {
@@ -103,10 +102,6 @@ final class PusherStore {
         }
 
         switch destination {
-        case .none:
-            router.show(message: "Please select push destination", window: NSApplication.shared.windows.first)
-            completion(false)
-            return
 
         case .simulator: ()
             // Will be implemented as a part of SDKCF-4031
@@ -166,6 +161,7 @@ final class PusherStore {
 extension PusherStore: PusherInteracting {
     func subscribe(_ pusherInteractable: PusherInteractable) {
         subscribers.append(pusherInteractable)
+        pusherInteractable.newState(state: state) // send current state
     }
 
     func unsubscribe(_ pusherInteractable: PusherInteractable) {

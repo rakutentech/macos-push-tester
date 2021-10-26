@@ -15,14 +15,13 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var sendToSimulatorButton: NSButton!
     @IBOutlet private var deviceSettingsControls: DeviceSettingsControls!
     private let pusherStore: PusherInteracting
-    private var selectedDestination = Destination.none
+    private var selectedDestination = Destination.device
 
     // MARK: - Init
     
     required init?(coder: NSCoder) {
         pusherStore = PusherStore(apnsPusher: APNSPusher(), router: Router())
         super.init(coder: coder)
-        pusherStore.subscribe(self)
         #if DEBUG
         print("\(self.className) init")
         #endif
@@ -62,6 +61,8 @@ public final class PusherViewController: NSViewController {
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
         payloadTextView.string = "{\n\t\"aps\":{\n\t\t\"alert\":\"Test\",\n\t\t\"sound\":\"default\",\n\t\t\"badge\":1\n\t}\n}"
+
+        pusherStore.subscribe(self)
     }
     
     public override func viewDidAppear() {
@@ -148,9 +149,13 @@ extension PusherViewController: NSTextFieldDelegate {
     @IBOutlet private weak var orLabel: NSTextField!
     @IBOutlet private weak var selectDeviceButtonContainer: NSView!
     @IBOutlet private weak var apnsButtonsContainer: NSView!
+    @IBOutlet private weak var priorityTextField: NSTextField!
+    @IBOutlet private weak var apnsCollapseIdTextField: NSTextField!
+    @IBOutlet private weak var sandBoxCheckBox: NSButton!
 
     private var allControls: [NSView] {
-        [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer]
+        [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer,
+         priorityTextField, apnsCollapseIdTextField, sandBoxCheckBox]
     }
 
     func set(visible: Bool) {
