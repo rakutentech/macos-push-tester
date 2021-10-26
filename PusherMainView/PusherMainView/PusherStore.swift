@@ -29,7 +29,7 @@ enum ActionType {
 
 enum Destination {
     case device
-    case simualtor
+    case simulator
     case none
 }
 
@@ -108,7 +108,7 @@ final class PusherStore {
             completion(false)
             return
 
-        case .simualtor: ()
+        case .simulator: ()
             // Will be implemented as a part of SDKCF-4031
             router.show(message: "Push to the Simulator is not supported yet", window: NSApplication.shared.windows.first)
             completion(false)

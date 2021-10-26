@@ -88,7 +88,7 @@ public final class PusherViewController: NSViewController {
             selectedDestination = .device
             pusherStore.dispatch(actionType: .chooseDevice)
         case sendToSimulatorButton:
-            selectedDestination = .simualtor
+            selectedDestination = .simulator
             pusherStore.dispatch(actionType: .chooseSimulator)
         default: ()
         }
@@ -127,7 +127,7 @@ extension PusherViewController: PusherInteractable {
         apnsAuthTokenRadioButton.state = state.authTokenRadioState
         sendToDeviceButton.state = state.deviceRadioState
         sendToSimulatorButton.state = state.simulatorRadioState
-        deviceSettingsControls.setVisible(state.deviceRadioState == .on)
+        deviceSettingsControls.set(visible: state.deviceRadioState == .on)
     }
 }
 
@@ -153,7 +153,7 @@ extension PusherViewController: NSTextFieldDelegate {
         [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer]
     }
 
-    func setVisible(_ visible: Bool) {
+    func set(visible: Bool) {
         allControls.forEach { $0.isHidden = !visible }
     }
 }
