@@ -1,7 +1,7 @@
 import Foundation
 import MultipeerConnectivity
 
-public protocol APNSServiceBrowsing: class {
+public protocol APNSServiceBrowsing: AnyObject {
     func didUpdateDevices()
 }
 
