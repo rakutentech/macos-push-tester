@@ -9,13 +9,16 @@ public enum APNSPusherType {
 public protocol APNSPushable {
     var type: APNSPusherType { get set }
     var identity: SecIdentity? { get }
-    func pushPayload(_ payload: Dictionary<String, Any>,
-                     to token: String,
-                     withTopic topic: String?,
-                     priority: Int,
-                     collapseID: String?,
-                     inSandbox sandbox: Bool,
-                     completion: @escaping (Result<String, Error>) -> Void)
+    func pushToDevice(_ token: String,
+                      payload: Dictionary<String, Any>,
+                      withTopic topic: String?,
+                      priority: Int,
+                      collapseID: String?,
+                      inSandbox sandbox: Bool,
+                      completion: @escaping (Result<String, Error>) -> Void)
+    func pushToSimulator(payload: String,
+                         appBundleID bundleID: String,
+                         completion: @escaping (Result<String, Error>) -> Void)
 }
 
 public final class APNSPusher: NSObject, APNSPushable {
@@ -24,11 +27,11 @@ public final class APNSPusher: NSObject, APNSPushable {
             switch type {
             case .certificate(let _identity):
                 identity = _identity
-                session = URLSession(configuration: .default,
+                session = URLSession(configuration: .ephemeral,
                                      delegate: self,
                                      delegateQueue: .main)
             case .token:
-                session = URLSession(configuration: .default,
+                session = URLSession(configuration: .ephemeral,
                                      delegate: nil,
                                      delegateQueue: .main)
             case .none: ()
@@ -64,13 +67,13 @@ public final class APNSPusher: NSObject, APNSPushable {
         super.init()
     }
     
-    public func pushPayload(_ payload: Dictionary<String, Any>,
-                            to token: String,
-                            withTopic topic: String?,
-                            priority: Int,
-                            collapseID: String?,
-                            inSandbox sandbox: Bool,
-                            completion: @escaping (Result<String, Error>) -> Void){
+    public func pushToDevice(_ token: String,
+                             payload: Dictionary<String, Any>,
+                             withTopic topic: String?,
+                             priority: Int,
+                             collapseID: String?,
+                             inSandbox sandbox: Bool,
+                             completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
             completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL error"])))
             return
@@ -110,16 +113,16 @@ public final class APNSPusher: NSObject, APNSPushable {
         }
         
         session?.dataTask(with: request, completionHandler: { (data, response, error) in
-            guard let r = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
-                }
-                return
-            }
-            
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error as NSError))
+                }
+                return
+            }
+
+            guard let r = response as? HTTPURLResponse else {
+                DispatchQueue.main.async {
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
                 }
                 return
             }
@@ -146,6 +149,39 @@ public final class APNSPusher: NSObject, APNSPushable {
                 }
             }
         }).resume()
+    }
+
+    public func pushToSimulator(payload: String, appBundleID bundleID: String, completion: @escaping (Result<String, Error>) -> Void) {
+
+        guard let payloadData = payload.data(using: .utf8), (try? JSONSerialization.jsonObject(with: payloadData)) != nil else {
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Invalid JSON format"])))
+            return
+        }
+
+        let bundleCheckResult = ShellRunner.run(command: "xcrun simctl get_app_container booted \(bundleID)")
+        if case .failure = bundleCheckResult {
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Cannot find provided bundle ID in booted simulator"])))
+            return
+        }
+
+        let result = ShellRunner.run(command: "printf '\(payload)' | xcrun simctl push booted \(bundleID) -")
+
+        switch result {
+        case .failure(let error):
+            switch error {
+            case .commandError(let message):
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: message])))
+            case .taskInitError(let initError):
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: initError.localizedDescription])))
+            case .unknown:
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
+            }
+            return
+        case .success(let message):
+            completion(.success(message))
+        }
     }
 }
 

@@ -12,8 +12,12 @@ class APNSPusherMock: APNSPushable {
         self.type = type
         identity = nil
     }
-    
-    func pushPayload(_ payload: Dictionary<String, Any>, to token: String, withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<String, Error>) -> Void) {
+
+    func pushToDevice(_ token: String, payload: Dictionary<String, Any>, withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<String, Error>) -> Void) {
+        completion(result)
+    }
+
+    func pushToSimulator(payload: String, appBundleID bundleID: String, completion: @escaping (Result<String, Error>) -> Void) {
         completion(result)
     }
 }
@@ -44,6 +48,7 @@ class PusherStoreTests: XCTestCase {
                                                             teamID: "teamID",
                                                             p8: "p8")),
                     router: RouterMock()).dispatch(actionType: .push(#"{"":""}"#,
+                                                                     destination: .device,
                                                                      deviceToken: "1234",
                                                                      appBundleID: "com.myapp",
                                                                      priority: 0,
@@ -62,6 +67,7 @@ class PusherStoreTests: XCTestCase {
                                                             teamID: "teamID",
                                                             p8: "p8")),
                     router: RouterMock()).dispatch(actionType: .push(#"{"":""}"#,
+                                                                     destination: .device,
                                                                      deviceToken: "1234",
                                                                      appBundleID: "com.myapp",
                                                                      priority: 0,
