@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2021-11-16
+- Add "Send push to simulator" implementation (SDKCF-4031)
+- Add UI for selecting push destination - device or simulator (SDKCF-4030)
+- GitHub Actions release on tag
+- Use ephemeral URL session configuration and reorder data task error messages
+
 ## [1.1.2] - 2021-07-21
 - improve: use the StackView in the main screen (SDKCF-3988) => Fix the json text view when there are more than 10 lines
 - setup Bitrise CI
