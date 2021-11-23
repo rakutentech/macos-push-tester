@@ -112,4 +112,5 @@ extension Data {
 
 ## UI Preview
 
-![The macOS Push Tester App](preview.png)
+![Send push notification to device](preview-push-device.png)
+![Send push notification to simulator](preview-push-simulator.png)
