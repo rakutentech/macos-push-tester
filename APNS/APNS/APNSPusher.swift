@@ -40,6 +40,9 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
+    /// 20 min to resolve [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
+    private let providerTokenTTL: TimeInterval = 60*20
+    private var devAuthToken: (digest: String, timestamp: Date, hash: Int)?
     
     public private(set) var identity: SecIdentity? {
         get {
@@ -105,9 +108,14 @@ public final class APNSPusher: NSObject, APNSPushable {
             let jwt = JWT(keyID: keyID,
                           teamID: teamID,
                           issueDate: Date(),
-                          expireDuration: 60 * 60)
-            
-            if let authToken = try? jwt.sign(with: p8) {
+                          expireDuration: providerTokenTTL)
+            /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
+            if let devAuthToken = devAuthToken,
+               Date().timeIntervalSince(devAuthToken.timestamp) < providerTokenTTL,
+               devAuthToken.hash == keyID.hashValue ^ teamID.hashValue ^ p8.hashValue {
+                request.addValue("bearer \(devAuthToken.digest)", forHTTPHeaderField: "authorization")
+            } else if let authToken = try? jwt.sign(with: p8) {
+                devAuthToken = (authToken, Date(), keyID.hashValue ^ teamID.hashValue ^ p8.hashValue)
                 request.addValue("bearer \(authToken)", forHTTPHeaderField: "authorization")
             }
         }
