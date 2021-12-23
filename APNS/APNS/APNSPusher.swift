@@ -40,9 +40,8 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
-    /// 20 min to resolve [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
-    private let providerTokenTTL: TimeInterval = 60*20
-    private var devAuthToken: (digest: String, timestamp: Date, hash: Int)?
+
+    private var devAuthToken: DevAuthToken?
     
     public private(set) var identity: SecIdentity? {
         get {
@@ -103,20 +102,14 @@ public final class APNSPusher: NSObject, APNSPushable {
         
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
-        if case .token(let keyID, let teamID, let p8) = type {
-            // Assign developer information and token expiration setting
-            let jwt = JWT(keyID: keyID,
-                          teamID: teamID,
-                          issueDate: Date(),
-                          expireDuration: providerTokenTTL)
+        if case .token(let keyID, let teamID, let p8) = type,
+           let currAuthToken = DevAuthToken(keyID: keyID, teamID: teamID, p8Digest: p8) {
             /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
-            if let devAuthToken = devAuthToken,
-               Date().timeIntervalSince(devAuthToken.timestamp) < providerTokenTTL,
-               devAuthToken.hash == keyID.hashValue ^ teamID.hashValue ^ p8.hashValue {
-                request.addValue("bearer \(devAuthToken.digest)", forHTTPHeaderField: "authorization")
-            } else if let authToken = try? jwt.sign(with: p8) {
-                devAuthToken = (authToken, Date(), keyID.hashValue ^ teamID.hashValue ^ p8.hashValue)
-                request.addValue("bearer \(authToken)", forHTTPHeaderField: "authorization")
+            if let devAuthToken = devAuthToken, currAuthToken == devAuthToken, devAuthToken.isValid {
+                request.addValue("bearer \(devAuthToken)", forHTTPHeaderField: "authorization")
+            } else {
+                devAuthToken = currAuthToken
+                request.addValue("bearer \(currAuthToken)", forHTTPHeaderField: "authorization")
             }
         }
         
@@ -211,5 +204,45 @@ extension APNSPusher: URLSessionDelegate {
         certificate = nil
         
         completionHandler(.useCredential, cred)
+    }
+}
+
+// MARK: - DevAuthToken
+
+private struct DevAuthToken {
+    private let keyID: String
+    private let teamID: String
+    private let p8Digest: String
+    private let authToken: String
+    private let timestamp = Date()
+    /// 20 min to resolve [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
+    private let providerTokenTTL: TimeInterval = 60*20
+    
+    init?(keyID: String, teamID: String, p8Digest: String) {
+        // Assign developer information and token expiration setting
+        guard let authToken = try? JWT(keyID: keyID,
+                                   teamID: teamID,
+                                   issueDate: Date(),
+                                   expireDuration: providerTokenTTL).sign(with: p8Digest) else {
+            return nil
+        }
+        self.authToken = authToken
+        self.keyID = keyID
+        self.teamID = teamID
+        self.p8Digest = p8Digest
+    }
+    
+    var isValid: Bool {
+        Date().timeIntervalSince(timestamp) < providerTokenTTL
+    }
+}
+extension DevAuthToken: Equatable {
+    static func == (lhs: DevAuthToken, rhs: DevAuthToken) -> Bool {
+        lhs.keyID == rhs.keyID && lhs.teamID == rhs.teamID && lhs.p8Digest == rhs.p8Digest
+    }
+}
+extension DevAuthToken: CustomStringConvertible {
+    var description: String {
+        authToken
     }
 }
