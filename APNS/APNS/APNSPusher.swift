@@ -40,7 +40,6 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
-
     private var devAuthToken: DevAuthToken?
     
     public private(set) var identity: SecIdentity? {
@@ -102,6 +101,7 @@ public final class APNSPusher: NSObject, APNSPushable {
         
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
+        // Assign developer information and token expiration setting
         if case .token(let keyID, let teamID, let p8) = type,
            let currAuthToken = DevAuthToken(keyID: keyID, teamID: teamID, p8Digest: p8) {
             /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
@@ -215,14 +215,14 @@ private struct DevAuthToken {
     private let p8Digest: String
     private let authToken: String
     private let timestamp = Date()
-    /// 20 min to resolve [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
+    /// 20 min to resolve
+    /// [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
     private let providerTokenTTL: TimeInterval = 60*20
     
     init?(keyID: String, teamID: String, p8Digest: String) {
-        // Assign developer information and token expiration setting
         guard let authToken = try? JWT(keyID: keyID,
                                    teamID: teamID,
-                                   issueDate: Date(),
+                                   issueDate: timestamp,
                                    expireDuration: providerTokenTTL).sign(with: p8Digest) else {
             return nil
         }
