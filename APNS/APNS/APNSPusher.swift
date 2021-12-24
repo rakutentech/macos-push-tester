@@ -40,7 +40,7 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
-    private var lastAuthToken: DevAuthToken?
+    private var lastProvider: APNSProvider?
     
     public private(set) var identity: SecIdentity? {
         get {
@@ -101,15 +101,15 @@ public final class APNSPusher: NSObject, APNSPushable {
         
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
-        // Assign developer information and token expiration setting
+        // encode Apple Developer account as a APNs Provider Token in the authorization header
         if case .token(let keyID, let teamID, let p8) = type,
-           let currAuthToken = DevAuthToken(keyID: keyID, teamID: teamID, p8Digest: p8) {
+           let provider = APNSProvider(keyID: keyID, teamID: teamID, p8Digest: p8) {
             /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
-            if let lastAuthToken = lastAuthToken, currAuthToken == lastAuthToken, lastAuthToken.isValid {
-                request.addValue("bearer \(lastAuthToken)", forHTTPHeaderField: "authorization")
+            if let lastProvider = lastProvider, lastProvider == provider, lastProvider.isValid {
+                request.addValue("bearer \(lastProvider)", forHTTPHeaderField: "authorization")
             } else {
-                lastAuthToken = currAuthToken
-                request.addValue("bearer \(currAuthToken)", forHTTPHeaderField: "authorization")
+                lastProvider = provider
+                request.addValue("bearer \(provider)", forHTTPHeaderField: "authorization")
             }
         }
         
@@ -207,9 +207,9 @@ extension APNSPusher: URLSessionDelegate {
     }
 }
 
-// MARK: - DevAuthToken
+// MARK: - APNSProvider
 
-private struct DevAuthToken {
+private struct APNSProvider {
     private let keyID: String
     private let teamID: String
     private let p8Digest: String
@@ -236,12 +236,12 @@ private struct DevAuthToken {
         Date().timeIntervalSince(timestamp) < providerTokenTTL
     }
 }
-extension DevAuthToken: Equatable {
+extension APNSProvider: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.keyID == rhs.keyID && lhs.teamID == rhs.teamID && lhs.p8Digest == rhs.p8Digest
     }
 }
-extension DevAuthToken: CustomStringConvertible {
+extension APNSProvider: CustomStringConvertible {
     var description: String {
         authToken
     }
