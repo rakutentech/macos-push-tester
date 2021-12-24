@@ -40,7 +40,7 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
-    private var lastProvider: APNSProvider?
+    private var cachedProviders = Set<APNSProvider>()
     
     public private(set) var identity: SecIdentity? {
         get {
@@ -105,10 +105,10 @@ public final class APNSPusher: NSObject, APNSPushable {
         if case .token(let keyID, let teamID, let p8) = type,
            let provider = APNSProvider(keyID: keyID, teamID: teamID, p8Digest: p8) {
             /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
-            if let lastProvider = lastProvider, lastProvider == provider, lastProvider.isValid {
+            if let lastProvider = cachedProviders.first(where: { $0 == provider }), lastProvider.isValid {
                 request.addValue("bearer \(lastProvider)", forHTTPHeaderField: "authorization")
             } else {
-                lastProvider = provider
+                cachedProviders.update(with: provider)
                 request.addValue("bearer \(provider)", forHTTPHeaderField: "authorization")
             }
         }
@@ -236,7 +236,7 @@ private struct APNSProvider {
         Date().timeIntervalSince(timestamp) < providerTokenTTL
     }
 }
-extension APNSProvider: Equatable {
+extension APNSProvider: Equatable, Hashable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.keyID == rhs.keyID && lhs.teamID == rhs.teamID && lhs.p8Digest == rhs.p8Digest
     }
