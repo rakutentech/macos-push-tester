@@ -236,9 +236,16 @@ private struct APNSProvider {
         Date().timeIntervalSince(timestamp) < providerTokenTTL
     }
 }
-extension APNSProvider: Equatable, Hashable {
+extension APNSProvider: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.keyID == rhs.keyID && lhs.teamID == rhs.teamID && lhs.p8Digest == rhs.p8Digest
+    }
+}
+extension APNSProvider: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(keyID)
+        hasher.combine(teamID)
+        hasher.combine(p8Digest)
     }
 }
 extension APNSProvider: CustomStringConvertible {
