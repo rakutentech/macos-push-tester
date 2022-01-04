@@ -40,6 +40,7 @@ public final class APNSPusher: NSObject, APNSPushable {
     }
     private var _identity: SecIdentity?
     private var session: URLSession?
+    private var cachedProviders = Set<APNSProvider>()
     
     public private(set) var identity: SecIdentity? {
         get {
@@ -100,15 +101,15 @@ public final class APNSPusher: NSObject, APNSPushable {
         
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
         
-        if case .token(let keyID, let teamID, let p8) = type {
-            // Assign developer information and token expiration setting
-            let jwt = JWT(keyID: keyID,
-                          teamID: teamID,
-                          issueDate: Date(),
-                          expireDuration: 60 * 60)
-            
-            if let authToken = try? jwt.sign(with: p8) {
-                request.addValue("bearer \(authToken)", forHTTPHeaderField: "authorization")
+        // encode Apple Developer account as a APNs Provider Token in the authorization header
+        if case .token(let keyID, let teamID, let p8) = type,
+           let provider = APNSProvider(keyID: keyID, teamID: teamID, p8Digest: p8) {
+            /// reuse same digest for up to `providerTokenTTL` as per APNs server spec
+            if let lastProvider = cachedProviders.first(where: { $0 == provider }), lastProvider.isValid {
+                request.addValue("bearer \(lastProvider)", forHTTPHeaderField: "authorization")
+            } else {
+                cachedProviders.update(with: provider)
+                request.addValue("bearer \(provider)", forHTTPHeaderField: "authorization")
             }
         }
         
@@ -203,5 +204,52 @@ extension APNSPusher: URLSessionDelegate {
         certificate = nil
         
         completionHandler(.useCredential, cred)
+    }
+}
+
+// MARK: - APNSProvider
+
+private struct APNSProvider {
+    private let keyID: String
+    private let teamID: String
+    private let p8Digest: String
+    private let authToken: String
+    private let timestamp = Date()
+    /// 20 min to resolve
+    /// [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
+    private let providerTokenTTL: TimeInterval = 60 * 20
+    
+    init?(keyID: String, teamID: String, p8Digest: String) {
+        guard let authToken = try? JWT(keyID: keyID,
+                                   teamID: teamID,
+                                   issueDate: timestamp,
+                                   expireDuration: providerTokenTTL).sign(with: p8Digest) else {
+            return nil
+        }
+        self.authToken = authToken
+        self.keyID = keyID
+        self.teamID = teamID
+        self.p8Digest = p8Digest
+    }
+    
+    var isValid: Bool {
+        Date().timeIntervalSince(timestamp) < providerTokenTTL
+    }
+}
+extension APNSProvider: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.keyID == rhs.keyID && lhs.teamID == rhs.teamID && lhs.p8Digest == rhs.p8Digest
+    }
+}
+extension APNSProvider: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(keyID)
+        hasher.combine(teamID)
+        hasher.combine(p8Digest)
+    }
+}
+extension APNSProvider: CustomStringConvertible {
+    var description: String {
+        authToken
     }
 }
