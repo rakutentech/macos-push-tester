@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.2.1] - TBA
+## [1.2.1] - 2022-02-01
 - Fix TooManyProviderTokenUpdates send to device APNS error
 
 ## [1.2.0] - 2021-11-16
