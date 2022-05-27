@@ -20,8 +20,7 @@ enum ShellRunner {
 
         do {
             try task.run()
-        }
-        catch {
+        } catch {
             return .failure(.taskInitError(error))
         }
 
@@ -42,4 +41,3 @@ enum ShellRunner {
         return .success(resultString)
     }
 }
-
