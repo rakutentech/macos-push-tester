@@ -234,7 +234,7 @@ extension PusherStore: PusherInteracting {
                               didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
                               contextInfo: nil,
                               identities: identities,
-                                 message: "choose.identity".localized)
+                              message: "choose.identity".localized)
 
         case .cancelIdentity: ()
 

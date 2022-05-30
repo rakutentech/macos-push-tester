@@ -69,7 +69,7 @@ final class AuthTokenViewcontroller: NSViewController {
 
         guard let p8FileURL = p8FileURL,
               let p8String = try? String(contentsOf: p8FileURL, encoding: .utf8) else {
-                  pusherStore?.dispatch(actionType: .alert(message: "error.p8.file.is.incorrect".localized, fromWindow: view.window))
+            pusherStore?.dispatch(actionType: .alert(message: "error.p8.file.is.incorrect".localized, fromWindow: view.window))
             return
         }
 
