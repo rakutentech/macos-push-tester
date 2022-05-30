@@ -5,7 +5,7 @@ final class DevicesViewController: NSViewController {
     @IBOutlet private var tableView: NSTableView!
     private let apnsServiceBrowser = APNSServiceBrowser(serviceType: "pusher")
     private var pusherStore: PusherInteracting?
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         apnsServiceBrowser.delegate = self
@@ -13,7 +13,7 @@ final class DevicesViewController: NSViewController {
         print("\(self.className) init")
         #endif
     }
-    
+
     static func create(pusherStore: PusherInteracting) -> DevicesViewController? {
         let bundle = Bundle(for: PusherViewController.self)
         let storyboard = NSStoryboard(name: "Pusher", bundle: bundle)
@@ -23,34 +23,34 @@ final class DevicesViewController: NSViewController {
         viewController.pusherStore = pusherStore
         return viewController
     }
-    
+
     deinit {
         #if DEBUG
         print("\(self.className) deinit")
         #endif
         apnsServiceBrowser.searching = false
     }
-    
-    // MARK:- Life Cycle
-    
+
+    // MARK: - Life Cycle
+
     override func viewDidAppear() {
         super.viewDidAppear()
         apnsServiceBrowser.searching = true
     }
-    
+
     override func viewDidDisappear() {
         super.viewDidDisappear()
         apnsServiceBrowser.searching = false
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
     }
-    
-    // MARK:- Actions
-    
+
+    // MARK: - Actions
+
     @IBAction private func didTapCloseButton(_ sender: Any) {
         pusherStore?.dispatch(actionType: .dismiss(fromViewController: self))
     }
@@ -64,11 +64,12 @@ extension DevicesViewController: NSTableViewDataSource {
 
 extension DevicesViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DeviceTableCellView"), owner: nil) as? NSTableCellView,
-            let identifier = tableColumn?.identifier else {
+        guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DeviceTableCellView"),
+                                            owner: nil) as? NSTableCellView,
+              let identifier = tableColumn?.identifier else {
             return nil
         }
-        
+
         switch identifier.rawValue {
         case "name":
             cell.textField?.stringValue = apnsServiceBrowser.devices[row].displayName
@@ -78,10 +79,10 @@ extension DevicesViewController: NSTableViewDelegate {
             cell.textField?.stringValue = apnsServiceBrowser.devices[row].appID
         default: ()
         }
-        
+
         return cell
     }
-    
+
     func tableViewSelectionDidChange(_ notification: Notification) {
         guard tableView.selectedRow != -1 else {
             return

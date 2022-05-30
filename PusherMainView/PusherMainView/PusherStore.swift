@@ -24,7 +24,7 @@ enum ActionType {
               priority: Int,
               collapseID: String?,
               sandbox: Bool,
-              completion:(Bool) -> Void)
+              completion: (Bool) -> Void)
 }
 
 enum Destination {
@@ -81,8 +81,8 @@ final class PusherStore {
         guard let keyID = Keychain.string(for: "keyID"),
               let teamID = Keychain.string(for: "teamID"),
               let p8FileURLString = Keychain.string(for: "p8FileURLString") else {
-                  return
-              }
+            return
+        }
         authToken = AuthToken(keyID: keyID, teamID: teamID, p8FileURLString: p8FileURLString)
     }
 
@@ -128,7 +128,7 @@ final class PusherStore {
             }
 
             guard let data = payloadString.data(using: .utf8),
-                let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> else {
+                  let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
                 completion(false)
                 return
             }
@@ -140,8 +140,8 @@ final class PusherStore {
                                     collapseID: collapseID,
                                     inSandbox: sandbox,
                                     completion: { [weak self] result in
-                self?.handlePushResult(result, calling: completion)
-            })
+                                        self?.handlePushResult(result, calling: completion)
+                                    })
         }
     }
 
@@ -221,7 +221,7 @@ extension PusherStore: PusherInteracting {
 
         case .chooseIdentity(let fromViewController):
             let identities = APNSIdentity.identities()
-            guard identities.count > 0 else {
+            guard !identities.isEmpty else {
                 state = reducer.reduce(actionType: .cancelIdentity, state: state)
                 subscribers.forEach { $0.newState(state: state) }
                 router.show(message: "There isn't identity.", window: NSApplication.shared.windows.first)
@@ -230,11 +230,11 @@ extension PusherStore: PusherInteracting {
             let panel = SFChooseIdentityPanel.shared()
             panel?.setAlternateButtonTitle("Cancel")
             panel?.beginSheet(for: fromViewController.view.window,
-                                 modalDelegate: self,
-                                 didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
-                                 contextInfo: nil,
-                                 identities: identities,
-                                 message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
+                              modalDelegate: self,
+                              didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
+                              contextInfo: nil,
+                              identities: identities,
+                              message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
 
         case .cancelIdentity: ()
 
@@ -248,7 +248,7 @@ extension PusherStore: PusherInteracting {
     private func reduce(actionType: ActionType) {
         let oldState = state
         state = reducer.reduce(actionType: actionType, state: state)
-        if (state != oldState) {
+        if state != oldState {
             subscribers.forEach { $0.newState(state: state) }
         }
     }

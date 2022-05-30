@@ -10,25 +10,25 @@ public final class APNSServiceBrowser: NSObject {
     private var browser: MCNearbyServiceBrowser
     private var peerIDToDeviceMap: [MCPeerID: APNSServiceDevice]
     private var _searching: Bool
-    
+
     public weak var delegate: APNSServiceBrowsing?
-    
+
     public var searching: Bool {
         get {
             return _searching
         }
         set(value) {
             _searching = value
-            
-            if (_searching) {
+
+            if _searching {
                 browser.startBrowsingForPeers()
-                
+
             } else {
                 browser.stopBrowsingForPeers()
             }
         }
     }
-    
+
     public init(serviceType: String) {
         peerIDToDeviceMap = [:]
         devices = []
@@ -41,7 +41,7 @@ public final class APNSServiceBrowser: NSObject {
 }
 
 extension APNSServiceBrowser: MCNearbyServiceBrowserDelegate {
-    public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+    public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         guard let token = info?["token"], let appID = info?["appID"] else {
             return
         }
@@ -54,17 +54,17 @@ extension APNSServiceBrowser: MCNearbyServiceBrowserDelegate {
             self.delegate?.didUpdateDevices()
         }
     }
-    
+
     public func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         guard let lostDevice = peerIDToDeviceMap[peerID] else {
             return
         }
-        
+
         DispatchQueue.main.async {
             guard let foundDevice = self.devices.firstIndex(where: { $0 == lostDevice }) else {
                 return
             }
-            
+
             self.devices.remove(at: foundDevice)
             self.peerIDToDeviceMap.removeValue(forKey: peerID)
             self.delegate?.didUpdateDevices()

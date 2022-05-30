@@ -18,7 +18,7 @@ public final class PusherViewController: NSViewController {
     private var selectedDestination = Destination.device
 
     // MARK: - Init
-    
+
     required init?(coder: NSCoder) {
         pusherStore = PusherStore(apnsPusher: APNSPusher(), router: Router())
         super.init(coder: coder)
@@ -26,14 +26,14 @@ public final class PusherViewController: NSViewController {
         print("\(self.className) init")
         #endif
     }
-    
+
     deinit {
         pusherStore.unsubscribe(self)
         #if DEBUG
         print("\(self.className) deinit")
         #endif
     }
-    
+
     public static func create() -> PusherViewController? {
         let bundle = Bundle(for: PusherViewController.self)
         let storyboard = NSStoryboard(name: "Pusher", bundle: bundle)
@@ -42,21 +42,21 @@ public final class PusherViewController: NSViewController {
         }
         return pusherMainViewController
     }
-    
+
     // MARK: - Life Cycle
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         deviceTokenTextField.placeholderString = "Enter a device token"
         deviceTokenTextField.delegate = self
-        
+
         apnsCollapseIdTextField.placeholderString = "Enter APNS Collapse ID"
         appBundleIDTextField.placeholderString = "Enter your app bundle ID"
         priorityTextField.placeholderString = "Enter APNS priority"
-        
+
         priorityTextField.stringValue = "10"
-        
+
         payloadTextView.isRichText = false
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
@@ -64,18 +64,18 @@ public final class PusherViewController: NSViewController {
 
         pusherStore.subscribe(self)
     }
-    
+
     public override func viewDidAppear() {
         super.viewDidAppear()
         view.window?.title = "The macOS Push Tester App"
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func chooseIdentity(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseIdentity(fromViewController: self))
     }
-    
+
     @IBAction func chooseAuthenticationToken(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseAuthToken(fromViewController: self))
     }
@@ -94,7 +94,7 @@ public final class PusherViewController: NSViewController {
         default: ()
         }
     }
-    
+
     @IBAction func loadJSONFile(_ sender: Any) {
         pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
             guard let jsonString = try? String(contentsOf: jsonFileURL, encoding: .utf8) else {
@@ -104,7 +104,7 @@ public final class PusherViewController: NSViewController {
             self.payloadTextView.string = jsonString
         }))
     }
-    
+
     @IBAction func sendPush(_ sender: Any) {
         pusherStore.dispatch(actionType: .push(payloadTextView.string,
                                                destination: selectedDestination,
@@ -114,7 +114,7 @@ public final class PusherViewController: NSViewController {
                                                collapseID: apnsCollapseIdTextField.stringValue,
                                                sandbox: sandBoxCheckBox.state.rawValue == 1) { _ in })
     }
-    
+
     @IBAction func selectDevice(_ sender: Any) {
         pusherStore.dispatch(actionType: .devicesList(fromViewController: self))
     }

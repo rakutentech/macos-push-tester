@@ -10,7 +10,7 @@ public protocol APNSPushable {
     var type: APNSPusherType { get set }
     var identity: SecIdentity? { get }
     func pushToDevice(_ token: String,
-                      payload: Dictionary<String, Any>,
+                      payload: [String: Any],
                       withTopic topic: String?,
                       priority: Int,
                       collapseID: String?,
@@ -41,66 +41,70 @@ public final class APNSPusher: NSObject, APNSPushable {
     private var _identity: SecIdentity?
     private var session: URLSession?
     private var cachedProviders = Set<APNSProvider>()
-    
+
     public private(set) var identity: SecIdentity? {
         get {
             return _identity
         }
-        
+
         set(value) {
             if _identity != value {
                 if _identity != nil {
                     _identity = nil
                 }
-                
+
                 if value != nil {
                     _identity = value
-                    
+
                 } else {
                     _identity = nil
                 }
             }
         }
     }
-    
+
     public override init() {
         self.type = .none
         super.init()
     }
-    
+
     public func pushToDevice(_ token: String,
-                             payload: Dictionary<String, Any>,
+                             payload: [String: Any],
                              withTopic topic: String?,
                              priority: Int,
                              collapseID: String?,
                              inSandbox sandbox: Bool,
                              completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
-            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "URL error"])))
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                        code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "URL error"])))
             return
         }
-        
+
         guard let httpBody = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
-            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Payload error"])))
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                        code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Payload error"])))
             return
         }
-        
+
         var request = URLRequest(url: url)
-        
+
         request.httpMethod = "POST"
-        
+
         request.httpBody = httpBody
-        
+
         if let topic = topic {
             request.addValue(topic, forHTTPHeaderField: "apns-topic")
         }
-        
-        if let collapseID = collapseID, collapseID.count > 0 {
+
+        if let collapseID = collapseID, !collapseID.isEmpty {
             request.addValue(collapseID, forHTTPHeaderField: "apns-collapse-id")
         }
-        
+
         request.addValue("\(priority)", forHTTPHeaderField: "apns-priority")
-        
+
         // encode Apple Developer account as a APNs Provider Token in the authorization header
         if case .token(let keyID, let teamID, let p8) = type,
            let provider = APNSProvider(keyID: keyID, teamID: teamID, p8Digest: p8) {
@@ -112,7 +116,7 @@ public final class APNSPusher: NSObject, APNSPushable {
                 request.addValue("bearer \(provider)", forHTTPHeaderField: "authorization")
             }
         }
-        
+
         session?.dataTask(with: request, completionHandler: { (data, response, error) in
             if let error = error {
                 DispatchQueue.main.async {
@@ -123,29 +127,36 @@ public final class APNSPusher: NSObject, APNSPushable {
 
             guard let r = response as? HTTPURLResponse else {
                 DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
+                    completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                                code: 0,
+                                                userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
                 }
                 return
             }
-            
+
             switch r.statusCode {
             case 200:
                 DispatchQueue.main.async {
                     completion(.success(HTTPURLResponse.localizedString(forStatusCode: r.statusCode)))
                 }
-                
+
             default:
                 if let data = data,
-                    let dict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments),
-                    let json = dict as? [String: Any],
-                    let reason = json["reason"] as? String {
+                   let dict = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments),
+                   let json = dict as? [String: Any],
+                   let reason = json["reason"] as? String {
                     DispatchQueue.main.async {
-                        completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: reason])))
+                        completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                                    code: r.statusCode,
+                                                    userInfo: [NSLocalizedDescriptionKey: reason])))
                     }
-                    
+
                 } else {
                     DispatchQueue.main.async {
-                        completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: r.statusCode, userInfo: [NSLocalizedDescriptionKey: HTTPURLResponse.localizedString(forStatusCode: r.statusCode)])))
+                        let error = NSError(domain: "com.pusher.APNSPusher",
+                                            code: r.statusCode,
+                                            userInfo: [NSLocalizedDescriptionKey: HTTPURLResponse.localizedString(forStatusCode: r.statusCode)])
+                        completion(.failure(error))
                     }
                 }
             }
@@ -155,14 +166,16 @@ public final class APNSPusher: NSObject, APNSPushable {
     public func pushToSimulator(payload: String, appBundleID bundleID: String, completion: @escaping (Result<String, Error>) -> Void) {
 
         guard let payloadData = payload.data(using: .utf8), (try? JSONSerialization.jsonObject(with: payloadData)) != nil else {
-            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                        code: 0,
                                         userInfo: [NSLocalizedDescriptionKey: "Invalid JSON format"])))
             return
         }
 
         let bundleCheckResult = ShellRunner.run(command: "xcrun simctl get_app_container booted \(bundleID)")
         if case .failure = bundleCheckResult {
-            completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0,
+            completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                        code: 0,
                                         userInfo: [NSLocalizedDescriptionKey: "Cannot find provided bundle ID in booted simulator"])))
             return
         }
@@ -173,11 +186,17 @@ public final class APNSPusher: NSObject, APNSPushable {
         case .failure(let error):
             switch error {
             case .commandError(let message):
-                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: message])))
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                            code: 0,
+                                            userInfo: [NSLocalizedDescriptionKey: message])))
             case .taskInitError(let initError):
-                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: initError.localizedDescription])))
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                            code: 0,
+                                            userInfo: [NSLocalizedDescriptionKey: initError.localizedDescription])))
             case .unknown:
-                completion(.failure(NSError(domain: "com.pusher.APNSPusher", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
+                completion(.failure(NSError(domain: "com.pusher.APNSPusher",
+                                            code: 0,
+                                            userInfo: [NSLocalizedDescriptionKey: "Unknown error"])))
             }
             return
         case .success(let message):
@@ -192,17 +211,17 @@ extension APNSPusher: URLSessionDelegate {
             return
         }
         var certificate: SecCertificate?
-        
+
         SecIdentityCopyCertificate(identityNotNil, &certificate)
-        
+
         guard let cert = certificate else {
             return
         }
-        
+
         let cred = URLCredential(identity: identityNotNil, certificates: [cert], persistence: .forSession)
-        
+
         certificate = nil
-        
+
         completionHandler(.useCredential, cred)
     }
 }
@@ -218,12 +237,12 @@ private struct APNSProvider {
     /// 20 min to resolve
     /// [TooManyProviderTokenUpdates](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/handling_notification_responses_from_apns)
     private let providerTokenTTL: TimeInterval = 60 * 20
-    
+
     init?(keyID: String, teamID: String, p8Digest: String) {
         guard let authToken = try? JWT(keyID: keyID,
-                                   teamID: teamID,
-                                   issueDate: timestamp,
-                                   expireDuration: providerTokenTTL).sign(with: p8Digest) else {
+                                       teamID: teamID,
+                                       issueDate: timestamp,
+                                       expireDuration: providerTokenTTL).sign(with: p8Digest) else {
             return nil
         }
         self.authToken = authToken
@@ -231,7 +250,7 @@ private struct APNSProvider {
         self.teamID = teamID
         self.p8Digest = p8Digest
     }
-    
+
     var isValid: Bool {
         Date().timeIntervalSince(timestamp) < providerTokenTTL
     }
