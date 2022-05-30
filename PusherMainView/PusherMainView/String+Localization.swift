@@ -11,7 +11,7 @@ extension String {
 
 private extension Bundle {
     static func bundle(bundleIdSubstring: String) -> Bundle? {
-        return (allBundles + allFrameworks).first(where: { $0.bundleIdentifier?.contains(bundleIdSubstring) == true })
+        (allBundles + allFrameworks).first(where: { $0.bundleIdentifier?.contains(bundleIdSubstring) == true })
     }
 
     static var sdk: Bundle? {

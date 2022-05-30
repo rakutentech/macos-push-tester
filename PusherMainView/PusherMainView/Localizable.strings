@@ -19,4 +19,4 @@
 // Error
 "error.json.file.is.incorrect" = "JSON file is incorrect";
 "error.p8.file.is.incorrect" = "p8 file is incorrect";
-"error.no.identity" = "There isn't identity.";
+"error.no.identity" = "No identity set.";
