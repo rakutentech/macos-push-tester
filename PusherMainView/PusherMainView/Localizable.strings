@@ -1,0 +1,22 @@
+// Titles
+"app.title" = "The macOS Push Tester App";
+"cancel" = "Cancel";
+"close" = "Close";
+"enter.device.token" = "Enter a device token";
+"enter.apns.collapse.id" = "Enter APNS Collapse ID";
+"enter.your.app.bundle.id" = "Enter your app bundle ID";
+"enter.apns.priority" = "Enter APNS priority";
+
+// Messages
+"please.enter.team.id" = "Please enter Team ID";
+"please.enter.key.id" = "Please enter Key ID";
+"please.enter.an app.bundle.id" = "Please enter an app bundle ID";
+"please.select.an.apns.method" = "Please select an APNS method";
+"please.select.an.apns.certificate" = "Please select an APNS Certificate";
+"please.enter.a.device.token" = "Please enter a Device Token";
+"choose.identity" = "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)";
+
+// Error
+"error.json.file.is.incorrect" = "JSON file is incorrect";
+"error.p8.file.is.incorrect" = "p8 file is incorrect";
+"error.no.identity" = "No identity set.";
