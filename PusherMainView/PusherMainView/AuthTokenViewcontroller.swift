@@ -58,18 +58,18 @@ final class AuthTokenViewcontroller: NSViewController {
 
     @IBAction private func didTapValidateButton(_ sender: Any) {
         guard !teamIDTextField.stringValue.isEmpty else {
-            pusherStore?.dispatch(actionType: .alert(message: "Please enter Team ID", fromWindow: view.window))
+            pusherStore?.dispatch(actionType: .alert(message: "please.enter.team.id".localized, fromWindow: view.window))
             return
         }
 
         guard !keyIDTextField.stringValue.isEmpty else {
-            pusherStore?.dispatch(actionType: .alert(message: "Please enter Key ID", fromWindow: view.window))
+            pusherStore?.dispatch(actionType: .alert(message: "please.enter.key.id".localized, fromWindow: view.window))
             return
         }
 
         guard let p8FileURL = p8FileURL,
               let p8String = try? String(contentsOf: p8FileURL, encoding: .utf8) else {
-            pusherStore?.dispatch(actionType: .alert(message: "p8 file is incorrect", fromWindow: view.window))
+                  pusherStore?.dispatch(actionType: .alert(message: "error.p8.file.is.incorrect".localized, fromWindow: view.window))
             return
         }
 

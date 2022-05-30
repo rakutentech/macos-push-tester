@@ -96,7 +96,7 @@ final class PusherStore {
                       completion:@escaping (Bool) -> Void) {
 
         guard let appBundleID = appBundleID, !appBundleID.isEmpty else {
-            router.show(message: "Please enter an app bundle ID", window: NSApplication.shared.windows.first)
+            router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
             completion(false)
             return
         }
@@ -110,19 +110,19 @@ final class PusherStore {
 
         case .device:
             if case .none = apnsPusher.type {
-                router.show(message: "Please select an APNS method", window: NSApplication.shared.windows.first)
+                router.show(message: "please.select.an.apns.method".localized, window: NSApplication.shared.windows.first)
                 completion(false)
                 return
             }
 
             if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
-                router.show(message: "Please select an APNS Certificate", window: NSApplication.shared.windows.first)
+                router.show(message: "please.select.an.apns.certificate".localized, window: NSApplication.shared.windows.first)
                 completion(false)
                 return
             }
 
             guard let deviceToken = deviceToken, !deviceToken.isEmpty else {
-                router.show(message: "Please enter a Device Token", window: NSApplication.shared.windows.first)
+                router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
                 completion(false)
                 return
             }
@@ -224,17 +224,17 @@ extension PusherStore: PusherInteracting {
             guard !identities.isEmpty else {
                 state = reducer.reduce(actionType: .cancelIdentity, state: state)
                 subscribers.forEach { $0.newState(state: state) }
-                router.show(message: "There isn't identity.", window: NSApplication.shared.windows.first)
+                router.show(message: "error.no.identity".localized, window: NSApplication.shared.windows.first)
                 return
             }
             let panel = SFChooseIdentityPanel.shared()
-            panel?.setAlternateButtonTitle("Cancel")
+            panel?.setAlternateButtonTitle("cancel".localized)
             panel?.beginSheet(for: fromViewController.view.window,
                               modalDelegate: self,
                               didEnd: #selector(chooseIdentityPanelDidEnd(_:returnCode:contextInfo:)),
                               contextInfo: nil,
                               identities: identities,
-                              message: "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)")
+                                 message: "choose.identity".localized)
 
         case .cancelIdentity: ()
 

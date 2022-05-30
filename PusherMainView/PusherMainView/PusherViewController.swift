@@ -48,12 +48,12 @@ public final class PusherViewController: NSViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        deviceTokenTextField.placeholderString = "Enter a device token"
+        deviceTokenTextField.placeholderString = "enter.device.token".localized
         deviceTokenTextField.delegate = self
 
-        apnsCollapseIdTextField.placeholderString = "Enter APNS Collapse ID"
-        appBundleIDTextField.placeholderString = "Enter your app bundle ID"
-        priorityTextField.placeholderString = "Enter APNS priority"
+        apnsCollapseIdTextField.placeholderString = "enter.apns.collapse.id".localized
+        appBundleIDTextField.placeholderString = "enter.your.app.bundle.id".localized
+        priorityTextField.placeholderString = "enter.apns.priority".localized
 
         priorityTextField.stringValue = "10"
 
@@ -67,7 +67,7 @@ public final class PusherViewController: NSViewController {
 
     public override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.title = "The macOS Push Tester App"
+        view.window?.title = "app.title".localized
     }
 
     // MARK: - Actions
@@ -98,7 +98,7 @@ public final class PusherViewController: NSViewController {
     @IBAction func loadJSONFile(_ sender: Any) {
         pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
             guard let jsonString = try? String(contentsOf: jsonFileURL, encoding: .utf8) else {
-                self.pusherStore.dispatch(actionType: .alert(message: "JSON file is incorrect", fromWindow: self.view.window))
+                self.pusherStore.dispatch(actionType: .alert(message: "error.json.file.is.incorrect".localized, fromWindow: self.view.window))
                 return
             }
             self.payloadTextView.string = jsonString

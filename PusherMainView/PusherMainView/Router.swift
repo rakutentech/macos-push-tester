@@ -64,7 +64,7 @@ private extension NSAlert {
         }
         let alert = NSAlert()
         alert.messageText = message
-        alert.addButton(withTitle: "Close")
+        alert.addButton(withTitle: "close".localized)
         alert.beginSheetModal(for: window)
     }
 }

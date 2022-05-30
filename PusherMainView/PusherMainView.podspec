@@ -5,6 +5,7 @@ Pod::Spec.new do |spec|
   spec.authors      = 'Rakuten Ecosystem Mobile'
   spec.summary      = 'PusherMainView Framework for macOS'
   spec.source_files = 'PusherMainView/*.swift'
+  spec.resource_bundles = { 'PusherMainViewResources' => ['PusherMainView/*.strings'] }
   spec.framework    = 'Cocoa'
   spec.dependency 'APNS'
   spec.homepage     = 'https://github.com/rakutentech/macos-push-tester'
