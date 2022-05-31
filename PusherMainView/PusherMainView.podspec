@@ -14,5 +14,7 @@ Pod::Spec.new do |spec|
   spec.resources = ["PusherMainView/Base.lproj/Pusher.storyboard","PusherMainView/MainPlayground.playground"]
   spec.test_spec 'PusherMainViewTests' do |test_spec|
     test_spec.source_files = 'PusherMainViewTests/*.swift'
+    test_spec.dependency 'Quick'
+    test_spec.dependency 'Nimble'
   end
 end
