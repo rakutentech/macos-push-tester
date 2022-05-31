@@ -20,3 +20,4 @@
 "error.json.file.is.incorrect" = "JSON file is incorrect";
 "error.p8.file.is.incorrect" = "p8 file is incorrect";
 "error.no.identity" = "No identity set.";
+"error.save.file" = "An error occured while saving the file.";

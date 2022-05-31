@@ -41,9 +41,87 @@ struct RouterMock: Routing {
     }
 }
 
+final class ObserverMock: NSObject {
+    internal private(set) var pusherState: PusherState?
+    internal private(set) var errorState: ErrorState?
+
+    func reset() {
+        self.pusherState = nil
+        self.errorState = nil
+    }
+}
+
+extension ObserverMock: PusherInteractable {
+    func newState(state: PusherState) {
+        self.pusherState = state
+    }
+
+    func newErrorState(_ errorState: ErrorState) {
+        self.errorState = errorState
+    }
+}
+
 final class PusherStoreSpec: QuickSpec {
     override func spec() {
+        let fileName = "pusherfile.txt"
+        let filePath = FileManager.default.currentDirectoryPath.appending("/\(fileName)")
+        let fileURL: URL! = URL(string: "file://" + filePath)
+        let invalidFileURL: URL! = URL(string: "invalid://" + filePath)
+        let textToSave = "hello world"
+        let observer = ObserverMock()
+        let apnsPusherMock = APNSPusherMock(result: .success("OK"),
+                                            type: .token(keyID: "keyID",
+                                                         teamID: "teamID",
+                                                         p8: "p8"))
+
         describe("PusherStore") {
+            context("When a saveFile action is dispatched") {
+                afterEach {
+                    try? FileManager.default.removeItem(at: fileURL)
+                    observer.reset()
+                }
+
+                context("When the file URL is invalid") {
+                    it("should return an error") {
+                        let store = PusherStore(apnsPusher: apnsPusherMock, router: RouterMock())
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .saveFile(text: textToSave, fileURL: invalidFileURL))
+
+                        if case .saveFile(let text, let fileURL) = observer.errorState?.actionType {
+                            expect(text).to(equal(textToSave))
+                            expect(fileURL).to(equal(invalidFileURL))
+
+                        } else {
+                            fail("Expecting to get .saveFile action")
+                        }
+
+                        expect((observer.errorState?.error as NSError?)?.domain).toEventually(equal("NSCocoaErrorDomain"))
+                        expect((observer.errorState?.error as NSError?)?.code).to(equal(518))
+                    }
+                }
+
+                context("When the file URL is valid") {
+                    it("should save the file") {
+                        let store = PusherStore(apnsPusher: apnsPusherMock, router: RouterMock())
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .saveFile(text: textToSave, fileURL: fileURL))
+
+                        expect(observer.pusherState?.fileURL).toEventually(equal(fileURL))
+
+                        expect(FileManager.default.fileExists(atPath: filePath)).to(beTrue())
+                    }
+
+                    it("should save the correct text") {
+                        let store = PusherStore(apnsPusher: apnsPusherMock, router: RouterMock())
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .saveFile(text: textToSave, fileURL: fileURL))
+
+                        let text = try? String(contentsOfFile: filePath)
+                        expect(text).toEventually(equal(textToSave))
+                    }
+                }
+            }
+
             context("When a push action is dispatched") {
                 context("When APNS returns an error") {
                     it("should return error") {
@@ -74,10 +152,7 @@ final class PusherStoreSpec: QuickSpec {
                 context("When APNS returns a success") {
                     it("should return success") {
                         var success = false
-                        let store = PusherStore(apnsPusher: APNSPusherMock(result: .success("OK"),
-                                                                           type: .token(keyID: "keyID",
-                                                                                        teamID: "teamID",
-                                                                                        p8: "p8")),
+                        let store = PusherStore(apnsPusher: apnsPusherMock,
                                                 router: RouterMock())
 
                         store.dispatch(actionType: .push(#"{"":""}"#,
