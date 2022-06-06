@@ -40,6 +40,19 @@ struct PusherReducer {
             newState.simulatorRadioState = .on
             newState.deviceRadioState = .off
 
+        case .configure, .chooseFile:
+            newState.appTitle = "app.title".localized
+
+        case .saveFile(_, let fileURL):
+            newState.appTitle = "app.title".localized
+            newState.fileURL = fileURL
+
+        case .payloadDidChange(let fileURL):
+            guard fileURL != nil else {
+                return newState
+            }
+            newState.appTitle = "app.title".localized + " *"
+
         default: ()
         }
 

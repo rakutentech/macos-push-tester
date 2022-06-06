@@ -2,31 +2,6 @@ import Foundation
 import APNS
 import SecurityInterface.SFChooseIdentityPanel
 
-enum ActionType {
-    case devicesList(fromViewController: NSViewController)
-    case deviceToken(String)
-    case chooseAuthToken(fromViewController: NSViewController)
-    case alert(message: String, fromWindow: NSWindow?)
-    case browsingFiles(fromViewController: NSViewController, completion: (_ p8FileURL: URL) -> Void)
-    case selectDevice(device: APNSServiceDevice)
-    case chooseSimulator
-    case chooseDevice
-    case cancelAuthToken
-    case saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
-    case chooseIdentity(fromViewController: NSViewController)
-    case cancelIdentity
-    case updateIdentity(identity: SecIdentity)
-    case dismiss(fromViewController: NSViewController)
-    case push(_ payloadString: String,
-              destination: Destination,
-              deviceToken: String?,
-              appBundleID: String?,
-              priority: Int,
-              collapseID: String?,
-              sandbox: Bool,
-              completion: (Bool) -> Void)
-}
-
 enum Destination {
     case device
     case simulator
@@ -38,8 +13,9 @@ struct AuthToken: Codable {
     public let p8FileURLString: String
 }
 
-protocol PusherInteractable where Self: NSViewController {
+protocol PusherInteractable where Self: NSObject {
     func newState(state: PusherState)
+    func newErrorState(_ errorState: ErrorState)
 }
 
 protocol PusherInteracting {
@@ -60,7 +36,8 @@ final class PusherStore {
                                                  certificateRadioState: .off,
                                                  authTokenRadioState: .off,
                                                  deviceRadioState: .on,
-                                                 simulatorRadioState: .off)
+                                                 simulatorRadioState: .off,
+                                                 appTitle: "")
 
     init(apnsPusher: APNSPushable, router: Routing) {
         self.apnsPusher = apnsPusher
@@ -174,31 +151,49 @@ extension PusherStore: PusherInteracting {
         switch actionType {
         case .devicesList(let fromViewController):
             router.presentDevicesList(from: fromViewController, pusherStore: self)
+            reduce(result: .success(actionType))
 
         case .deviceToken(_):
             state = reducer.reduce(actionType: actionType, state: state)
+            reduce(result: .success(actionType))
 
         case .alert(let message, let window):
             router.show(message: message, window: window)
+            reduce(result: .success(actionType))
 
         case .browsingFiles(let fromViewController, let completion):
             router.browseFiles(from: fromViewController, completion: completion)
+            reduce(result: .success(actionType))
+
+        case .browsingJSONFiles(let fromViewController, let completion):
+            router.browseFiles(from: fromViewController) { fileURL in
+                guard let jsonString = try? String(contentsOf: fileURL, encoding: .utf8) else {
+                    self.dispatch(actionType: .alert(message: "error.json.file.is.incorrect".localized, fromWindow: NSApplication.shared.mainWindow))
+                    return
+                }
+                completion(fileURL, jsonString)
+            }
+            reduce(result: .success(actionType))
 
         case .chooseAuthToken(let fromViewController):
             updateAuthToken()
             router.presentAuthTokenAlert(from: fromViewController, pusherStore: self)
+            reduce(result: .success(actionType))
 
         case .saveAuthToken(let teamID, let keyID, let p8FileURL, let p8):
             apnsPusher.type = .token(keyID: keyID, teamID: teamID, p8: p8)
             Keychain.set(value: keyID, forKey: "keyID")
             Keychain.set(value: teamID, forKey: "teamID")
             Keychain.set(value: p8FileURL.absoluteString, forKey: "p8FileURLString")
+            reduce(result: .success(actionType))
 
         case .dismiss(let fromViewController):
             router.dismiss(from: fromViewController)
+            reduce(result: .success(actionType))
 
         case .updateIdentity(let identity):
             apnsPusher.type = .certificate(identity: identity)
+            reduce(result: .success(actionType))
 
         case .push(let payloadString,
                    let destination,
@@ -216,8 +211,10 @@ extension PusherStore: PusherInteracting {
                  collapseID: collapseID,
                  inSandbox: sandbox,
                  completion: completion)
+            reduce(result: .success(actionType))
 
-        case .selectDevice, .cancelAuthToken: ()
+        case .selectDevice, .cancelAuthToken:
+            reduce(result: .success(actionType))
 
         case .chooseIdentity(let fromViewController):
             let identities = APNSIdentity.identities()
@@ -235,21 +232,43 @@ extension PusherStore: PusherInteracting {
                               contextInfo: nil,
                               identities: identities,
                               message: "choose.identity".localized)
+            reduce(result: .success(actionType))
 
-        case .cancelIdentity: ()
+        case .chooseFile:
+            NSApplication.shared.saveMenuItem?.isEnabled = true
+            reduce(result: .success(actionType))
 
-        case .chooseDevice, .chooseSimulator: ()
+        case .saveFile(let text, let fileURL):
+            do {
+                try text.write(to: fileURL, atomically: true, encoding: .utf8)
+                reduce(result: .success(actionType))
 
+            } catch {
+                router.show(message: "error.save.file".localized, window: NSApplication.shared.windows.first)
+                reduce(result: .failure(error, actionType))
+            }
+
+        default:
+            reduce(result: .success(actionType))
         }
-
-        reduce(actionType: actionType)
     }
 
-    private func reduce(actionType: ActionType) {
-        let oldState = state
-        state = reducer.reduce(actionType: actionType, state: state)
-        if state != oldState {
-            subscribers.forEach { $0.newState(state: state) }
+    enum StoreResult {
+        case success(ActionType)
+        case failure(Error, ActionType)
+    }
+
+    private func reduce(result: StoreResult) {
+        switch result {
+        case .success(let actionType):
+            let oldState = state
+            state = reducer.reduce(actionType: actionType, state: state)
+            if state != oldState {
+                subscribers.forEach { $0.newState(state: state) }
+            }
+
+        case .failure(let error, let actionType):
+            subscribers.forEach { $0.newErrorState(ErrorState(error: error as NSError, actionType: actionType)) }
         }
     }
 

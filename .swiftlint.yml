@@ -6,6 +6,7 @@ included:
 disabled_rules:
 - identifier_name
 - function_parameter_count
+- cyclomatic_complexity
 
 opt_in_rules:
 - empty_count

@@ -16,6 +16,7 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var deviceSettingsControls: DeviceSettingsControls!
     private let pusherStore: PusherInteracting
     private var selectedDestination = Destination.device
+    private var jsonFileURL: URL?
 
     // MARK: - Init
 
@@ -61,16 +62,24 @@ public final class PusherViewController: NSViewController {
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
         payloadTextView.string = "{\n\t\"aps\":{\n\t\t\"alert\":\"Test\",\n\t\t\"sound\":\"default\",\n\t\t\"badge\":1\n\t}\n}"
+        payloadTextView.delegate = self
 
         pusherStore.subscribe(self)
     }
 
     public override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.title = "app.title".localized
+        pusherStore.dispatch(actionType: .configure)
     }
 
     // MARK: - Actions
+
+    @IBAction func saveFile(_ sender: Any) {
+        guard let jsonFileURL = jsonFileURL else {
+            return
+        }
+        pusherStore.dispatch(actionType: .saveFile(text: payloadTextView.string, fileURL: jsonFileURL))
+    }
 
     @IBAction func chooseIdentity(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseIdentity(fromViewController: self))
@@ -96,12 +105,10 @@ public final class PusherViewController: NSViewController {
     }
 
     @IBAction func loadJSONFile(_ sender: Any) {
-        pusherStore.dispatch(actionType: .browsingFiles(fromViewController: self, completion: { jsonFileURL in
-            guard let jsonString = try? String(contentsOf: jsonFileURL, encoding: .utf8) else {
-                self.pusherStore.dispatch(actionType: .alert(message: "error.json.file.is.incorrect".localized, fromWindow: self.view.window))
-                return
-            }
-            self.payloadTextView.string = jsonString
+        pusherStore.dispatch(actionType: .browsingJSONFiles(fromViewController: self, completion: { jsonFileURL, text in
+            self.jsonFileURL = jsonFileURL
+            self.payloadTextView.string = text
+            self.pusherStore.dispatch(actionType: .chooseFile)
         }))
     }
 
@@ -129,6 +136,13 @@ extension PusherViewController: PusherInteractable {
         sendToDeviceButton.state = state.deviceRadioState
         sendToSimulatorButton.state = state.simulatorRadioState
         deviceSettingsControls.set(visible: state.deviceRadioState == .on)
+        view.window?.title = state.appTitle
+    }
+
+    func newErrorState(_ errorState: ErrorState) {
+        #if DEBUG
+        NSLog("\(errorState.error) for \(errorState.actionType)")
+        #endif
     }
 }
 
@@ -143,6 +157,16 @@ extension PusherViewController: NSTextFieldDelegate {
         pusherStore.dispatch(actionType: .deviceToken(deviceToken))
     }
 }
+
+// MARK: - NSTextViewDelegate
+
+extension PusherViewController: NSTextViewDelegate {
+    public func textDidChange(_ notification: Notification) {
+        pusherStore.dispatch(actionType: .payloadDidChange(fileURL: jsonFileURL))
+    }
+}
+
+// MARK: - DeviceSettingsControls
 
 @objc final class DeviceSettingsControls: NSObject {
     @IBOutlet private weak var deviceTokenTextField: NSTextField!
