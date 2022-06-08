@@ -12,5 +12,7 @@ Pod::Spec.new do |spec|
   spec.osx.deployment_target  = '10.13'
   spec.test_spec 'APNSTests' do |test_spec|
     test_spec.source_files = 'APNSTests/*.swift'
+    test_spec.dependency 'Quick'
+    test_spec.dependency 'Nimble'
   end
 end
