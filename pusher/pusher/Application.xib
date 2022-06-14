@@ -93,9 +93,9 @@
                                     <action selector="saveFile:" target="-1" id="053-v8-lzB"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" enabled="NO" keyEquivalent="S" id="Bw7-FT-i3A">
+                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
                                 <connections>
-                                    <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
+                                    <action selector="saveFileAs:" target="-1" id="seZ-Cu-2Vo"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Revert to Saved" enabled="NO" keyEquivalent="r" id="KaW-ft-85H">

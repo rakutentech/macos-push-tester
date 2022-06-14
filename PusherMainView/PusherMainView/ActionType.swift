@@ -28,6 +28,7 @@ enum ActionType {
               completion: (Bool) -> Void)
     case chooseFile
     case saveFile(text: String, fileURL: URL)
+    case saveFileAs(text: String, fromViewController: NSViewController, completion: (_ fileURL: URL) -> Void)
     case payloadDidChange(fileURL: URL?)
 }
 
@@ -97,6 +98,9 @@ extension ActionType: Equatable {
 
         case (let .saveFile(lhsString, lhsURL), let .saveFile(rhsString, rhsURL)):
             return lhsString == rhsString && lhsURL == rhsURL
+
+        case (let .saveFileAs(lhsString, lhsViewController, _), let .saveFileAs(rhsString, rhsViewController, _)):
+            return lhsString == rhsString && lhsViewController == rhsViewController
 
         case (let .payloadDidChange(lhsURL), let .payloadDidChange(rhsURL)):
             return lhsURL == rhsURL

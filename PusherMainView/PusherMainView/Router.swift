@@ -5,6 +5,7 @@ protocol Routing {
     func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting)
     func show(message: String, window: NSWindow?)
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (_ p8FileURL: URL) -> Void)
+    func saveFileAs(from fromViewController: NSViewController, completion: @escaping (_ fileURL: URL) -> Void)
     func dismiss(from fromViewController: NSViewController)
 }
 
@@ -48,6 +49,19 @@ extension Router: Routing {
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
                let p8fileURL = panel.urls.first {
                 completion(p8fileURL)
+            }
+        }
+    }
+
+    func saveFileAs(from fromViewController: NSViewController, completion: @escaping (_ fileURL: URL) -> Void) {
+        guard let window = fromViewController.view.window else { return }
+
+        let panel = NSSavePanel()
+
+        panel.beginSheetModal(for: window) { result in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
+               let fileURL = panel.url {
+                completion(fileURL)
             }
         }
     }

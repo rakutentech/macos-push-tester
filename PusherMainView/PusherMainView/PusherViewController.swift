@@ -81,6 +81,12 @@ public final class PusherViewController: NSViewController {
         pusherStore.dispatch(actionType: .saveFile(text: payloadTextView.string, fileURL: jsonFileURL))
     }
 
+    @IBAction func saveFileAs(_ sender: Any) {
+        pusherStore.dispatch(actionType: .saveFileAs(text: payloadTextView.string, fromViewController: self, completion: { fileURL in
+            self.jsonFileURL = fileURL
+        }))
+    }
+
     @IBAction func chooseIdentity(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseIdentity(fromViewController: self))
     }

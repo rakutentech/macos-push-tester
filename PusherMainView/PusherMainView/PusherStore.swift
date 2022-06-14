@@ -248,6 +248,13 @@ extension PusherStore: PusherInteracting {
                 reduce(result: .failure(error, actionType))
             }
 
+        case .saveFileAs(let text, let fromViewController, let completion):
+            router.saveFileAs(from: fromViewController) { fileURL in
+                self.dispatch(actionType: .chooseFile)
+                self.dispatch(actionType: .saveFile(text: text, fileURL: fileURL))
+                completion(fileURL)
+            }
+
         default:
             reduce(result: .success(actionType))
         }
