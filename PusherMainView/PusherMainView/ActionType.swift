@@ -26,8 +26,9 @@ enum ActionType {
               collapseID: String?,
               sandbox: Bool,
               completion: (Bool) -> Void)
-    case chooseFile
+    case enableSaveMenuItem
     case saveFile(text: String, fileURL: URL)
+    case saveFileAs(text: String, fromViewController: NSViewController, completion: (_ fileURL: URL) -> Void)
     case payloadDidChange(fileURL: URL?)
 }
 
@@ -92,11 +93,14 @@ extension ActionType: Equatable {
                 && lhs6 == rhs6
                 && lhs7 == rhs7
 
-        case (.chooseFile, .chooseFile):
+        case (.enableSaveMenuItem, .enableSaveMenuItem):
             return true
 
         case (let .saveFile(lhsString, lhsURL), let .saveFile(rhsString, rhsURL)):
             return lhsString == rhsString && lhsURL == rhsURL
+
+        case (let .saveFileAs(lhsString, lhsViewController, _), let .saveFileAs(rhsString, rhsViewController, _)):
+            return lhsString == rhsString && lhsViewController == rhsViewController
 
         case (let .payloadDidChange(lhsURL), let .payloadDidChange(rhsURL)):
             return lhsURL == rhsURL

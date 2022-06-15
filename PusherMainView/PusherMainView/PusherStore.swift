@@ -234,7 +234,7 @@ extension PusherStore: PusherInteracting {
                               message: "choose.identity".localized)
             reduce(result: .success(actionType))
 
-        case .chooseFile:
+        case .enableSaveMenuItem:
             NSApplication.shared.saveMenuItem?.isEnabled = true
             reduce(result: .success(actionType))
 
@@ -246,6 +246,13 @@ extension PusherStore: PusherInteracting {
             } catch {
                 router.show(message: "error.save.file".localized, window: NSApplication.shared.windows.first)
                 reduce(result: .failure(error, actionType))
+            }
+
+        case .saveFileAs(let text, let fromViewController, let completion):
+            router.saveFileAs(from: fromViewController) { fileURL in
+                self.dispatch(actionType: .enableSaveMenuItem)
+                self.dispatch(actionType: .saveFile(text: text, fileURL: fileURL))
+                completion(fileURL)
             }
 
         default:
