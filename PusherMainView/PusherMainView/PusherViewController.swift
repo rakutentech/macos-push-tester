@@ -114,7 +114,7 @@ public final class PusherViewController: NSViewController {
         pusherStore.dispatch(actionType: .browsingJSONFiles(fromViewController: self, completion: { jsonFileURL, text in
             self.jsonFileURL = jsonFileURL
             self.payloadTextView.string = text
-            self.pusherStore.dispatch(actionType: .chooseFile)
+            self.pusherStore.dispatch(actionType: .enableSaveMenuItem)
         }))
     }
 
