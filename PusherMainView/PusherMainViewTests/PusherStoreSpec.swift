@@ -81,6 +81,14 @@ final class PusherStoreSpec: QuickSpec {
                                             type: .token(keyID: "keyID",
                                                          teamID: "teamID",
                                                          p8: "p8"))
+        let failedAPNSMock = APNSPusherMock(result: .failure(NSError(domain: "com.pusher.error",
+                                                                     code: 400,
+                                                                     userInfo: nil)),
+                                            type: .token(keyID: "keyID",
+                                                         teamID: "teamID",
+                                                         p8: "p8"))
+        let validJSONstring = #"{"":""}"#
+        let invalidJSONstring = #"{]"#
 
         describe("PusherStore") {
             afterEach {
@@ -189,50 +197,87 @@ final class PusherStoreSpec: QuickSpec {
             }
 
             context("When a push action is dispatched") {
-                context("When APNS returns an error") {
-                    it("should return error") {
-                        var failure = false
-                        let store = PusherStore(apnsPusher: APNSPusherMock(result: .failure(NSError(domain: "com.pusher.error",
-                                                                                                    code: 400,
-                                                                                                    userInfo: nil)),
-                                                                           type: .token(keyID: "keyID",
-                                                                                        teamID: "teamID",
-                                                                                        p8: "p8")),
-                                                router: router)
+                context("When the JSON string is invalid") {
+                    context("When APNS returns an error") {
+                        it("should return an error") {
+                            let store = PusherStore(apnsPusher: failedAPNSMock,
+                                                    router: router)
+                            store.subscribe(observer)
+                            store.dispatch(actionType: .push(invalidJSONstring,
+                                                             destination: .device,
+                                                             deviceToken: "1234",
+                                                             appBundleID: "com.myapp",
+                                                             priority: 0,
+                                                             collapseID: nil,
+                                                             sandbox: true,
+                                                             completion: { _ in
+                                                             }))
 
-                        store.dispatch(actionType: .push(#"{"":""}"#,
-                                                         destination: .device,
-                                                         deviceToken: "1234",
-                                                         appBundleID: "com.myapp",
-                                                         priority: 0,
-                                                         collapseID: nil,
-                                                         sandbox: true,
-                                                         completion: { success in
-                                                            failure = !success
-                                                         }))
+                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                        }
+                    }
 
-                        expect(failure).toEventually(beTrue())
+                    context("When APNS returns a success") {
+                        it("should return an error") {
+                            let store = PusherStore(apnsPusher: apnsPusherMock,
+                                                    router: router)
+                            store.subscribe(observer)
+                            store.dispatch(actionType: .push(invalidJSONstring,
+                                                             destination: .device,
+                                                             deviceToken: "1234",
+                                                             appBundleID: "com.myapp",
+                                                             priority: 0,
+                                                             collapseID: nil,
+                                                             sandbox: true,
+                                                             completion: { _ in
+                                                             }))
+
+                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                        }
                     }
                 }
 
-                context("When APNS returns a success") {
-                    it("should return success") {
-                        var success = false
-                        let store = PusherStore(apnsPusher: apnsPusherMock,
-                                                router: router)
+                context("When the JSON string is valid") {
+                    context("When APNS returns an error") {
+                        it("should return error") {
+                            var failure = false
+                            let store = PusherStore(apnsPusher: failedAPNSMock,
+                                                    router: router)
 
-                        store.dispatch(actionType: .push(#"{"":""}"#,
-                                                         destination: .device,
-                                                         deviceToken: "1234",
-                                                         appBundleID: "com.myapp",
-                                                         priority: 0,
-                                                         collapseID: nil,
-                                                         sandbox: true,
-                                                         completion: { aSuccess in
-                                                            success = aSuccess
-                                                         }))
+                            store.dispatch(actionType: .push(validJSONstring,
+                                                             destination: .device,
+                                                             deviceToken: "1234",
+                                                             appBundleID: "com.myapp",
+                                                             priority: 0,
+                                                             collapseID: nil,
+                                                             sandbox: true,
+                                                             completion: { success in
+                                                                failure = !success
+                                                             }))
 
-                        expect(success).toEventually(beTrue())
+                            expect(failure).toEventually(beTrue())
+                        }
+                    }
+
+                    context("When APNS returns a success") {
+                        it("should return success") {
+                            var success = false
+                            let store = PusherStore(apnsPusher: apnsPusherMock,
+                                                    router: router)
+
+                            store.dispatch(actionType: .push(validJSONstring,
+                                                             destination: .device,
+                                                             deviceToken: "1234",
+                                                             appBundleID: "com.myapp",
+                                                             priority: 0,
+                                                             collapseID: nil,
+                                                             sandbox: true,
+                                                             completion: { aSuccess in
+                                                                success = aSuccess
+                                                             }))
+
+                            expect(success).toEventually(beTrue())
+                        }
                     }
                 }
             }

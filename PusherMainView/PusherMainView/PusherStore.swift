@@ -203,6 +203,12 @@ extension PusherStore: PusherInteracting {
                    let collapseID,
                    let sandbox,
                    let completion):
+            guard payloadString.isValidJSON else {
+                router.show(message: "error.json.file.is.incorrect".localized,
+                            window: NSApplication.shared.windows.first)
+                reduce(result: .failure(PushTesterError.invalidJson, actionType))
+                return
+            }
             push(payloadString,
                  to: destination,
                  deviceToken: deviceToken,
