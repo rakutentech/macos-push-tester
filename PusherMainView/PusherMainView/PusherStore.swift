@@ -128,7 +128,7 @@ final class PusherStore {
             self.router.show(message: error.localizedDescription, window: NSApplication.shared.windows.first)
             completion(false)
 
-        case .success(_):
+        case .success:
             completion(true)
         }
     }
@@ -153,7 +153,7 @@ extension PusherStore: PusherInteracting {
             router.presentDevicesList(from: fromViewController, pusherStore: self)
             reduce(result: .success(actionType))
 
-        case .deviceToken(_):
+        case .deviceToken:
             state = reducer.reduce(actionType: actionType, state: state)
             reduce(result: .success(actionType))
 
