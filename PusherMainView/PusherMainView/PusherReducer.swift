@@ -7,7 +7,7 @@ struct PusherReducer {
         switch actionType {
         case .selectDevice(let device):
             newState.deviceTokenString = device.token
-            newState.appID = device.appID
+            newState.appOrProjectID = device.appID
 
         case .deviceToken(let deviceToken):
             newState.deviceTokenString = deviceToken
@@ -32,13 +32,21 @@ struct PusherReducer {
         case .updateIdentity:
             newState.certificateRadioState = .on
 
-        case .chooseDevice:
-            newState.simulatorRadioState = .off
-            newState.deviceRadioState = .on
+        case .chooseiOSDevice:
+            newState.iOSSimulatorRadioState = .off
+            newState.iOSDeviceRadioState = .on
+            newState.androidDeviceRadioState = .off
 
-        case .chooseSimulator:
-            newState.simulatorRadioState = .on
-            newState.deviceRadioState = .off
+        case .chooseiOSSimulator:
+            newState.iOSSimulatorRadioState = .on
+            newState.iOSDeviceRadioState = .off
+            newState.androidDeviceRadioState = .off
+
+        case .chooseAndroidDevice(let legacyFCM):
+            newState.iOSSimulatorRadioState = .off
+            newState.iOSDeviceRadioState = .off
+            newState.androidDeviceRadioState = .on
+            newState.legacyFCMCheckboxState = legacyFCM ? .on : .off
 
         case .configure, .enableSaveMenuItem:
             newState.appTitle = "app.title".localized

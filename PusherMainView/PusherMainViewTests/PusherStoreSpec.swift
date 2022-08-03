@@ -4,69 +4,8 @@ import Quick
 import Nimble
 @testable import PusherMainView
 
-class APNSPusherMock: APNSPushable {
-    private var result: Result<String, Error>
-    var type: APNSPusherType
-    var identity: SecIdentity?
-
-    init(result: Result<String, Error>, type: APNSPusherType) {
-        self.result = result
-        self.type = type
-        identity = nil
-    }
-
-    func pushToDevice(_ token: String, payload: [String: Any], withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, completion: @escaping (Result<String, Error>) -> Void) {
-        completion(result)
-    }
-
-    func pushToSimulator(payload: String, appBundleID bundleID: String, completion: @escaping (Result<String, Error>) -> Void) {
-        completion(result)
-    }
-}
-
-struct RouterMock: Routing {
-    var fileURL: URL!
-
-    func presentDevicesList(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
-    }
-
-    func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
-    }
-
-    func show(message: String, window: NSWindow?) {
-    }
-
-    func browseFiles(from fromViewController: NSViewController, completion: @escaping (URL) -> Void) {
-    }
-
-    func saveFileAs(from fromViewController: NSViewController, completion: @escaping (URL) -> Void) {
-        completion(fileURL)
-    }
-
-    func dismiss(from fromViewController: NSViewController) {
-    }
-}
-
-final class ObserverMock: NSObject {
-    internal private(set) var pusherState: PusherState?
-    internal private(set) var errorState: ErrorState?
-
-    func reset() {
-        self.pusherState = nil
-        self.errorState = nil
-    }
-}
-
-extension ObserverMock: PusherInteractable {
-    func newState(state: PusherState) {
-        self.pusherState = state
-    }
-
-    func newErrorState(_ errorState: ErrorState) {
-        self.errorState = errorState
-    }
-}
-
+// swiftlint:disable type_body_length
+// swiftlint:disable function_body_length
 final class PusherStoreSpec: QuickSpec {
     override func spec() {
         var router = RouterMock()
@@ -76,7 +15,7 @@ final class PusherStoreSpec: QuickSpec {
         let fileURL: URL! = URL(string: "file://" + filePath)
         let invalidFileURL: URL! = URL(string: "invalid://" + filePath)
         let textToSave = "hello world"
-        let observer = ObserverMock()
+        var observer = ObserverMock()
         let apnsPusherMock = APNSPusherMock(result: .success("OK"),
                                             type: .token(keyID: "keyID",
                                                          teamID: "teamID",
@@ -87,14 +26,22 @@ final class PusherStoreSpec: QuickSpec {
                                             type: .token(keyID: "keyID",
                                                          teamID: "teamID",
                                                          p8: "p8"))
+        let fcmPusherMock = FCMPusherMock(result: .success("OK"))
+        let failedFCMPusherMock = FCMPusherMock(result: .failure(NSError(domain: "com.pusher.error",
+                                                                         code: 400,
+                                                                         userInfo: nil)))
+        var store: PusherStore!
         let validJSONstring = #"{"":""}"#
         let invalidJSONstring = #"{]"#
 
         describe("PusherStore") {
+            beforeEach {
+                router = RouterMock()
+                observer = ObserverMock()
+                store = PusherStore(apnsPusher: apnsPusherMock, fcmPusher: fcmPusherMock, router: router)
+            }
             afterEach {
                 try? FileManager.default.removeItem(at: fileURL)
-                observer.reset()
-                router.fileURL = nil
             }
 
             context("When a saveFileAs action is dispatched") {
@@ -102,7 +49,6 @@ final class PusherStoreSpec: QuickSpec {
                     it("should return an error") {
                         router.fileURL = invalidFileURL
 
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFileAs(text: textToSave,
                                                                fromViewController: viewController,
@@ -126,7 +72,6 @@ final class PusherStoreSpec: QuickSpec {
                     it("should save the file") {
                         router.fileURL = fileURL
 
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFileAs(text: textToSave,
                                                                fromViewController: viewController,
@@ -141,7 +86,6 @@ final class PusherStoreSpec: QuickSpec {
                     it("should save the correct text") {
                         router.fileURL = fileURL
 
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFileAs(text: textToSave,
                                                                fromViewController: viewController,
@@ -157,7 +101,6 @@ final class PusherStoreSpec: QuickSpec {
             context("When a saveFile action is dispatched") {
                 context("When the file URL is invalid") {
                     it("should return an error") {
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFile(text: textToSave, fileURL: invalidFileURL))
 
@@ -176,7 +119,6 @@ final class PusherStoreSpec: QuickSpec {
 
                 context("When the file URL is valid") {
                     it("should save the file") {
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFile(text: textToSave, fileURL: fileURL))
 
@@ -186,7 +128,6 @@ final class PusherStoreSpec: QuickSpec {
                     }
 
                     it("should save the correct text") {
-                        let store = PusherStore(apnsPusher: apnsPusherMock, router: router)
                         store.subscribe(observer)
                         store.dispatch(actionType: .saveFile(text: textToSave, fileURL: fileURL))
 
@@ -199,19 +140,21 @@ final class PusherStoreSpec: QuickSpec {
             context("When a push action is dispatched") {
                 context("When the JSON string is invalid") {
                     context("When APNS returns an error") {
+                        beforeEach {
+                            store = PusherStore(apnsPusher: failedAPNSMock, fcmPusher: fcmPusherMock, router: router)
+                        }
+
                         it("should return an error") {
-                            let store = PusherStore(apnsPusher: failedAPNSMock,
-                                                    router: router)
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(invalidJSONstring,
-                                                             destination: .device,
-                                                             deviceToken: "1234",
-                                                             appBundleID: "com.myapp",
-                                                             priority: 0,
-                                                             collapseID: nil,
-                                                             sandbox: true,
-                                                             completion: { _ in
-                                                             }))
+                            store.dispatch(actionType: .push(.apnsData(payload: invalidJSONstring,
+                                                                       destination: .iOSDevice,
+                                                                       deviceToken: "1234",
+                                                                       appBundleID: "com.myapp",
+                                                                       priority: 0,
+                                                                       collapseID: nil,
+                                                                       sandbox: true),
+                                                              completion: { _ in
+                                                              }))
 
                             expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
                         }
@@ -219,18 +162,54 @@ final class PusherStoreSpec: QuickSpec {
 
                     context("When APNS returns a success") {
                         it("should return an error") {
-                            let store = PusherStore(apnsPusher: apnsPusherMock,
-                                                    router: router)
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(invalidJSONstring,
-                                                             destination: .device,
-                                                             deviceToken: "1234",
-                                                             appBundleID: "com.myapp",
-                                                             priority: 0,
-                                                             collapseID: nil,
-                                                             sandbox: true,
-                                                             completion: { _ in
-                                                             }))
+                            store.dispatch(actionType: .push(.apnsData(payload: invalidJSONstring,
+                                                                       destination: .iOSDevice,
+                                                                       deviceToken: "1234",
+                                                                       appBundleID: "com.myapp",
+                                                                       priority: 0,
+                                                                       collapseID: nil,
+                                                                       sandbox: true),
+                                                              completion: { _ in
+                                                              }))
+
+                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                        }
+                    }
+
+                    context("When FCM returns an error") {
+                        beforeEach {
+                            store = PusherStore(apnsPusher: apnsPusherMock, fcmPusher: failedFCMPusherMock, router: router)
+                        }
+
+                        it("should return an error") {
+                            store.subscribe(observer)
+                            store.dispatch(actionType: .push(.fcmData(payload: invalidJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: nil,
+                                                                      collapseID: nil,
+                                                                      legacyFCM: true),
+                                                              completion: { _ in
+                                                              }))
+
+                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                        }
+                    }
+
+                    context("When FCM returns a success") {
+                        it("should return an error") {
+                            store.subscribe(observer)
+                            store.dispatch(actionType: .push(.fcmData(payload: invalidJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: nil,
+                                                                      collapseID: nil,
+                                                                      legacyFCM: true),
+                                                              completion: { _ in
+                                                              }))
 
                             expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
                         }
@@ -239,21 +218,23 @@ final class PusherStoreSpec: QuickSpec {
 
                 context("When the JSON string is valid") {
                     context("When APNS returns an error") {
+                        beforeEach {
+                            store = PusherStore(apnsPusher: failedAPNSMock, fcmPusher: fcmPusherMock, router: router)
+                        }
+
                         it("should return error") {
                             var failure = false
-                            let store = PusherStore(apnsPusher: failedAPNSMock,
-                                                    router: router)
 
-                            store.dispatch(actionType: .push(validJSONstring,
-                                                             destination: .device,
-                                                             deviceToken: "1234",
-                                                             appBundleID: "com.myapp",
-                                                             priority: 0,
-                                                             collapseID: nil,
-                                                             sandbox: true,
-                                                             completion: { success in
-                                                                failure = !success
-                                                             }))
+                            store.dispatch(actionType: .push(.apnsData(payload: validJSONstring,
+                                                                       destination: .iOSDevice,
+                                                                       deviceToken: "1234",
+                                                                       appBundleID: "com.myapp",
+                                                                       priority: 0,
+                                                                       collapseID: nil,
+                                                                       sandbox: true),
+                                                              completion: { success in
+                                                                  failure = !success
+                                                              }))
 
                             expect(failure).toEventually(beTrue())
                         }
@@ -262,20 +243,283 @@ final class PusherStoreSpec: QuickSpec {
                     context("When APNS returns a success") {
                         it("should return success") {
                             var success = false
-                            let store = PusherStore(apnsPusher: apnsPusherMock,
-                                                    router: router)
 
-                            store.dispatch(actionType: .push(validJSONstring,
-                                                             destination: .device,
-                                                             deviceToken: "1234",
-                                                             appBundleID: "com.myapp",
-                                                             priority: 0,
-                                                             collapseID: nil,
-                                                             sandbox: true,
+                            store.dispatch(actionType: .push(.apnsData(payload: validJSONstring,
+                                                                       destination: .iOSDevice,
+                                                                       deviceToken: "1234",
+                                                                       appBundleID: "com.myapp",
+                                                                       priority: 0,
+                                                                       collapseID: nil,
+                                                                       sandbox: true),
                                                              completion: { aSuccess in
-                                                                success = aSuccess
+                                                                 success = aSuccess
                                                              }))
 
+                            expect(success).toEventually(beTrue())
+                        }
+                    }
+
+                    context("When FCM returns an error") {
+                        beforeEach {
+                            store = PusherStore(apnsPusher: apnsPusherMock, fcmPusher: failedFCMPusherMock, router: router)
+                        }
+
+                        it("should return an error") {
+                            var failure = false
+
+                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: nil,
+                                                                      collapseID: nil,
+                                                                      legacyFCM: true),
+                                                             completion: { success in
+                                                                 failure = !success
+                                                             }))
+
+                            expect(failure).toEventually(beTrue())
+                        }
+                    }
+
+                    context("When FCM returns a success") {
+                        it("should return an error") {
+                            var success = false
+
+                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: nil,
+                                                                      collapseID: nil,
+                                                                      legacyFCM: true),
+                                                             completion: { aSuccess in
+                                                                 success = aSuccess
+                                                             }))
+
+                            expect(success).toEventually(beTrue())
+                        }
+                    }
+                }
+
+                context("and PushData is FCM type") {
+                    context("and legacy mode is on") {
+                        context("and device token is not provided") {
+
+                            it("should return an error message when token is nil") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: nil,
+                                                                          serverKey: "my.key",
+                                                                          projectID: nil,
+                                                                          collapseID: nil,
+                                                                          legacyFCM: true),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.device.token".localized))
+                            }
+
+                            it("should return an error message when token is empty") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "",
+                                                                          serverKey: "my.key",
+                                                                          projectID: nil,
+                                                                          collapseID: nil,
+                                                                          legacyFCM: true),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.device.token".localized))
+                            }
+                        }
+
+                        context("and server key is not provided") {
+
+                            it("should return an error message when server key is nil") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: nil,
+                                                                          projectID: nil,
+                                                                          collapseID: nil,
+                                                                          legacyFCM: true),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.server.key".localized))
+                            }
+
+                            it("should return an error message when server key is empty") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: "",
+                                                                          projectID: nil,
+                                                                          collapseID: nil,
+                                                                          legacyFCM: true),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.server.key".localized))
+                            }
+                        }
+
+                        it("should succeed with other (not required) values set to nil") {
+                            var success = false
+
+                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: nil,
+                                                                      collapseID: nil,
+                                                                      legacyFCM: true),
+                                                             completion: { aSuccess in
+                                                                 success = aSuccess
+                                                             }))
+                            expect(success).toEventually(beTrue())
+                        }
+                    }
+
+                    context("and legacy mode is off") {
+                        context("and device token is not provided") {
+
+                            it("should return an error message when token is nil") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: nil,
+                                                                          serverKey: "my.key",
+                                                                          projectID: "project.id",
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.device.token".localized))
+                            }
+
+                            it("should return an error message when token is empty") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "",
+                                                                          serverKey: "my.key",
+                                                                          projectID: "project.id",
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.device.token".localized))
+                            }
+                        }
+
+                        context("and server key is not provided") {
+
+                            it("should return an error message when server key is nil") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: nil,
+                                                                          projectID: "project.id",
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.server.key".localized))
+                            }
+
+                            it("should return an error message when server key is empty") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: "",
+                                                                          projectID: "project.id",
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.a.server.key".localized))
+                            }
+                        }
+
+                        context("and project id key is not provided") {
+
+                            it("should return an error message when project id is nil") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: "my.key",
+                                                                          projectID: nil,
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.firebase.project.id".localized))
+                            }
+
+                            it("should return an error message when project id is empty") {
+                                var failure = false
+
+                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                          destination: .androidDevice,
+                                                                          deviceToken: "1234",
+                                                                          serverKey: "my.key",
+                                                                          projectID: "",
+                                                                          collapseID: nil,
+                                                                          legacyFCM: false),
+                                                                 completion: { success in
+                                                                     failure = !success
+                                                                 }))
+                                expect(failure).toEventually(beTrue())
+                                expect(router.lastMessage).to(equal("please.enter.firebase.project.id".localized))
+                            }
+                        }
+
+                        it("should succeed with other (not required) values set to nil") {
+                            var success = false
+
+                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
+                                                                      destination: .androidDevice,
+                                                                      deviceToken: "1234",
+                                                                      serverKey: "my.key",
+                                                                      projectID: "project.id",
+                                                                      collapseID: nil,
+                                                                      legacyFCM: false),
+                                                             completion: { aSuccess in
+                                                                 success = aSuccess
+                                                             }))
                             expect(success).toEventually(beTrue())
                         }
                     }
