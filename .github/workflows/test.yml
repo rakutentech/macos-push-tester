@@ -8,10 +8,6 @@ on:
       - 'pusher/**'
   pull_request:
 
-permissions:
-   statuses: write
-   checks: write
-
 jobs:
   unit-test:
     runs-on: macos-12
