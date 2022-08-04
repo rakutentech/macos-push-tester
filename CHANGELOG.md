@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2022-08-04
+- Add SwiftLint
+- PusherMainView Localization
+- Convert PusherStoreTests to BDD
+- Handle ⌘S shortcut and the Save Menu Item in the File Menu
+- Convert APNSTests to BDD
+- Replace print by RLogger.debug in the AppDelegate
+- Allow Undo and Redo in NSTextView with ⌘Z
+- Handle ⇧⌘S shortcut and the Save as... Menu Item in the File Menu
+- Replace pusher by PushTester in Application.xib
+- Show an error alert when the user tries to send an invalid JSON file
+- Handle ⌘O shortcut and the Open File Menu Item
+
 ## [1.2.1] - 2022-02-01
 - Fix TooManyProviderTokenUpdates send to device APNS error
 
