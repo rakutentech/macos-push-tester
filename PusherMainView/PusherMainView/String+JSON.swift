@@ -11,4 +11,8 @@ extension String {
 
         return JSONSerialization.isValidJSONObject(jsonObject)
     }
+
+    var isDefaultPayload: Bool {
+        [DefaultPayloads.apns, DefaultPayloads.fcmLegacy, DefaultPayloads.fcmV1].contains(self)
+    }
 }

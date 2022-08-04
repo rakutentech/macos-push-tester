@@ -14,7 +14,7 @@ protocol FCMPushable {
                              completion: @escaping (Result<String, Error>) -> Void)
 }
 
-class FCMPusher: FCMPushable {
+final class FCMPusher: FCMPushable {
     let session = URLSession(configuration: .ephemeral,
                              delegate: nil,
                              delegateQueue: .main)
@@ -33,24 +33,22 @@ class FCMPusher: FCMPushable {
         }
 
         var updatedPayload = payload
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
-
-        updatedPayload["to"] = token
         if let collapseID = collapseID {
             updatedPayload["collapse_key"] = collapseID
         }
+        // put device token in the payload if it's not defined
+        if updatedPayload["to"] == nil {
+            updatedPayload["to"] = token
+        }
 
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: updatedPayload, options: .prettyPrinted) else {
             completion(.failure(NSError(domain: "com.pusher.FCMPusher",
                                         code: 0,
                                         userInfo: [NSLocalizedDescriptionKey: "Payload error"])))
             return
         }
 
-        request.httpBody = httpBody
+        let request = URLRequest.fcmRequest(url: url, httpBody: httpBody, authHeaderValue: "key=\(serverKey)")
 
         session.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -111,24 +109,25 @@ class FCMPusher: FCMPushable {
         }
 
         var updatedPayload = payload
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(serverKey)", forHTTPHeaderField: "Authorization")
-
-        updatedPayload["token"] = token
         if let collapseID = collapseID {
             updatedPayload["collapse_key"] = collapseID
         }
+        // put device token in the payload if it's not defined
+        if var messageBody = updatedPayload["message"] as? [String: Any] {
+            if messageBody["token"] == nil {
+                messageBody["token"] = token
+                updatedPayload["message"] = messageBody
+            }
+        }
 
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: ["message": payload], options: .prettyPrinted) else {
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: updatedPayload, options: .prettyPrinted) else {
             completion(.failure(NSError(domain: "com.pusher.FCMPusher",
                                         code: 0,
                                         userInfo: [NSLocalizedDescriptionKey: "Payload error"])))
             return
         }
 
-        request.httpBody = httpBody
+        let request = URLRequest.fcmRequest(url: url, httpBody: httpBody, authHeaderValue: "Bearer \(serverKey)")
 
         session.dataTask(with: request) { data, response, error in
             if let error = error {

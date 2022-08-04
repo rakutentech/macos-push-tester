@@ -146,13 +146,13 @@ final class PusherStoreSpec: QuickSpec {
 
                         it("should return an error") {
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(.apnsData(payload: invalidJSONstring,
-                                                                       destination: .iOSDevice,
-                                                                       deviceToken: "1234",
-                                                                       appBundleID: "com.myapp",
-                                                                       priority: 0,
-                                                                       collapseID: nil,
-                                                                       sandbox: true),
+                            store.dispatch(actionType: .push(.apns(APNSPushData(payload: invalidJSONstring,
+                                                                                destination: .iOSDevice,
+                                                                                deviceToken: "1234",
+                                                                                appBundleID: "com.myapp",
+                                                                                priority: 0,
+                                                                                collapseID: nil,
+                                                                                sandbox: true)),
                                                               completion: { _ in
                                                               }))
 
@@ -163,13 +163,13 @@ final class PusherStoreSpec: QuickSpec {
                     context("When APNS returns a success") {
                         it("should return an error") {
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(.apnsData(payload: invalidJSONstring,
-                                                                       destination: .iOSDevice,
-                                                                       deviceToken: "1234",
-                                                                       appBundleID: "com.myapp",
-                                                                       priority: 0,
-                                                                       collapseID: nil,
-                                                                       sandbox: true),
+                            store.dispatch(actionType: .push(.apns(APNSPushData(payload: invalidJSONstring,
+                                                                                destination: .iOSDevice,
+                                                                                deviceToken: "1234",
+                                                                                appBundleID: "com.myapp",
+                                                                                priority: 0,
+                                                                                collapseID: nil,
+                                                                                sandbox: true)),
                                                               completion: { _ in
                                                               }))
 
@@ -184,13 +184,13 @@ final class PusherStoreSpec: QuickSpec {
 
                         it("should return an error") {
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(.fcmData(payload: invalidJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: nil,
-                                                                      collapseID: nil,
-                                                                      legacyFCM: true),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: invalidJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: nil,
+                                                                              collapseID: nil,
+                                                                              legacyFCM: true)),
                                                               completion: { _ in
                                                               }))
 
@@ -201,13 +201,13 @@ final class PusherStoreSpec: QuickSpec {
                     context("When FCM returns a success") {
                         it("should return an error") {
                             store.subscribe(observer)
-                            store.dispatch(actionType: .push(.fcmData(payload: invalidJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: nil,
-                                                                      collapseID: nil,
-                                                                      legacyFCM: true),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: invalidJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: nil,
+                                                                              collapseID: nil,
+                                                                              legacyFCM: true)),
                                                               completion: { _ in
                                                               }))
 
@@ -225,13 +225,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should return error") {
                             var failure = false
 
-                            store.dispatch(actionType: .push(.apnsData(payload: validJSONstring,
-                                                                       destination: .iOSDevice,
-                                                                       deviceToken: "1234",
-                                                                       appBundleID: "com.myapp",
-                                                                       priority: 0,
-                                                                       collapseID: nil,
-                                                                       sandbox: true),
+                            store.dispatch(actionType: .push(.apns(APNSPushData(payload: validJSONstring,
+                                                                                destination: .iOSDevice,
+                                                                                deviceToken: "1234",
+                                                                                appBundleID: "com.myapp",
+                                                                                priority: 0,
+                                                                                collapseID: nil,
+                                                                                sandbox: true)),
                                                               completion: { success in
                                                                   failure = !success
                                                               }))
@@ -244,13 +244,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should return success") {
                             var success = false
 
-                            store.dispatch(actionType: .push(.apnsData(payload: validJSONstring,
-                                                                       destination: .iOSDevice,
-                                                                       deviceToken: "1234",
-                                                                       appBundleID: "com.myapp",
-                                                                       priority: 0,
-                                                                       collapseID: nil,
-                                                                       sandbox: true),
+                            store.dispatch(actionType: .push(.apns(APNSPushData(payload: validJSONstring,
+                                                                                destination: .iOSDevice,
+                                                                                deviceToken: "1234",
+                                                                                appBundleID: "com.myapp",
+                                                                                priority: 0,
+                                                                                collapseID: nil,
+                                                                                sandbox: true)),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))
@@ -267,13 +267,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should return an error") {
                             var failure = false
 
-                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: nil,
-                                                                      collapseID: nil,
-                                                                      legacyFCM: true),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: nil,
+                                                                              collapseID: nil,
+                                                                              legacyFCM: true)),
                                                              completion: { success in
                                                                  failure = !success
                                                              }))
@@ -286,13 +286,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should return an error") {
                             var success = false
 
-                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: nil,
-                                                                      collapseID: nil,
-                                                                      legacyFCM: true),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: nil,
+                                                                              collapseID: nil,
+                                                                              legacyFCM: true)),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))
@@ -309,13 +309,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when token is nil") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: nil,
-                                                                          serverKey: "my.key",
-                                                                          projectID: nil,
-                                                                          collapseID: nil,
-                                                                          legacyFCM: true),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: nil,
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: nil,
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: true)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -326,13 +326,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when token is empty") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "",
-                                                                          serverKey: "my.key",
-                                                                          projectID: nil,
-                                                                          collapseID: nil,
-                                                                          legacyFCM: true),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "",
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: nil,
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: true)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -346,13 +346,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when server key is nil") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: nil,
-                                                                          projectID: nil,
-                                                                          collapseID: nil,
-                                                                          legacyFCM: true),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: nil,
+                                                                                  projectID: nil,
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: true)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -363,13 +363,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when server key is empty") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: "",
-                                                                          projectID: nil,
-                                                                          collapseID: nil,
-                                                                          legacyFCM: true),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: "",
+                                                                                  projectID: nil,
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: true)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -381,13 +381,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should succeed with other (not required) values set to nil") {
                             var success = false
 
-                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: nil,
-                                                                      collapseID: nil,
-                                                                      legacyFCM: true),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: nil,
+                                                                              collapseID: nil,
+                                                                              legacyFCM: true)),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))
@@ -401,13 +401,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when token is nil") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: nil,
-                                                                          serverKey: "my.key",
-                                                                          projectID: "project.id",
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: nil,
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: "project.id",
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -418,13 +418,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when token is empty") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "",
-                                                                          serverKey: "my.key",
-                                                                          projectID: "project.id",
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "",
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: "project.id",
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -438,13 +438,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when server key is nil") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: nil,
-                                                                          projectID: "project.id",
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: nil,
+                                                                                  projectID: "project.id",
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -455,13 +455,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when server key is empty") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: "",
-                                                                          projectID: "project.id",
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: "",
+                                                                                  projectID: "project.id",
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -475,13 +475,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when project id is nil") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: "my.key",
-                                                                          projectID: nil,
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: nil,
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -492,13 +492,13 @@ final class PusherStoreSpec: QuickSpec {
                             it("should return an error message when project id is empty") {
                                 var failure = false
 
-                                store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                          destination: .androidDevice,
-                                                                          deviceToken: "1234",
-                                                                          serverKey: "my.key",
-                                                                          projectID: "",
-                                                                          collapseID: nil,
-                                                                          legacyFCM: false),
+                                store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                                  destination: .androidDevice,
+                                                                                  deviceToken: "1234",
+                                                                                  serverKey: "my.key",
+                                                                                  projectID: "",
+                                                                                  collapseID: nil,
+                                                                                  legacyFCM: false)),
                                                                  completion: { success in
                                                                      failure = !success
                                                                  }))
@@ -510,13 +510,13 @@ final class PusherStoreSpec: QuickSpec {
                         it("should succeed with other (not required) values set to nil") {
                             var success = false
 
-                            store.dispatch(actionType: .push(.fcmData(payload: validJSONstring,
-                                                                      destination: .androidDevice,
-                                                                      deviceToken: "1234",
-                                                                      serverKey: "my.key",
-                                                                      projectID: "project.id",
-                                                                      collapseID: nil,
-                                                                      legacyFCM: false),
+                            store.dispatch(actionType: .push(.fcm(FCMPushData(payload: validJSONstring,
+                                                                              destination: .androidDevice,
+                                                                              deviceToken: "1234",
+                                                                              serverKey: "my.key",
+                                                                              projectID: "project.id",
+                                                                              collapseID: nil,
+                                                                              legacyFCM: false)),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))

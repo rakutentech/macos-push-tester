@@ -6,11 +6,13 @@
 
 # The macOS Push Tester App
 
-The macOS Push Tester App allows you to send push notifications through APNS (Apple Push Notification Service) and receive them on a device.
+The macOS Push Tester App allows you to send push notifications through APNS (Apple Push Notification Service) or FCM (Firebase Cloud Messaging) and receive them on a device or simulator/emulator.
+
+Android emulators must enable the Google API for Google Play services.
 
 It can also get device tokens from any iPhone on the same wifi network.
 
-**Notice**: This app was created to be used by the SSED SDK team internally. Anyone is free to use it but please be aware that it is unsupported.
+**Notice**: This app was created to be used by the Rakuten SDK team internally. Anyone is free to use it but please be aware that it is unsupported.
 
 ## How to build/run from source
 
@@ -112,5 +114,7 @@ extension Data {
 
 ## UI Preview
 
-![Send push notification to device](preview-push-device.png)
-![Send push notification to simulator](preview-push-simulator.png)
+![Send push notification to iOS device](preview-push-ios-device.png)
+![Send push notification to iOS simulator](preview-push-ios-simulator.png)
+![Send push notification to Android device](preview-push-android-device.png)
+

@@ -65,7 +65,7 @@ public final class PusherViewController: NSViewController {
         payloadTextView.isRichText = false
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
-        payloadTextView.string = "{\n\t\"aps\":{\n\t\t\"alert\":\"Test\",\n\t\t\"sound\":\"default\",\n\t\t\"badge\":1\n\t}\n}"
+        payloadTextView.string = DefaultPayloads.apns
         payloadTextView.delegate = self
 
         pusherStore.subscribe(self)
@@ -74,6 +74,22 @@ public final class PusherViewController: NSViewController {
     public override func viewDidAppear() {
         super.viewDidAppear()
         pusherStore.dispatch(actionType: .configure)
+    }
+
+    private func updateDefaultPayload(state: PusherState) {
+        guard payloadTextView.string.isDefaultPayload else {
+            return
+        }
+
+        if state.androidDeviceRadioState == .on {
+            if state.legacyFCMCheckboxState == .on {
+                payloadTextView.string = DefaultPayloads.fcmLegacy
+            } else {
+                payloadTextView.string = DefaultPayloads.fcmV1
+            }
+        } else {
+            payloadTextView.string = DefaultPayloads.apns
+        }
     }
 
     // MARK: - Actions
@@ -127,17 +143,25 @@ public final class PusherViewController: NSViewController {
 
     @IBAction func sendPush(_ sender: Any) {
         let isAndroidSelected = sendToAndroidDeviceButton.state == .on
-        pusherStore.dispatch(actionType: .push(PushData(
-            payload: payloadTextView.string,
-            destination: selectedDestination,
-            deviceToken: deviceTokenTextField.stringValue,
-            serverKey: serverKeyTextField.stringValue,
-            appBundleID: isAndroidSelected ? nil : appOrProjectIDTextField.stringValue,
-            projectID: isAndroidSelected ? appOrProjectIDTextField.stringValue : nil,
-            priority: priorityTextField?.integerValue ?? 10,
-            collapseID: collapseIdTextField.stringValue,
-            sandbox: sandBoxCheckBox.state.rawValue == 1,
-            legacyFCM: legacyFCMCheckbox.state == .on)) { _ in })
+        if isAndroidSelected {
+            pusherStore.dispatch(actionType: .push(.fcm(FCMPushData(
+                payload: payloadTextView.string,
+                destination: selectedDestination,
+                deviceToken: deviceTokenTextField.stringValue,
+                serverKey: serverKeyTextField.stringValue,
+                projectID: appOrProjectIDTextField.stringValue,
+                collapseID: collapseIdTextField.stringValue,
+                legacyFCM: legacyFCMCheckbox.state == .on))) { _ in })
+        } else {
+            pusherStore.dispatch(actionType: .push(.apns(APNSPushData(
+                payload: payloadTextView.string,
+                destination: selectedDestination,
+                deviceToken: deviceTokenTextField.stringValue,
+                appBundleID: appOrProjectIDTextField.stringValue,
+                priority: priorityTextField?.integerValue ?? 10,
+                collapseID: collapseIdTextField.stringValue,
+                sandbox: sandBoxCheckBox.state.rawValue == 1))) { _ in })
+        }
     }
 
     @IBAction func selectDevice(_ sender: Any) {
@@ -169,6 +193,8 @@ extension PusherViewController: PusherInteractable {
         } else {
             appOrProjectIDTextField.placeholderString = "enter.your.app.bundle.id".localized
         }
+
+        updateDefaultPayload(state: state)
     }
 
     func newErrorState(_ errorState: ErrorState) {

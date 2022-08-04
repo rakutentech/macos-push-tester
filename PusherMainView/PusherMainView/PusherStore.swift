@@ -71,103 +71,112 @@ final class PusherStore {
 
     private func push(data pushData: PushData,
                       completion: @escaping (Bool) -> Void) {
+        switch pushData {
+        case .apns(let data):
+            switch data.destination {
 
-        switch pushData.destination {
-
-        case .iOSSimulator:
-            guard let appBundleID = pushData.appBundleID, !appBundleID.isEmpty else {
-                router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            apnsPusher.pushToSimulator(payload: pushData.payload, appBundleID: appBundleID) { [weak self] result in
-                self?.handlePushResult(result, calling: completion)
-            }
-
-        case .iOSDevice:
-            guard let appBundleID = pushData.appBundleID, !appBundleID.isEmpty else {
-                router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            if case .none = apnsPusher.type {
-                router.show(message: "please.select.an.apns.method".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
-                router.show(message: "please.select.an.apns.certificate".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let deviceToken = pushData.deviceToken, !deviceToken.isEmpty else {
-                router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let data = pushData.payload.data(using: .utf8),
-                  let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-                completion(false)
-                return
-            }
-
-            apnsPusher.pushToDevice(deviceToken,
-                                    payload: payload,
-                                    withTopic: appBundleID,
-                                    priority: pushData.priority,
-                                    collapseID: pushData.collapseID,
-                                    inSandbox: pushData.sandbox,
-                                    completion: { [weak self] result in
-                                        self?.handlePushResult(result, calling: completion)
-                                    })
-
-        case .androidDevice:
-            guard let deviceToken = pushData.deviceToken, !deviceToken.isEmpty else {
-                router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let serverKey = pushData.serverKey, !serverKey.isEmpty else {
-                router.show(message: "please.enter.a.server.key".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let data = pushData.payload.data(using: .utf8),
-                  let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-                completion(false)
-                return
-            }
-
-            if pushData.legacyFCM {
-                fcmPusher.pushUsingLegacyEndpoint(deviceToken,
-                                                  payload: payload,
-                                                  collapseID: pushData.collapseID,
-                                                  serverKey: serverKey,
-                                                  completion: { [weak self] result in
-                                                      self?.handlePushResult(result, calling: completion)
-                                                  })
-            } else {
-                guard let projectID = pushData.projectID, !projectID.isEmpty else {
-                    router.show(message: "please.enter.firebase.project.id".localized, window: NSApplication.shared.windows.first)
+            case .iOSSimulator:
+                guard let appBundleID = data.appBundleID, !appBundleID.isEmpty else {
+                    router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
                     completion(false)
                     return
                 }
 
-                fcmPusher.pushUsingV1Endpoint(deviceToken,
-                                              payload: payload,
-                                              collapseID: pushData.collapseID,
-                                              serverKey: serverKey,
-                                              projectID: projectID,
-                                              completion: { [weak self] result in
-                                                  self?.handlePushResult(result, calling: completion)
-                                              })
+                apnsPusher.pushToSimulator(payload: data.payload, appBundleID: appBundleID) { [weak self] result in
+                    self?.handlePushResult(result, calling: completion)
+                }
+
+            case .iOSDevice:
+                guard let appBundleID = data.appBundleID, !appBundleID.isEmpty else {
+                    router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                if case .none = apnsPusher.type {
+                    router.show(message: "please.select.an.apns.method".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
+                    router.show(message: "please.select.an.apns.certificate".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let deviceToken = data.deviceToken, !deviceToken.isEmpty else {
+                    router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let payloadData = data.payload.data(using: .utf8),
+                      let payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
+                    completion(false)
+                    return
+                }
+
+                apnsPusher.pushToDevice(deviceToken,
+                                        payload: payload,
+                                        withTopic: appBundleID,
+                                        priority: data.priority,
+                                        collapseID: data.collapseID,
+                                        inSandbox: data.sandbox,
+                                        completion: { [weak self] result in
+                                            self?.handlePushResult(result, calling: completion)
+                                        })
+
+            case .androidDevice: ()
+            }
+        case .fcm(let data):
+            switch data.destination {
+
+            case .androidDevice:
+                guard let deviceToken = data.deviceToken, !deviceToken.isEmpty else {
+                    router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let serverKey = data.serverKey, !serverKey.isEmpty else {
+                    router.show(message: "please.enter.a.server.key".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let payloadData = data.payload.data(using: .utf8),
+                      let payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
+                    completion(false)
+                    return
+                }
+
+                if data.legacyFCM {
+                    fcmPusher.pushUsingLegacyEndpoint(deviceToken,
+                                                      payload: payload,
+                                                      collapseID: data.collapseID,
+                                                      serverKey: serverKey,
+                                                      completion: { [weak self] result in
+                                                          self?.handlePushResult(result, calling: completion)
+                                                      })
+                } else {
+                    guard let projectID = data.projectID, !projectID.isEmpty else {
+                        router.show(message: "please.enter.firebase.project.id".localized, window: NSApplication.shared.windows.first)
+                        completion(false)
+                        return
+                    }
+
+                    fcmPusher.pushUsingV1Endpoint(deviceToken,
+                                                  payload: payload,
+                                                  collapseID: data.collapseID,
+                                                  serverKey: serverKey,
+                                                  projectID: projectID,
+                                                  completion: { [weak self] result in
+                                                      self?.handlePushResult(result, calling: completion)
+                                                  })
+                }
+
+            case .iOSSimulator, .iOSDevice: ()
             }
         }
     }
