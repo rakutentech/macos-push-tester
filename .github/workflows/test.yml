@@ -6,7 +6,12 @@ on:
       - 'APNS/**'
       - 'PusherMainView/**'
       - 'pusher/**'
-  pull_request:
+  pull_request_target:
+
+permissions:
+  actions: write
+  checks: read
+  contents: read
 
 jobs:
   unit-test:
