@@ -10,6 +10,9 @@ on:
 
 permissions:
   checks: read
+  actions: write
+  checks: read
+  contents: read
 
 jobs:
   unit-test:
