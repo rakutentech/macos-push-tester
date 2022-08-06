@@ -8,12 +8,6 @@ on:
       - 'pusher/**'
   pull_request_target:
 
-permissions:
-  checks: read
-  actions: write
-  checks: read
-  contents: read
-
 jobs:
   unit-test:
     runs-on: macos-12
