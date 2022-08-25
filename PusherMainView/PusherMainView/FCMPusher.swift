@@ -33,7 +33,7 @@ final class FCMPusher: FCMPushable {
         }
 
         var updatedPayload = payload
-        if let collapseID = collapseID {
+        if let collapseID = collapseID, !collapseID.isEmpty {
             updatedPayload["collapse_key"] = collapseID
         }
         // put device token in the payload if it's not defined
@@ -69,6 +69,27 @@ final class FCMPusher: FCMPushable {
 
             switch r.statusCode {
             case 200:
+                guard let data = data,
+                      let responseData = try? JSONDecoder().decode(FCMLegacyResponse.self, from: data) else {
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(domain: "com.pusher.FCMPusher",
+                                                    code: r.statusCode,
+                                                    userInfo: [NSLocalizedDescriptionKey: "Cannot parse response data (200)"])))
+                    }
+                    return
+                }
+
+                guard responseData.failure == 0 else {
+                    let results = FCMLegacyResponse.parseResults(data: data) ?? []
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(
+                            domain: "com.pusher.FCMPusher",
+                            code: r.statusCode,
+                            userInfo: [NSLocalizedDescriptionKey: "Failures: \(responseData.failure)\n\(results)"])))
+                    }
+                    return
+                }
+
                 DispatchQueue.main.async {
                     completion(.success(HTTPURLResponse.localizedString(forStatusCode: r.statusCode)))
                 }
@@ -109,7 +130,7 @@ final class FCMPusher: FCMPushable {
         }
 
         var updatedPayload = payload
-        if let collapseID = collapseID {
+        if let collapseID = collapseID, !collapseID.isEmpty {
             updatedPayload["collapse_key"] = collapseID
         }
         // put device token in the payload if it's not defined
@@ -179,4 +200,14 @@ struct FCMRequestError: Decodable {
     let message: String
     let status: String
     let code: Int
+}
+
+struct FCMLegacyResponse: Decodable {
+    let success: Int
+    let failure: Int
+
+    static func parseResults(data: Data) -> [[String: Any]]? {
+        let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        return json?["results"] as? [[String: Any]]
+    }
 }
