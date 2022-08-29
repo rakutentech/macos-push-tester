@@ -1,5 +1,6 @@
 import Foundation
 import APNS
+import FCM
 @testable import PusherMainView
 
 class APNSPusherMock: APNSPushable {

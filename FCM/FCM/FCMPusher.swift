@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FCMPushable {
+public protocol FCMPushable {
     func pushUsingLegacyEndpoint(_ token: String,
                                  payload: [String: Any],
                                  collapseID: String?,
@@ -14,16 +14,20 @@ protocol FCMPushable {
                              completion: @escaping (Result<String, Error>) -> Void)
 }
 
-final class FCMPusher: FCMPushable {
-    let session = URLSession(configuration: .ephemeral,
-                             delegate: nil,
-                             delegateQueue: .main)
+public final class FCMPusher: FCMPushable {
+    private let session: URLSession
 
-    func pushUsingLegacyEndpoint(_ token: String,
-                                 payload: [String: Any],
-                                 collapseID: String?,
-                                 serverKey: String,
-                                 completion: @escaping (Result<String, Error>) -> Void) {
+    public init(session: URLSession = URLSession(configuration: .ephemeral,
+                                                 delegate: nil,
+                                                 delegateQueue: .main)) {
+        self.session = session
+    }
+
+    public func pushUsingLegacyEndpoint(_ token: String,
+                                        payload: [String: Any],
+                                        collapseID: String?,
+                                        serverKey: String,
+                                        completion: @escaping (Result<String, Error>) -> Void) {
 
         guard let url = URL(string: "https://fcm.googleapis.com/fcm/send") else {
             completion(.failure(NSError(domain: "com.pusher.FCMPusher",
@@ -115,12 +119,12 @@ final class FCMPusher: FCMPushable {
         }.resume()
     }
 
-    func pushUsingV1Endpoint(_ token: String,
-                             payload: [String: Any],
-                             collapseID: String?,
-                             serverKey: String,
-                             projectID: String,
-                             completion: @escaping (Result<String, Error>) -> Void) {
+    public func pushUsingV1Endpoint(_ token: String,
+                                    payload: [String: Any],
+                                    collapseID: String?,
+                                    serverKey: String,
+                                    projectID: String,
+                                    completion: @escaping (Result<String, Error>) -> Void) {
 
         guard let url = URL(string: "https://fcm.googleapis.com/v1/projects/\(projectID)/messages:send") else {
             completion(.failure(NSError(domain: "com.pusher.FCMPusher",
