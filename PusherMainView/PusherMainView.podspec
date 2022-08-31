@@ -8,6 +8,7 @@ Pod::Spec.new do |spec|
   spec.resource_bundles = { 'PusherMainViewResources' => ['PusherMainView/*.strings'] }
   spec.framework    = 'Cocoa'
   spec.dependency 'APNS'
+  spec.dependency 'FCM'
   spec.homepage     = 'https://github.com/rakutentech/macos-push-tester'
   spec.source       = { :git => 'https://github.com/rakutentech/macos-push-tester.git' }
   spec.osx.deployment_target  = '10.13'

@@ -6,14 +6,18 @@
 "enter.apns.collapse.id" = "Enter APNS Collapse ID";
 "enter.your.app.bundle.id" = "Enter your app bundle ID";
 "enter.apns.priority" = "Enter APNS priority";
+"enter.fcm.project.id" = "Enter Firebase Project ID";
+"enter.fcm.server.key" = "Enter Server Key";
 
 // Messages
 "please.enter.team.id" = "Please enter Team ID";
 "please.enter.key.id" = "Please enter Key ID";
 "please.enter.an app.bundle.id" = "Please enter an app bundle ID";
+"please.enter.firebase.project.id" = "Please enter a Firebase Project ID";
 "please.select.an.apns.method" = "Please select an APNS method";
 "please.select.an.apns.certificate" = "Please select an APNS Certificate";
 "please.enter.a.device.token" = "Please enter a Device Token";
+"please.enter.a.server.key" = "Please enter a Server Key";
 "choose.identity" = "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)";
 
 // Error

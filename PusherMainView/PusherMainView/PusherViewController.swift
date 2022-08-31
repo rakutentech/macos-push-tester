@@ -1,27 +1,31 @@
 import Cocoa
 import APNS
+import FCM
 
 public final class PusherViewController: NSViewController {
     @IBOutlet private var deviceTokenTextField: NSTextField!
-    @IBOutlet private var apnsCollapseIdTextField: NSTextField!
+    @IBOutlet private var collapseIdTextField: NSTextField!
     @IBOutlet private var payloadTextView: NSTextView!
-    @IBOutlet private var appBundleIDTextField: NSTextField!
+    @IBOutlet private var appOrProjectIDTextField: NSTextField!
     @IBOutlet private var priorityTextField: NSTextField!
     @IBOutlet private var sandBoxCheckBox: NSButton!
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
     @IBOutlet private var loadJSONFileButton: NSButton!
-    @IBOutlet private var sendToDeviceButton: NSButton!
-    @IBOutlet private var sendToSimulatorButton: NSButton!
+    @IBOutlet private var sendToiOSDeviceButton: NSButton!
+    @IBOutlet private var sendToiOSSimulatorButton: NSButton!
+    @IBOutlet private var sendToAndroidDeviceButton: NSButton!
+    @IBOutlet private var serverKeyTextField: NSTextField!
+    @IBOutlet private var legacyFCMCheckbox: NSButton!
     @IBOutlet private var deviceSettingsControls: DeviceSettingsControls!
     private let pusherStore: PusherInteracting
-    private var selectedDestination = Destination.device
+    private var selectedDestination = Destination.iOSDevice
     private var jsonFileURL: URL?
 
     // MARK: - Init
 
     required init?(coder: NSCoder) {
-        pusherStore = PusherStore(apnsPusher: APNSPusher(), router: Router())
+        pusherStore = PusherStore(apnsPusher: APNSPusher(), fcmPusher: FCMPusher(), router: Router())
         super.init(coder: coder)
         #if DEBUG
         print("\(self.className) init")
@@ -52,16 +56,17 @@ public final class PusherViewController: NSViewController {
         deviceTokenTextField.placeholderString = "enter.device.token".localized
         deviceTokenTextField.delegate = self
 
-        apnsCollapseIdTextField.placeholderString = "enter.apns.collapse.id".localized
-        appBundleIDTextField.placeholderString = "enter.your.app.bundle.id".localized
+        collapseIdTextField.placeholderString = "enter.apns.collapse.id".localized
+        appOrProjectIDTextField.placeholderString = "enter.your.app.bundle.id".localized
         priorityTextField.placeholderString = "enter.apns.priority".localized
+        serverKeyTextField.placeholderString = "enter.fcm.server.key".localized
 
         priorityTextField.stringValue = "10"
 
         payloadTextView.isRichText = false
         payloadTextView.isAutomaticTextCompletionEnabled = false
         payloadTextView.isAutomaticQuoteSubstitutionEnabled = false
-        payloadTextView.string = "{\n\t\"aps\":{\n\t\t\"alert\":\"Test\",\n\t\t\"sound\":\"default\",\n\t\t\"badge\":1\n\t}\n}"
+        payloadTextView.string = DefaultPayloads.apns
         payloadTextView.delegate = self
 
         pusherStore.subscribe(self)
@@ -70,6 +75,22 @@ public final class PusherViewController: NSViewController {
     public override func viewDidAppear() {
         super.viewDidAppear()
         pusherStore.dispatch(actionType: .configure)
+    }
+
+    private func updateDefaultPayload(state: PusherState) {
+        guard payloadTextView.string.isDefaultPayload else {
+            return
+        }
+
+        if state.androidDeviceRadioState == .on {
+            if state.legacyFCMCheckboxState == .on {
+                payloadTextView.string = DefaultPayloads.fcmLegacy
+            } else {
+                payloadTextView.string = DefaultPayloads.fcmV1
+            }
+        } else {
+            payloadTextView.string = DefaultPayloads.apns
+        }
     }
 
     // MARK: - Actions
@@ -100,12 +121,15 @@ public final class PusherViewController: NSViewController {
             return
         }
         switch button {
-        case sendToDeviceButton:
-            selectedDestination = .device
-            pusherStore.dispatch(actionType: .chooseDevice)
-        case sendToSimulatorButton:
-            selectedDestination = .simulator
-            pusherStore.dispatch(actionType: .chooseSimulator)
+        case sendToiOSDeviceButton:
+            selectedDestination = .iOSDevice
+            pusherStore.dispatch(actionType: .chooseiOSDevice)
+        case sendToiOSSimulatorButton:
+            selectedDestination = .iOSSimulator
+            pusherStore.dispatch(actionType: .chooseiOSSimulator)
+        case sendToAndroidDeviceButton:
+            selectedDestination = .androidDevice
+            pusherStore.dispatch(actionType: .chooseAndroidDevice(useLegacyFCM: legacyFCMCheckbox.state == .on))
         default: ()
         }
     }
@@ -119,30 +143,59 @@ public final class PusherViewController: NSViewController {
     }
 
     @IBAction func sendPush(_ sender: Any) {
-        pusherStore.dispatch(actionType: .push(payloadTextView.string,
-                                               destination: selectedDestination,
-                                               deviceToken: deviceTokenTextField.stringValue,
-                                               appBundleID: appBundleIDTextField.stringValue,
-                                               priority: priorityTextField?.integerValue ?? 10,
-                                               collapseID: apnsCollapseIdTextField.stringValue,
-                                               sandbox: sandBoxCheckBox.state.rawValue == 1) { _ in })
+        let isAndroidSelected = sendToAndroidDeviceButton.state == .on
+        if isAndroidSelected {
+            pusherStore.dispatch(actionType: .push(.fcm(FCMPushData(
+                payload: payloadTextView.string,
+                destination: selectedDestination,
+                deviceToken: deviceTokenTextField.stringValue,
+                serverKey: serverKeyTextField.stringValue,
+                projectID: appOrProjectIDTextField.stringValue,
+                collapseID: collapseIdTextField.stringValue,
+                legacyFCM: legacyFCMCheckbox.state == .on))) { _ in })
+        } else {
+            pusherStore.dispatch(actionType: .push(.apns(APNSPushData(
+                payload: payloadTextView.string,
+                destination: selectedDestination,
+                deviceToken: deviceTokenTextField.stringValue,
+                appBundleID: appOrProjectIDTextField.stringValue,
+                priority: priorityTextField?.integerValue ?? 10,
+                collapseID: collapseIdTextField.stringValue,
+                sandbox: sandBoxCheckBox.state.rawValue == 1))) { _ in })
+        }
     }
 
     @IBAction func selectDevice(_ sender: Any) {
         pusherStore.dispatch(actionType: .devicesList(fromViewController: self))
+    }
+
+    @IBAction func setLegacyFCM(_ sender: Any) {
+        pusherStore.dispatch(actionType: .chooseAndroidDevice(useLegacyFCM: legacyFCMCheckbox.state == .on))
     }
 }
 
 extension PusherViewController: PusherInteractable {
     func newState(state: PusherState) {
         deviceTokenTextField.stringValue = state.deviceTokenString
-        appBundleIDTextField.stringValue = state.appID
+        appOrProjectIDTextField.stringValue = state.appOrProjectID
+        serverKeyTextField.stringValue = state.serverKeyString
         apnsCertificateRadioButton.state = state.certificateRadioState
         apnsAuthTokenRadioButton.state = state.authTokenRadioState
-        sendToDeviceButton.state = state.deviceRadioState
-        sendToSimulatorButton.state = state.simulatorRadioState
-        deviceSettingsControls.set(visible: state.deviceRadioState == .on)
+        sendToiOSDeviceButton.state = state.iOSDeviceRadioState
+        sendToiOSSimulatorButton.state = state.iOSSimulatorRadioState
+        sendToAndroidDeviceButton.state = state.androidDeviceRadioState
+        legacyFCMCheckbox.state = state.legacyFCMCheckboxState
+        appOrProjectIDTextField.isHidden = state.androidDeviceRadioState == .on && state.legacyFCMCheckboxState == .on
+        deviceSettingsControls.setVisible(for: selectedDestination)
         view.window?.title = state.appTitle
+
+        if state.androidDeviceRadioState == .on {
+            appOrProjectIDTextField.placeholderString = "enter.fcm.project.id".localized
+        } else {
+            appOrProjectIDTextField.placeholderString = "enter.your.app.bundle.id".localized
+        }
+
+        updateDefaultPayload(state: state)
     }
 
     func newErrorState(_ errorState: ErrorState) {
@@ -180,15 +233,26 @@ extension PusherViewController: NSTextViewDelegate {
     @IBOutlet private weak var selectDeviceButtonContainer: NSView!
     @IBOutlet private weak var apnsButtonsContainer: NSView!
     @IBOutlet private weak var priorityTextField: NSTextField!
-    @IBOutlet private weak var apnsCollapseIdTextField: NSTextField!
+    @IBOutlet private weak var collapseIdTextField: NSTextField!
     @IBOutlet private weak var sandBoxCheckBox: NSButton!
+    @IBOutlet private weak var serverKeyTextFieldContainter: NSView!
 
-    private var allControls: [NSView] {
+    private var iOSControls: [NSView] {
         [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer,
-         priorityTextField, apnsCollapseIdTextField, sandBoxCheckBox]
+         priorityTextField, collapseIdTextField, sandBoxCheckBox]
+    }
+    private var androidControls: [NSView] {
+        [deviceTokenTextField, serverKeyTextFieldContainter, collapseIdTextField]
     }
 
-    func set(visible: Bool) {
-        allControls.forEach { $0.isHidden = !visible }
+    func setVisible(for destination: Destination) {
+        (iOSControls + androidControls).forEach { $0.isHidden = true }
+        switch destination {
+        case .iOSDevice:
+            iOSControls.forEach { $0.isHidden = false }
+        case .androidDevice:
+            androidControls.forEach { $0.isHidden = false }
+        case .iOSSimulator: ()
+        }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="XfG-lQ-9wD">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="XfG-lQ-9wD">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,47 +11,67 @@
             <objects>
                 <viewController storyboardIdentifier="PusherViewController" id="XfG-lQ-9wD" customClass="PusherViewController" customModule="PusherMainView" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="556"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="683"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un2-So-heS">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="556"/>
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="683"/>
                                 <subviews>
-                                    <customView verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="S2A-G2-TyE">
-                                        <rect key="frame" x="10" y="522" width="460" height="24"/>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s8c-0S-uY8">
+                                        <rect key="frame" x="169" y="657" width="162" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Send Push Notification to:" id="YXa-GK-g4N">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <stackView distribution="equalCentering" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pet-Fs-B0L">
+                                        <rect key="frame" x="20" y="629" width="460" height="20"/>
                                         <subviews>
-                                            <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GNs-jJ-Epg" userLabel="Send Push to Device Radio Button">
-                                                <rect key="frame" x="18" y="3" width="152" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="Send Push to Device" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="gtT-EB-7gI">
+                                            <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozQ-IO-Xuj">
+                                                <rect key="frame" x="18" y="3" width="93" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="iOS Device" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8EV-gQ-YHz">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="chooseDestination:" target="XfG-lQ-9wD" id="jcq-En-54r"/>
+                                                    <action selector="chooseDestination:" target="XfG-lQ-9wD" id="Rh3-Iy-Jbg"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Nl-Ae-XeN" userLabel="Send Push to Simulator Radio Button">
-                                                <rect key="frame" x="272" y="3" width="168" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="Send Push to Simulator" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="sLW-C3-yVt">
+                                            <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wYK-KR-0MI">
+                                                <rect key="frame" x="166" y="3" width="119" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Android Device" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="reP-a5-v6u">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="chooseDestination:" target="XfG-lQ-9wD" id="oLh-CW-zuy"/>
+                                                    <action selector="chooseDestination:" target="XfG-lQ-9wD" id="all-u4-0Sf"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zee-HU-n3M">
+                                                <rect key="frame" x="331" y="3" width="109" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="iOS Simulator" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kda-ow-312">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="chooseDestination:" target="XfG-lQ-9wD" id="SQi-v8-1pe"/>
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="GNs-jJ-Epg" secondAttribute="bottom" constant="4" id="MwI-gK-5Wc"/>
-                                            <constraint firstAttribute="trailing" secondItem="9Nl-Ae-XeN" secondAttribute="trailing" constant="20" id="P5b-SR-7sn"/>
-                                            <constraint firstAttribute="bottom" secondItem="9Nl-Ae-XeN" secondAttribute="bottom" constant="4" id="eOr-67-puU"/>
-                                            <constraint firstItem="9Nl-Ae-XeN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GNs-jJ-Epg" secondAttribute="trailing" id="l49-Kr-HFK"/>
-                                            <constraint firstItem="GNs-jJ-Epg" firstAttribute="leading" secondItem="S2A-G2-TyE" secondAttribute="leading" constant="20" id="r9I-xY-auL"/>
-                                            <constraint firstItem="9Nl-Ae-XeN" firstAttribute="top" secondItem="S2A-G2-TyE" secondAttribute="top" constant="4" id="tQl-86-TGD"/>
-                                            <constraint firstItem="GNs-jJ-Epg" firstAttribute="top" secondItem="S2A-G2-TyE" secondAttribute="top" constant="4" id="yGE-BK-WuH"/>
-                                        </constraints>
-                                    </customView>
+                                        <edgeInsets key="edgeInsets" left="20" right="20" top="0.0" bottom="4"/>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <customView verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="3AL-Oj-nwN">
-                                        <rect key="frame" x="10" y="490" width="460" height="24"/>
+                                        <rect key="frame" x="20" y="597" width="460" height="24"/>
                                         <subviews>
                                             <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f46-vh-scI" userLabel="APNS Certificate Radio Button">
                                                 <rect key="frame" x="18" y="3" width="128" height="18"/>
@@ -84,8 +104,39 @@
                                             <constraint firstAttribute="bottom" secondItem="f46-vh-scI" secondAttribute="bottom" constant="4" id="mAa-UM-Yg0"/>
                                         </constraints>
                                     </customView>
+                                    <customView verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Xfq-t5-fsa">
+                                        <rect key="frame" x="20" y="568" width="460" height="21"/>
+                                        <subviews>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tlw-Fe-Wpy" userLabel="Server Key Text Field">
+                                                <rect key="frame" x="0.0" y="0.0" width="376" height="21"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2AY-PC-fek">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lbk-t7-SaY">
+                                                <rect key="frame" x="390" y="2" width="70" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Legacy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="k0F-yR-AzE">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="setLegacyFCM:" target="XfG-lQ-9wD" id="Hg9-lk-Rpb"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Lbk-t7-SaY" secondAttribute="trailing" id="BjW-h1-433"/>
+                                            <constraint firstAttribute="bottom" secondItem="tlw-Fe-Wpy" secondAttribute="bottom" id="Jnw-hB-kIe"/>
+                                            <constraint firstItem="Lbk-t7-SaY" firstAttribute="leading" secondItem="tlw-Fe-Wpy" secondAttribute="trailing" constant="16" id="LSm-HG-ABf"/>
+                                            <constraint firstItem="Lbk-t7-SaY" firstAttribute="centerY" secondItem="Xfq-t5-fsa" secondAttribute="centerY" id="Xp3-AI-M63"/>
+                                            <constraint firstItem="tlw-Fe-Wpy" firstAttribute="top" secondItem="Xfq-t5-fsa" secondAttribute="top" id="xYl-sf-DD7"/>
+                                            <constraint firstItem="tlw-Fe-Wpy" firstAttribute="leading" secondItem="Xfq-t5-fsa" secondAttribute="leading" id="zCj-zL-3bA"/>
+                                        </constraints>
+                                    </customView>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9fc-I7-7eG" userLabel="Device Token Text Field">
-                                        <rect key="frame" x="10" y="461" width="460" height="21"/>
+                                        <rect key="frame" x="20" y="539" width="460" height="21"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2EO-2B-8B4">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -93,7 +144,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qxe-qT-Lqe">
-                                        <rect key="frame" x="231" y="437" width="19" height="16"/>
+                                        <rect key="frame" x="241" y="515" width="19" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Or" id="mvn-Rz-XZo">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -101,7 +152,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="FJP-q7-OGw">
-                                        <rect key="frame" x="10" y="403" width="460" height="26"/>
+                                        <rect key="frame" x="20" y="481" width="460" height="26"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8vp-KJ-t7U">
                                                 <rect key="frame" x="167" y="-1" width="127" height="32"/>
@@ -123,17 +174,17 @@
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="249" verticalCompressionResistancePriority="749" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvz-5c-Eka" userLabel="Push Json Text View">
-                                        <rect key="frame" x="10" y="251" width="460" height="144"/>
+                                        <rect key="frame" x="20" y="285" width="460" height="188"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="cRx-BA-Y7B">
-                                            <rect key="frame" x="0.0" y="0.0" width="460" height="144"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="460" height="188"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsUndo="YES" spellingCorrection="YES" smartInsertDelete="YES" id="OgG-Ak-can">
-                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="144"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="188"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="460" height="144"/>
+                                                    <size key="minSize" width="460" height="188"/>
                                                     <size key="maxSize" width="550" height="10000000"/>
                                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 </textView>
@@ -147,15 +198,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Kpg-6a-jZy">
-                                            <rect key="frame" x="444" y="0.0" width="16" height="144"/>
+                                            <rect key="frame" x="444" y="0.0" width="16" height="188"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="bFS-SZ-dN4">
-                                        <rect key="frame" x="10" y="223" width="460" height="20"/>
+                                        <rect key="frame" x="20" y="227" width="460" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l8u-BE-8hp">
-                                                <rect key="frame" x="-7" y="-7" width="138" height="32"/>
+                                                <rect key="frame" x="-7" y="-7" width="138" height="62"/>
                                                 <buttonCell key="cell" type="push" title="Load a JSON File" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Brw-1c-qyQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -173,7 +224,7 @@
                                         </constraints>
                                     </customView>
                                     <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drn-pF-WxF">
-                                        <rect key="frame" x="10" y="88" width="460" height="127"/>
+                                        <rect key="frame" x="20" y="92" width="460" height="127"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8SA-5i-DSf" userLabel="APNS Collapse Id Text Field">
                                                 <rect key="frame" x="0.0" y="94" width="460" height="21"/>
@@ -213,17 +264,17 @@
                                         </customSpacing>
                                     </stackView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="blG-ra-9fI">
-                                        <rect key="frame" x="200" y="63" width="79" height="18"/>
+                                        <rect key="frame" x="210" y="67" width="79" height="18"/>
                                         <buttonCell key="cell" type="check" title="Sandbox" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wrh-SG-FTA">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="BoC-nl-vvG">
-                                        <rect key="frame" x="10" y="10" width="460" height="46"/>
+                                        <rect key="frame" x="20" y="10" width="460" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-sK-axC">
-                                                <rect key="frame" x="181" y="-7" width="99" height="32"/>
+                                                <rect key="frame" x="181" y="-7" width="99" height="36"/>
                                                 <buttonCell key="cell" type="push" title="Send Push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Xr-cd-Qeb">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -243,7 +294,13 @@
                                     </customView>
                                 </subviews>
                                 <edgeInsets key="edgeInsets" left="10" right="10" top="10" bottom="10"/>
+                                <constraints>
+                                    <constraint firstItem="Pet-Fs-B0L" firstAttribute="trailing" secondItem="3AL-Oj-nwN" secondAttribute="trailing" id="uip-6Q-o41"/>
+                                    <constraint firstItem="Pet-Fs-B0L" firstAttribute="leading" secondItem="3AL-Oj-nwN" secondAttribute="leading" id="xp9-ec-U32"/>
+                                </constraints>
                                 <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
@@ -256,6 +313,8 @@
                                     <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -281,32 +340,36 @@
                     <connections>
                         <outlet property="apnsAuthTokenRadioButton" destination="ttU-Tn-M4j" id="4Td-oc-58F"/>
                         <outlet property="apnsCertificateRadioButton" destination="f46-vh-scI" id="5b4-1W-erI"/>
-                        <outlet property="apnsCollapseIdTextField" destination="8SA-5i-DSf" id="kpv-5m-8qL"/>
-                        <outlet property="appBundleIDTextField" destination="pzN-ym-vza" id="Rd2-AO-xKT"/>
+                        <outlet property="appOrProjectIDTextField" destination="pzN-ym-vza" id="Rd2-AO-xKT"/>
+                        <outlet property="collapseIdTextField" destination="8SA-5i-DSf" id="kpv-5m-8qL"/>
                         <outlet property="deviceSettingsControls" destination="XdS-h4-cux" id="Mjw-RS-EHi"/>
-                        <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="F1t-lv-PLD"/>
+                        <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="HxS-dj-CHM"/>
+                        <outlet property="legacyFCMCheckbox" destination="Lbk-t7-SaY" id="u3O-1q-erE"/>
                         <outlet property="loadJSONFileButton" destination="l8u-BE-8hp" id="kva-wA-wbg"/>
                         <outlet property="payloadTextView" destination="OgG-Ak-can" id="sR4-xB-tKA"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="8C5-81-SNr"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="BNx-MA-bP2"/>
-                        <outlet property="sendToDeviceButton" destination="GNs-jJ-Epg" id="KVx-O9-chi"/>
-                        <outlet property="sendToSimulatorButton" destination="9Nl-Ae-XeN" id="GVd-9m-Vgn"/>
+                        <outlet property="sendToAndroidDeviceButton" destination="wYK-KR-0MI" id="oSV-lm-VOj"/>
+                        <outlet property="sendToiOSDeviceButton" destination="ozQ-IO-Xuj" id="IGk-1F-CCg"/>
+                        <outlet property="sendToiOSSimulatorButton" destination="Zee-HU-n3M" id="JE8-q2-9ta"/>
+                        <outlet property="serverKeyTextField" destination="tlw-Fe-Wpy" id="SZx-8C-xcW"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="XdS-h4-cux" customClass="DeviceSettingsControls" customModule="PusherMainView" customModuleProvider="target">
                     <connections>
                         <outlet property="apnsButtonsContainer" destination="3AL-Oj-nwN" id="OTU-8U-ymy"/>
-                        <outlet property="apnsCollapseIdTextField" destination="8SA-5i-DSf" id="qr2-de-Grt"/>
+                        <outlet property="collapseIdTextField" destination="8SA-5i-DSf" id="qr2-de-Grt"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="AD7-Tv-4eH"/>
                         <outlet property="orLabel" destination="qxe-qT-Lqe" id="mye-OB-plI"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="zMa-xp-xR9"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="Bx5-C6-8nr"/>
                         <outlet property="selectDeviceButtonContainer" destination="FJP-q7-OGw" id="t6R-Zq-34L"/>
+                        <outlet property="serverKeyTextFieldContainter" destination="Xfq-t5-fsa" id="c2i-VL-3zg"/>
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="55" y="708.5"/>
+            <point key="canvasLocation" x="-44" y="459.5"/>
         </scene>
         <!--Devices View Controller-->
         <scene sceneID="wsB-0v-r0Y">
@@ -342,7 +405,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView identifier="DeviceTableCellView" id="GMF-BK-cGy">
-                                                            <rect key="frame" x="1" y="1" width="112" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="105" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fft-Cv-hcg">
@@ -378,7 +441,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="tcR-oe-A9j">
-                                                            <rect key="frame" x="109" y="1" width="252" height="17"/>
+                                                            <rect key="frame" x="109" y="1" width="250" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="s2b-bN-BTW">
@@ -414,7 +477,7 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="mqO-Fy-Gd6">
-                                                            <rect key="frame" x="362" y="1" width="96" height="17"/>
+                                                            <rect key="frame" x="362" y="1" width="87" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="E82-xC-f2B">

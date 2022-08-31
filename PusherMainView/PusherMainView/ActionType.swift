@@ -10,21 +10,16 @@ enum ActionType {
     case browsingFiles(fromViewController: NSViewController, completion: (_ fileURL: URL) -> Void)
     case browsingJSONFiles(fromViewController: NSViewController, completion: (_ fileURL: URL, _ text: String) -> Void)
     case selectDevice(device: APNSServiceDevice)
-    case chooseSimulator
-    case chooseDevice
+    case chooseiOSSimulator
+    case chooseiOSDevice
+    case chooseAndroidDevice(useLegacyFCM: Bool)
     case cancelAuthToken
     case saveAuthToken(teamID: String, keyID: String, p8FileURL: URL, p8: String)
     case chooseIdentity(fromViewController: NSViewController)
     case cancelIdentity
     case updateIdentity(identity: SecIdentity)
     case dismiss(fromViewController: NSViewController)
-    case push(_ payloadString: String,
-              destination: Destination,
-              deviceToken: String?,
-              appBundleID: String?,
-              priority: Int,
-              collapseID: String?,
-              sandbox: Bool,
+    case push(_ data: PushData,
               completion: (Bool) -> Void)
     case enableSaveMenuItem
     case saveFile(text: String, fileURL: URL)
@@ -59,11 +54,14 @@ extension ActionType: Equatable {
         case (let .selectDevice(lhsAPNSServiceDevice), let .selectDevice(rhsAPNSServiceDevice)):
             return lhsAPNSServiceDevice == rhsAPNSServiceDevice
 
-        case (.chooseSimulator, .chooseSimulator):
+        case (.chooseiOSSimulator, .chooseiOSSimulator):
             return true
 
-        case (.chooseDevice, .chooseDevice):
+        case (.chooseiOSDevice, .chooseiOSDevice):
             return true
+
+        case (let .chooseAndroidDevice(lhs), let .chooseAndroidDevice(rhs)):
+            return lhs == rhs
 
         case (.cancelAuthToken, .cancelAuthToken):
             return true
@@ -83,15 +81,9 @@ extension ActionType: Equatable {
         case (let .dismiss(lhsViewController), let .dismiss(rhsViewController)):
             return lhsViewController == rhsViewController
 
-        case (let .push(lhs1, lhs2, lhs3, lhs4, lhs5, lhs6, lhs7, _),
-              let .push(rhs1, rhs2, rhs3, rhs4, rhs5, rhs6, rhs7, _)):
-            return lhs1 == rhs1
-                && lhs2 == rhs2
-                && lhs3 == rhs3
-                && lhs4 == rhs4
-                && lhs5 == rhs5
-                && lhs6 == rhs6
-                && lhs7 == rhs7
+        case (let .push(lhs, _),
+              let .push(rhs, _)):
+            return lhs == rhs
 
         case (.enableSaveMenuItem, .enableSaveMenuItem):
             return true

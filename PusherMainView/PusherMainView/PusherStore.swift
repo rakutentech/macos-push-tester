@@ -1,10 +1,12 @@
 import Foundation
 import APNS
+import FCM
 import SecurityInterface.SFChooseIdentityPanel
 
 enum Destination {
-    case device
-    case simulator
+    case iOSDevice
+    case androidDevice
+    case iOSSimulator
 }
 
 struct AuthToken: Codable {
@@ -27,20 +29,25 @@ protocol PusherInteracting {
 
 final class PusherStore {
     private var apnsPusher: APNSPushable
+    private var fcmPusher: FCMPushable
     private let router: Routing
     private let reducer = PusherReducer()
     public private(set) var authToken: AuthToken?
     private var subscribers: [PusherInteractable] = []
     private var state: PusherState = PusherState(deviceTokenString: "",
-                                                 appID: "",
+                                                 serverKeyString: "",
+                                                 appOrProjectID: "",
                                                  certificateRadioState: .off,
                                                  authTokenRadioState: .off,
-                                                 deviceRadioState: .on,
-                                                 simulatorRadioState: .off,
+                                                 iOSDeviceRadioState: .on,
+                                                 iOSSimulatorRadioState: .off,
+                                                 androidDeviceRadioState: .off,
+                                                 legacyFCMCheckboxState: .on,
                                                  appTitle: "")
 
-    init(apnsPusher: APNSPushable, router: Routing) {
+    init(apnsPusher: APNSPushable, fcmPusher: FCMPushable, router: Routing) {
         self.apnsPusher = apnsPusher
+        self.fcmPusher = fcmPusher
         self.router = router
         updateAuthToken()
         #if DEBUG
@@ -63,62 +70,115 @@ final class PusherStore {
         authToken = AuthToken(keyID: keyID, teamID: teamID, p8FileURLString: p8FileURLString)
     }
 
-    private func push(_ payloadString: String,
-                      to destination: Destination,
-                      deviceToken: String?,
-                      appBundleID: String?,
-                      priority: Int,
-                      collapseID: String?,
-                      inSandbox sandbox: Bool,
-                      completion:@escaping (Bool) -> Void) {
+    private func push(data pushData: PushData,
+                      completion: @escaping (Bool) -> Void) {
+        switch pushData {
+        case .apns(let data):
+            switch data.destination {
 
-        guard let appBundleID = appBundleID, !appBundleID.isEmpty else {
-            router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
-            completion(false)
-            return
-        }
+            case .iOSSimulator:
+                guard let appBundleID = data.appBundleID, !appBundleID.isEmpty else {
+                    router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
 
-        switch destination {
+                apnsPusher.pushToSimulator(payload: data.payload, appBundleID: appBundleID) { [weak self] result in
+                    self?.handlePushResult(result, calling: completion)
+                }
 
-        case .simulator:
-            apnsPusher.pushToSimulator(payload: payloadString, appBundleID: appBundleID) { [weak self] result in
-                self?.handlePushResult(result, calling: completion)
+            case .iOSDevice:
+                guard let appBundleID = data.appBundleID, !appBundleID.isEmpty else {
+                    router.show(message: "please.enter.an app.bundle.id".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                if case .none = apnsPusher.type {
+                    router.show(message: "please.select.an.apns.method".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
+                    router.show(message: "please.select.an.apns.certificate".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let deviceToken = data.deviceToken, !deviceToken.isEmpty else {
+                    router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let payloadData = data.payload.data(using: .utf8),
+                      let payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
+                    completion(false)
+                    return
+                }
+
+                apnsPusher.pushToDevice(deviceToken,
+                                        payload: payload,
+                                        withTopic: appBundleID,
+                                        priority: data.priority,
+                                        collapseID: data.collapseID,
+                                        inSandbox: data.sandbox,
+                                        completion: { [weak self] result in
+                                            self?.handlePushResult(result, calling: completion)
+                                        })
+
+            case .androidDevice: ()
             }
+        case .fcm(let data):
+            switch data.destination {
 
-        case .device:
-            if case .none = apnsPusher.type {
-                router.show(message: "please.select.an.apns.method".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
+            case .androidDevice:
+                guard let deviceToken = data.deviceToken, !deviceToken.isEmpty else {
+                    router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let serverKey = data.serverKey, !serverKey.isEmpty else {
+                    router.show(message: "please.enter.a.server.key".localized, window: NSApplication.shared.windows.first)
+                    completion(false)
+                    return
+                }
+
+                guard let payloadData = data.payload.data(using: .utf8),
+                      let payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
+                    completion(false)
+                    return
+                }
+
+                if data.legacyFCM {
+                    fcmPusher.pushUsingLegacyEndpoint(deviceToken,
+                                                      payload: payload,
+                                                      collapseID: data.collapseID,
+                                                      serverKey: serverKey,
+                                                      completion: { [weak self] result in
+                                                          self?.handlePushResult(result, calling: completion)
+                                                      })
+                } else {
+                    guard let projectID = data.projectID, !projectID.isEmpty else {
+                        router.show(message: "please.enter.firebase.project.id".localized, window: NSApplication.shared.windows.first)
+                        completion(false)
+                        return
+                    }
+
+                    fcmPusher.pushUsingV1Endpoint(deviceToken,
+                                                  payload: payload,
+                                                  collapseID: data.collapseID,
+                                                  serverKey: serverKey,
+                                                  projectID: projectID,
+                                                  completion: { [weak self] result in
+                                                      self?.handlePushResult(result, calling: completion)
+                                                  })
+                }
+
+            case .iOSSimulator, .iOSDevice: ()
             }
-
-            if case .certificate = apnsPusher.type, apnsPusher.identity == nil {
-                router.show(message: "please.select.an.apns.certificate".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let deviceToken = deviceToken, !deviceToken.isEmpty else {
-                router.show(message: "please.enter.a.device.token".localized, window: NSApplication.shared.windows.first)
-                completion(false)
-                return
-            }
-
-            guard let data = payloadString.data(using: .utf8),
-                  let payload = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-                completion(false)
-                return
-            }
-
-            apnsPusher.pushToDevice(deviceToken,
-                                    payload: payload,
-                                    withTopic: appBundleID,
-                                    priority: priority,
-                                    collapseID: collapseID,
-                                    inSandbox: sandbox,
-                                    completion: { [weak self] result in
-                                        self?.handlePushResult(result, calling: completion)
-                                    })
         }
     }
 
@@ -195,27 +255,15 @@ extension PusherStore: PusherInteracting {
             apnsPusher.type = .certificate(identity: identity)
             reduce(result: .success(actionType))
 
-        case .push(let payloadString,
-                   let destination,
-                   let deviceToken,
-                   let appBundleID,
-                   let priority,
-                   let collapseID,
-                   let sandbox,
+        case .push(let data,
                    let completion):
-            guard payloadString.isValidJSON else {
+            guard data.payload.isValidJSON else {
                 router.show(message: "error.json.file.is.incorrect".localized,
                             window: NSApplication.shared.windows.first)
                 reduce(result: .failure(PushTesterError.invalidJson, actionType))
                 return
             }
-            push(payloadString,
-                 to: destination,
-                 deviceToken: deviceToken,
-                 appBundleID: appBundleID,
-                 priority: priority,
-                 collapseID: collapseID,
-                 inSandbox: sandbox,
+            push(data: data,
                  completion: completion)
             reduce(result: .success(actionType))
 
