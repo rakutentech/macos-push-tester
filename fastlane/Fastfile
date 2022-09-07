@@ -4,12 +4,27 @@ platform :mac do
   desc "Building Pusher"
   lane :ci do
     sh "rm -rf ../artifacts"
-    sh "mkdir ../DerivedData"
+    sh "mkdir -p ../DerivedData"
 
     cocoapods
-    build_mac_app(workspace: "pusher.xcworkspace", scheme: "pusher", configuration: "Release", derived_data_path: "./DerivedData", skip_archive: true, clean: true)
+    scan(
+      clean: true,
+      skip_build: true,
+      output_directory: './artifacts/unit-tests',
+      derived_data_path: "./DerivedData",
+      scheme: 'pusher',
+      code_coverage: true,
+      xcodebuild_formatter: 'xcpretty',
+      output_types: 'json-compilation-database,html,junit',
+      output_files: 'compile_commands.json,report.html,report.junit')
 
-    sh "mkdir ../artifacts"
+    build_mac_app(
+      workspace: "pusher.xcworkspace", 
+      scheme: "pusher", 
+      configuration: "Release", 
+      derived_data_path: "./DerivedData", 
+      skip_archive: true)
+
     sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app ../artifacts"
     sh "cp -R ../DerivedData/Build/Products/Release/PushTester.app.dSYM ../artifacts"
     sh "rm -rf ../DerivedData"

@@ -8,16 +8,43 @@ workflows:
     before_run:
     - _setup
     steps:
-    - fastlane@2:
+    - fastlane@3:
         inputs:
         - update_fastlane: 'false'
         - lane: ci
         title: Build & Test
-    - deploy-to-bitrise-io@1:
+    - script@1:
+        title: Export test results
+        is_always_run: true
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+
+            # Source: https://devcenter.bitrise.io/testing/exporting-to-test-reports-from-custom-script-steps/
+
+            JUNIT=./artifacts/unit-tests/report.junit
+            if [ ! -f "$JUNIT" ]; then
+                echo "No JUnit file to export"
+                exit 0
+            fi
+            # Creating the sub-directory for the test run within the BITRISE_TEST_RESULT_DIR:
+            test_run_dir="$BITRISE_TEST_RESULT_DIR/result_dir_1"
+            mkdir "$test_run_dir"
+
+            # Exporting the JUnit XML test report:
+            cp "$JUNIT" "$test_run_dir/UnitTest.xml"
+
+            # Creating the test-info.json file with the name of the test run defined:
+            echo '{"test-name":"Tests scheme run"}' >> "$test_run_dir/test-info.json"
+    - deploy-to-bitrise-io@2:
         run_if: '{{enveq "BITRISE_GIT_BRANCH" "master"}}'
         inputs:
         - deploy_path: ./artifacts
         - is_compress: 'true'
+    - deploy-to-bitrise-io@2:
+        title: 'Export test results only'
+        run_if: '{{getenv "BITRISE_GIT_BRANCH" | ne "master"}}'
     - cache-push@2:
         inputs:
         - cache_paths: |-
