@@ -14,6 +14,7 @@ platform :mac do
       derived_data_path: "./DerivedData",
       scheme: 'pusher',
       code_coverage: true,
+      xcodebuild_formatter: 'xcpretty',
       output_types: 'json-compilation-database,html,junit',
       output_files: 'compile_commands.json,report.html,report.junit')
 
