@@ -152,7 +152,8 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 appBundleID: "com.myapp",
                                                                                 priority: 0,
                                                                                 collapseID: nil,
-                                                                                sandbox: true)),
+																																								sandbox: true,
+																																								liveActivity: false)),
                                                               completion: { _ in
                                                               }))
 
@@ -169,7 +170,8 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 appBundleID: "com.myapp",
                                                                                 priority: 0,
                                                                                 collapseID: nil,
-                                                                                sandbox: true)),
+																																								sandbox: true,
+																																								liveActivity: false)),
                                                               completion: { _ in
                                                               }))
 
@@ -231,7 +233,8 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 appBundleID: "com.myapp",
                                                                                 priority: 0,
                                                                                 collapseID: nil,
-                                                                                sandbox: true)),
+																																								sandbox: true,
+																																								liveActivity: false)),
                                                               completion: { success in
                                                                   failure = !success
                                                               }))
@@ -250,7 +253,8 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 appBundleID: "com.myapp",
                                                                                 priority: 0,
                                                                                 collapseID: nil,
-                                                                                sandbox: true)),
+																																								sandbox: true,
+																																								liveActivity: false)),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))

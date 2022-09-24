@@ -124,6 +124,7 @@ final class PusherStore {
                                         priority: data.priority,
                                         collapseID: data.collapseID,
                                         inSandbox: data.sandbox,
+																				liveActivity: data.liveActivity,
                                         completion: { [weak self] result in
                                             self?.handlePushResult(result, calling: completion)
                                         })

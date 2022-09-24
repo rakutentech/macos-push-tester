@@ -9,6 +9,7 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var appOrProjectIDTextField: NSTextField!
     @IBOutlet private var priorityTextField: NSTextField!
     @IBOutlet private var sandBoxCheckBox: NSButton!
+		@IBOutlet private var liveActivityCheckBox: NSButton!
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
     @IBOutlet private var loadJSONFileButton: NSButton!
@@ -161,7 +162,8 @@ public final class PusherViewController: NSViewController {
                 appBundleID: appOrProjectIDTextField.stringValue,
                 priority: priorityTextField?.integerValue ?? 10,
                 collapseID: collapseIdTextField.stringValue,
-                sandbox: sandBoxCheckBox.state.rawValue == 1))) { _ in })
+                sandbox: sandBoxCheckBox.state.rawValue == 1,
+								liveActivity: liveActivityCheckBox.state.rawValue == 1))) { _ in })
         }
     }
 
@@ -235,11 +237,12 @@ extension PusherViewController: NSTextViewDelegate {
     @IBOutlet private weak var priorityTextField: NSTextField!
     @IBOutlet private weak var collapseIdTextField: NSTextField!
     @IBOutlet private weak var sandBoxCheckBox: NSButton!
+		@IBOutlet private weak var liveActivityCheckBox: NSButton!
     @IBOutlet private weak var serverKeyTextFieldContainter: NSView!
 
     private var iOSControls: [NSView] {
         [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer,
-         priorityTextField, collapseIdTextField, sandBoxCheckBox]
+         priorityTextField, collapseIdTextField, sandBoxCheckBox, liveActivityCheckBox]
     }
     private var androidControls: [NSView] {
         [deviceTokenTextField, serverKeyTextFieldContainter, collapseIdTextField]
