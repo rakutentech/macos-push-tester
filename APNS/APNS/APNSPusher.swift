@@ -9,14 +9,7 @@ public enum APNSPusherType {
 public protocol APNSPushable {
     var type: APNSPusherType { get set }
     var identity: SecIdentity? { get }
-    func pushToDevice(_ token: String,
-                      payload: [String: Any],
-                      withTopic topic: String?,
-                      priority: Int,
-                      collapseID: String?,
-                      inSandbox sandbox: Bool,
-											liveActivity: Bool,
-                      completion: @escaping (Result<String, Error>) -> Void)
+    func pushToDevice(_ token: String, payload: [String: Any], withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, isLiveActivity liveActivity: Bool, completion: @escaping (Result<String, Error>) -> Void)
     func pushToSimulator(payload: String,
                          appBundleID bundleID: String,
                          completion: @escaping (Result<String, Error>) -> Void)
@@ -69,14 +62,7 @@ public final class APNSPusher: NSObject, APNSPushable {
         super.init()
     }
 
-    public func pushToDevice(_ token: String,
-                             payload: [String: Any],
-                             withTopic topic: String?,
-                             priority: Int,
-                             collapseID: String?,
-                             inSandbox sandbox: Bool,
-														 liveActivity: Bool,
-                             completion: @escaping (Result<String, Error>) -> Void) {
+    public func pushToDevice(_ token: String, payload: [String: Any], withTopic topic: String?, priority: Int, collapseID: String?, inSandbox sandbox: Bool, isLiveActivity liveActivity: Bool, completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "https://api\(sandbox ? ".development" : "").push.apple.com/3/device/\(token)") else {
             completion(.failure(NSError(domain: "com.pusher.APNSPusher",
                                         code: 0,
@@ -88,7 +74,7 @@ public final class APNSPusher: NSObject, APNSPushable {
 				if liveActivity {
 					payload["timestamp"] = Date().timeIntervalSince1970
 				}
-			
+
         guard let httpBody = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
             completion(.failure(NSError(domain: "com.pusher.APNSPusher",
                                         code: 0,
@@ -110,7 +96,7 @@ public final class APNSPusher: NSObject, APNSPushable {
 						correctTopic = correctTopic?.appending(suffix)
 					}
 				}
-			
+
         if let topic = correctTopic {
             request.addValue(topic, forHTTPHeaderField: "apns-topic")
         }
