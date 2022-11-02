@@ -20,6 +20,7 @@ class APNSPusherMock: APNSPushable {
                       priority: Int,
                       collapseID: String?,
                       inSandbox sandbox: Bool,
+                      liveActivity: Bool,
                       completion: @escaping (Result<String, Error>) -> Void) {
         completion(result)
     }

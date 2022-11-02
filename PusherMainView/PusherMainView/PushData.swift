@@ -22,6 +22,7 @@ struct APNSPushData: Equatable {
     let priority: Int
     let collapseID: String?
     let sandbox: Bool
+    let liveActivity: Bool
 }
 
 struct FCMPushData: Equatable {
