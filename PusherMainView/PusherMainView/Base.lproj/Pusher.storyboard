@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="XfG-lQ-9wD">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="XfG-lQ-9wD">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -155,7 +155,7 @@
                                         <rect key="frame" x="20" y="481" width="460" height="26"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8vp-KJ-t7U">
-                                                <rect key="frame" x="167" y="-1" width="127" height="32"/>
+                                                <rect key="frame" x="166" y="-1" width="128" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Select a device" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FLM-Ee-YQn">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -263,18 +263,38 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="blG-ra-9fI">
-                                        <rect key="frame" x="210" y="67" width="79" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Sandbox" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wrh-SG-FTA">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f27-o8-ZxL">
+                                        <rect key="frame" x="158" y="68" width="185" height="16"/>
+                                        <subviews>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="blG-ra-9fI">
+                                                <rect key="frame" x="-2" y="-1" width="79" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Sandbox" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wrh-SG-FTA">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4Z-03-8g1">
+                                                <rect key="frame" x="85" y="-1" width="100" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Live Activity" bezelStyle="regularSquare" imagePosition="left" inset="2" id="tT9-Se-2Zs">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="BoC-nl-vvG">
                                         <rect key="frame" x="20" y="10" width="460" height="50"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-sK-axC">
-                                                <rect key="frame" x="181" y="-7" width="99" height="36"/>
+                                                <rect key="frame" x="180" y="-7" width="100" height="36"/>
                                                 <buttonCell key="cell" type="push" title="Send Push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Xr-cd-Qeb">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -345,6 +365,7 @@
                         <outlet property="deviceSettingsControls" destination="XdS-h4-cux" id="Mjw-RS-EHi"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="HxS-dj-CHM"/>
                         <outlet property="legacyFCMCheckbox" destination="Lbk-t7-SaY" id="u3O-1q-erE"/>
+                        <outlet property="liveActivityCheckBox" destination="e4Z-03-8g1" id="Zek-Ia-zw2"/>
                         <outlet property="loadJSONFileButton" destination="l8u-BE-8hp" id="kva-wA-wbg"/>
                         <outlet property="payloadTextView" destination="OgG-Ak-can" id="sR4-xB-tKA"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="8C5-81-SNr"/>
@@ -361,6 +382,7 @@
                         <outlet property="apnsButtonsContainer" destination="3AL-Oj-nwN" id="OTU-8U-ymy"/>
                         <outlet property="collapseIdTextField" destination="8SA-5i-DSf" id="qr2-de-Grt"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="AD7-Tv-4eH"/>
+                        <outlet property="liveActivityCheckBox" destination="e4Z-03-8g1" id="hiW-Y5-WKw"/>
                         <outlet property="orLabel" destination="qxe-qT-Lqe" id="mye-OB-plI"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="zMa-xp-xR9"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="Bx5-C6-8nr"/>
@@ -521,7 +543,7 @@
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZ8-f6-Im7">
-                                <rect key="frame" x="207" y="3" width="69" height="32"/>
+                                <rect key="frame" x="206" y="3" width="70" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PrR-t0-d74">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -573,7 +595,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vtr-27-wjs">
-                                <rect key="frame" x="13" y="350" width="111" height="33"/>
+                                <rect key="frame" x="13" y="350" width="112" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="wsZ-NB-OBN"/>
                                 </constraints>
