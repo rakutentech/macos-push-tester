@@ -8,6 +8,8 @@
 
 The macOS Push Tester App allows you to send push notifications through APNS (Apple Push Notification Service) or FCM (Firebase Cloud Messaging) and receive them on a device or simulator/emulator.
 
+The macOS Push Tester App can also send push notifications to Live Activities on iOS devices (iOS >= 16.1). This feature only works with APNS token.
+
 Android emulators must enable the Google API for Google Play services.
 
 It can also get device tokens from any iPhone on the same wifi network.
