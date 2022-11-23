@@ -113,9 +113,15 @@ final class PusherStore {
                 }
 
                 guard let payloadData = data.payload.data(using: .utf8),
-                      let payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
+                      var payload = try? JSONSerialization.jsonObject(with: payloadData, options: .allowFragments) as? [String: Any] else {
                     completion(false)
                     return
+                }
+
+                // Update the timestamp for Live Activity notification payload
+                // Note: if the timestamp is not the current time, then the push won't be received on the device
+                if data.liveActivity {
+                    payload.update(with: Timestamp.current)
                 }
 
                 apnsPusher.pushToDevice(deviceToken,
