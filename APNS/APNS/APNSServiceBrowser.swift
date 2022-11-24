@@ -13,6 +13,10 @@ public final class APNSServiceBrowser: NSObject {
 
     public weak var delegate: APNSServiceBrowsing?
 
+    private enum Constants {
+        static let defaultDeviceTokenType = "APNS"
+    }
+
     public var searching: Bool {
         get {
             return _searching
@@ -45,9 +49,11 @@ extension APNSServiceBrowser: MCNearbyServiceBrowserDelegate {
         guard let token = info?["token"], let appID = info?["appID"] else {
             return
         }
+        let type = info?["type"] ?? Constants.defaultDeviceTokenType
         let device = APNSServiceDevice(displayName: peerID.displayName,
                                        token: token,
-                                       appID: appID)
+                                       appID: appID,
+                                       type: type)
         DispatchQueue.main.async {
             self.devices.insert(device, at: self.devices.count)
             self.peerIDToDeviceMap[peerID] = device

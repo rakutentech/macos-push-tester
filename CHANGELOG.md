@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Features
 - Add Live Activity support (SDKCF-6014)
 - Automatically update the timestamp for live activity (SDKCF-6078)
+- Add device token type in the devices browser (SDKCF-6079)
 
 ## [1.4.0] - 2022-11-02
 - Add support for Android devices (FCM)
