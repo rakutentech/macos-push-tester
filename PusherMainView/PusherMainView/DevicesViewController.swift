@@ -77,6 +77,8 @@ extension DevicesViewController: NSTableViewDelegate {
             cell.textField?.stringValue = apnsServiceBrowser.devices[row].token
         case "appID":
             cell.textField?.stringValue = apnsServiceBrowser.devices[row].appID
+        case "type":
+            cell.textField?.stringValue = apnsServiceBrowser.devices[row].type
         default: ()
         }
 
