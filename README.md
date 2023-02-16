@@ -40,16 +40,34 @@ Run `fastlane ci`
 import Foundation
 import MultipeerConnectivity
 
+/// A device token can be generated from APNS or ActivityKit.
+public enum DeviceTokenType: String {
+    case apns = "APNS"
+    case activityKit = "ActivityKit"
+}
+
 public final class DeviceAdvertiser: NSObject {
     private var nearbyServiceAdvertiser: MCNearbyServiceAdvertiser?
     private let serviceType: String
+
+    private enum Keys {
+        static let deviceToken = "token"
+        static let applicationIdentifier = "appID"
+        static let deviceTokenType = "type"
+    }
     
     public init(serviceType: String) {
         self.serviceType = serviceType
         super.init()
     }
 
-    public func setDeviceToken(_ deviceToken: String) {
+    /// Start advertising peer with device token (token), app identifier (appID) and device token type (type).
+    ///
+    /// - Parameters:
+    ///    - deviceToken: The APNS or ActivityKit device token
+    ///    - type: the device token type (APNS or ActivityKit)
+    public func setDeviceToken(_ deviceToken: String,
+                               type: DeviceTokenType = .apns) {
         if let advertiser = nearbyServiceAdvertiser {
             advertiser.stopAdvertisingPeer()
         }
@@ -58,7 +76,9 @@ public final class DeviceAdvertiser: NSObject {
         
         nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(
             peer: peerID,
-            discoveryInfo: ["token": deviceToken, "appID": Bundle.main.bundleIdentifier ?? ""],
+            discoveryInfo: [Keys.deviceToken: deviceToken,
+                            Keys.applicationIdentifier: Bundle.main.bundleIdentifier ?? "",
+                            Keys.deviceTokenType: type.rawValue],
             serviceType: serviceType
         )
         
@@ -68,11 +88,14 @@ public final class DeviceAdvertiser: NSObject {
 }
 
 extension DeviceAdvertiser: MCNearbyServiceAdvertiserDelegate {
-    public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, 
-                            didReceiveInvitationFromPeer peerID: MCPeerID, 
-                            withContext context: Data?, 
-                            invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+    public func advertiser(_ advertiser: MCNearbyServiceAdvertiser,
+                           didReceiveInvitationFromPeer peerID: MCPeerID,
+                           withContext context: Data?,
+                           invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         invitationHandler(false, MCSession())
+    }
+    
+    public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
     }
 }
 ```
