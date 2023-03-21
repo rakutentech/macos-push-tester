@@ -157,7 +157,11 @@ final class PusherStoreSpec: QuickSpec {
                                                               completion: { _ in
                                                               }))
 
-                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                            let error = observer.errorState?.error as? PushTesterError
+                            guard case .invalidJson = error else {
+                                fail("Unexpected error type \(String(describing: error)). Expected `.invalidJson`")
+                                return
+                            }
                         }
                     }
 
@@ -175,7 +179,11 @@ final class PusherStoreSpec: QuickSpec {
                                                               completion: { _ in
                                                               }))
 
-                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                            let error = observer.errorState?.error as? PushTesterError
+                            guard case .invalidJson = error else {
+                                fail("Unexpected error type \(String(describing: error)). Expected `.invalidJson`")
+                                return
+                            }
                         }
                     }
 
@@ -196,7 +204,11 @@ final class PusherStoreSpec: QuickSpec {
                                                               completion: { _ in
                                                               }))
 
-                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                            let error = observer.errorState?.error as? PushTesterError
+                            guard case .invalidJson = error else {
+                                fail("Unexpected error type \(String(describing: error)). Expected `.invalidJson`")
+                                return
+                            }
                         }
                     }
 
@@ -213,7 +225,11 @@ final class PusherStoreSpec: QuickSpec {
                                                               completion: { _ in
                                                               }))
 
-                            expect(observer.errorState?.error as? PushTesterError).toEventually(equal(.invalidJson))
+                            let error = observer.errorState?.error as? PushTesterError
+                            guard case .invalidJson = error else {
+                                fail("Unexpected error type \(String(describing: error)). Expected `.invalidJson`")
+                                return
+                            }
                         }
                     }
                 }
