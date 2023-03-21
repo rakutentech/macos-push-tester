@@ -1,0 +1,4 @@
+framework module Highlight {
+  header "Highlight-Swift.h"
+  requires objc
+}

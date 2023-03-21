@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Features
+- Add JSON syntax coloring and validation (SDKCF-6431)
+
 ## [1.5.0] - 2023-03-14
 
 ### Features

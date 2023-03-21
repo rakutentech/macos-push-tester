@@ -1,0 +1,3563 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "TopLevel",
+    "printedName": "TopLevel",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "AppKit",
+        "printedName": "AppKit",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "CoreGraphics",
+        "printedName": "CoreGraphics",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "DefaultJsonSyntaxHighlightingTheme",
+        "printedName": "DefaultJsonSyntaxHighlightingTheme",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(fontSize:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "DefaultJsonSyntaxHighlightingTheme",
+                "printedName": "Highlight.DefaultJsonSyntaxHighlightingTheme",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CGFloat",
+                "printedName": "CoreGraphics.CGFloat",
+                "hasDefaultArg": true,
+                "usr": "s:14CoreFoundation7CGFloatV"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV8fontSizeAC14CoreFoundation7CGFloatV_tcfc",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV8fontSizeAC12CoreGraphics7CGFloatV_tcfc",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "memberKeyColor",
+            "printedName": "memberKeyColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14memberKeyColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "whitespaceColor",
+            "printedName": "whitespaceColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15whitespaceColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "whitespaceFont",
+            "printedName": "whitespaceFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV14whitespaceFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "operatorColor",
+            "printedName": "operatorColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV13operatorColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "operatorFont",
+            "printedName": "operatorFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12operatorFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "numericValueColor",
+            "printedName": "numericValueColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV17numericValueColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "numericValueFont",
+            "printedName": "numericValueFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16numericValueFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "stringValueColor",
+            "printedName": "stringValueColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV16stringValueColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "stringValueFont",
+            "printedName": "stringValueFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV15stringValueFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "literalColor",
+            "printedName": "literalColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12literalColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "literalFont",
+            "printedName": "literalFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11literalFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unknownColor",
+            "printedName": "unknownColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV12unknownColorSo7NSColorCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unknownFont",
+            "printedName": "unknownFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvs",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvM",
+                "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV11unknownFontSo6NSFontCvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:9Highlight34DefaultJsonSyntaxHighlightingThemeV",
+        "mangledName": "$s9Highlight34DefaultJsonSyntaxHighlightingThemeV",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "JsonSyntaxHighlightingTheme",
+            "printedName": "JsonSyntaxHighlightingTheme",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "AppKit",
+        "printedName": "AppKit",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonSyntaxHighlightProvider",
+        "printedName": "JsonSyntaxHighlightProvider",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "shared",
+            "printedName": "shared",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "JsonSyntaxHighlightProvider",
+                "printedName": "Highlight.JsonSyntaxHighlightProvider",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC6sharedACvpZ",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC6sharedACvpZ",
+            "moduleName": "Highlight",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonSyntaxHighlightProvider",
+                    "printedName": "Highlight.JsonSyntaxHighlightProvider",
+                    "usr": "s:9Highlight010JsonSyntaxA8ProviderC"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC6sharedACvgZ",
+                "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC6sharedACvgZ",
+                "moduleName": "Highlight",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(theme:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "JsonSyntaxHighlightProvider",
+                "printedName": "Highlight.JsonSyntaxHighlightProvider",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Highlight.JsonSyntaxHighlightingTheme?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonSyntaxHighlightingTheme",
+                    "printedName": "Highlight.JsonSyntaxHighlightingTheme",
+                    "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC5themeAcA0bC17HighlightingTheme_pSg_tcfc",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC5themeAcA0bC17HighlightingTheme_pSg_tcfc",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "theme",
+            "printedName": "theme",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "JsonSyntaxHighlightingTheme",
+                "printedName": "Highlight.JsonSyntaxHighlightingTheme",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvp",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvp",
+            "moduleName": "Highlight",
+            "isOpen": true,
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonSyntaxHighlightingTheme",
+                    "printedName": "Highlight.JsonSyntaxHighlightingTheme",
+                    "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvg",
+                "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonSyntaxHighlightingTheme",
+                    "printedName": "Highlight.JsonSyntaxHighlightingTheme",
+                    "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvs",
+                "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvM",
+                "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC5themeAA0bC17HighlightingTheme_pvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "isOpen": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "highlight",
+            "printedName": "highlight(_:as:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSMutableAttributedString",
+                "printedName": "Foundation.NSMutableAttributedString",
+                "usr": "c:objc(cs)NSMutableAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Syntax",
+                "printedName": "Highlight.Syntax",
+                "usr": "s:9Highlight6SyntaxO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC9highlight_2asySo25NSMutableAttributedStringC_AA0C0OtF",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC9highlight_2asySo25NSMutableAttributedStringC_AA0C0OtF",
+            "moduleName": "Highlight",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "highlight",
+            "printedName": "highlight(_:as:behaviour:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSMutableAttributedString",
+                "printedName": "Foundation.NSMutableAttributedString",
+                "usr": "c:objc(cs)NSMutableAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Syntax",
+                "printedName": "Highlight.Syntax",
+                "usr": "s:9Highlight6SyntaxO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizerBehaviour",
+                "printedName": "Highlight.JsonTokenizerBehaviour",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC9highlight_2as9behaviourySo25NSMutableAttributedStringC_AA0C0OAA0B18TokenizerBehaviourOtF",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC9highlight_2as9behaviourySo25NSMutableAttributedStringC_AA0C0OAA0B18TokenizerBehaviourOtF",
+            "moduleName": "Highlight",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "highlightJson",
+            "printedName": "highlightJson(_:tokens:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSMutableAttributedString",
+                "printedName": "Foundation.NSMutableAttributedString",
+                "usr": "c:objc(cs)NSMutableAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Highlight.JsonToken]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonToken",
+                    "printedName": "Highlight.JsonToken",
+                    "usr": "s:9Highlight9JsonTokenO"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight010JsonSyntaxA8ProviderC09highlightB0_6tokensySo25NSMutableAttributedStringC_SayAA0B5TokenOGtF",
+            "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC09highlightB0_6tokensySo25NSMutableAttributedStringC_SayAA0B5TokenOGtF",
+            "moduleName": "Highlight",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:9Highlight010JsonSyntaxA8ProviderC",
+        "mangledName": "$s9Highlight010JsonSyntaxA8ProviderC",
+        "moduleName": "Highlight",
+        "isOpen": true,
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "SyntaxHighlightProvider",
+            "printedName": "SyntaxHighlightProvider",
+            "usr": "s:9Highlight06SyntaxA8ProviderP",
+            "mangledName": "$s9Highlight06SyntaxA8ProviderP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonSyntaxHighlightingTheme",
+        "printedName": "JsonSyntaxHighlightingTheme",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "whitespaceColor",
+            "printedName": "whitespaceColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP15whitespaceColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP15whitespaceColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP15whitespaceColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP15whitespaceColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "whitespaceFont",
+            "printedName": "whitespaceFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP14whitespaceFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP14whitespaceFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP14whitespaceFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP14whitespaceFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "memberKeyColor",
+            "printedName": "memberKeyColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP14memberKeyColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP14memberKeyColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP14memberKeyColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP14memberKeyColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "operatorColor",
+            "printedName": "operatorColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP13operatorColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP13operatorColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP13operatorColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP13operatorColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "operatorFont",
+            "printedName": "operatorFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12operatorFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12operatorFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12operatorFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12operatorFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "numericValueColor",
+            "printedName": "numericValueColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP17numericValueColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP17numericValueColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP17numericValueColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP17numericValueColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "numericValueFont",
+            "printedName": "numericValueFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP16numericValueFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP16numericValueFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP16numericValueFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP16numericValueFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "stringValueColor",
+            "printedName": "stringValueColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP16stringValueColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP16stringValueColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP16stringValueColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP16stringValueColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "stringValueFont",
+            "printedName": "stringValueFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP15stringValueFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP15stringValueFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP15stringValueFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP15stringValueFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "literalColor",
+            "printedName": "literalColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12literalColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12literalColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12literalColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12literalColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "literalFont",
+            "printedName": "literalFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP11literalFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP11literalFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP11literalFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP11literalFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unknownColor",
+            "printedName": "unknownColor",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSColor",
+                "printedName": "AppKit.NSColor",
+                "usr": "c:objc(cs)NSColor"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12unknownColorSo7NSColorCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12unknownColorSo7NSColorCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSColor",
+                    "printedName": "AppKit.NSColor",
+                    "usr": "c:objc(cs)NSColor"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP12unknownColorSo7NSColorCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP12unknownColorSo7NSColorCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unknownFont",
+            "printedName": "unknownFont",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSFont",
+                "printedName": "AppKit.NSFont",
+                "usr": "c:objc(cs)NSFont"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP11unknownFontSo6NSFontCvp",
+            "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP11unknownFontSo6NSFontCvp",
+            "moduleName": "Highlight",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "NSFont",
+                    "printedName": "AppKit.NSFont",
+                    "usr": "c:objc(cs)NSFont"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP11unknownFontSo6NSFontCvg",
+                "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP11unknownFontSo6NSFontCvg",
+                "moduleName": "Highlight",
+                "genericSig": "<τ_0_0 where τ_0_0 : Highlight.JsonSyntaxHighlightingTheme>",
+                "sugared_genericSig": "<Self where Self : Highlight.JsonSyntaxHighlightingTheme>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:9Highlight27JsonSyntaxHighlightingThemeP",
+        "mangledName": "$s9Highlight27JsonSyntaxHighlightingThemeP",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonToken",
+        "printedName": "JsonToken",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "memberKey",
+            "printedName": "memberKey",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO9memberKeyyACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO9memberKeyyACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "whitespace",
+            "printedName": "whitespace",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO10whitespaceyACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO10whitespaceyACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "operator",
+            "printedName": "operator",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO8operatoryACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO8operatoryACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "stringValue",
+            "printedName": "stringValue",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO11stringValueyACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO11stringValueyACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "numericValue",
+            "printedName": "numericValue",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO12numericValueyACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO12numericValueyACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "literal",
+            "printedName": "literal",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "_NSRange",
+                        "printedName": "Foundation._NSRange",
+                        "usr": "c:@S@_NSRange"
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO7literalyACSo8_NSRangeVcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO7literalyACSo8_NSRangeVcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "unknown",
+            "printedName": "unknown",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonToken.Type) -> (Foundation._NSRange, Highlight.JsonTokenizerError) -> Highlight.JsonToken",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Foundation._NSRange, Highlight.JsonTokenizerError) -> Highlight.JsonToken",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Tuple",
+                        "printedName": "(Foundation._NSRange, Highlight.JsonTokenizerError)",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "_NSRange",
+                            "printedName": "Foundation._NSRange",
+                            "usr": "c:@S@_NSRange"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "JsonTokenizerError",
+                            "printedName": "Highlight.JsonTokenizerError",
+                            "usr": "s:9Highlight18JsonTokenizerErrorO"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonToken.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonToken",
+                        "printedName": "Highlight.JsonToken",
+                        "usr": "s:9Highlight9JsonTokenO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight9JsonTokenO7unknownyACSo8_NSRangeV_AA0B14TokenizerErrorOtcACmF",
+            "mangledName": "$s9Highlight9JsonTokenO7unknownyACSo8_NSRangeV_AA0B14TokenizerErrorOtcACmF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "RawDocComment"
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:9Highlight9JsonTokenO",
+        "mangledName": "$s9Highlight9JsonTokenO",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonTokenizer",
+        "printedName": "JsonTokenizer",
+        "children": [
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(behaviour:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizer",
+                "printedName": "Highlight.JsonTokenizer",
+                "usr": "s:9Highlight13JsonTokenizerV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizerBehaviour",
+                "printedName": "Highlight.JsonTokenizerBehaviour",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:9Highlight13JsonTokenizerV9behaviourAcA0bC9BehaviourO_tcfc",
+            "mangledName": "$s9Highlight13JsonTokenizerV9behaviourAcA0bC9BehaviourO_tcfc",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "behaviour",
+            "printedName": "behaviour",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizerBehaviour",
+                "printedName": "Highlight.JsonTokenizerBehaviour",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvp",
+            "mangledName": "$s9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvp",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerBehaviour",
+                    "printedName": "Highlight.JsonTokenizerBehaviour",
+                    "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvg",
+                "mangledName": "$s9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerBehaviour",
+                    "printedName": "Highlight.JsonTokenizerBehaviour",
+                    "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvs",
+                "mangledName": "$s9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvs",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvM",
+                "mangledName": "$s9Highlight13JsonTokenizerV9behaviourAA0bC9BehaviourOvM",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "tokenize",
+            "printedName": "tokenize(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Highlight.JsonToken]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonToken",
+                    "printedName": "Highlight.JsonToken",
+                    "usr": "s:9Highlight9JsonTokenO"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight13JsonTokenizerV8tokenizeySayAA0B5TokenOGSSF",
+            "mangledName": "$s9Highlight13JsonTokenizerV8tokenizeySayAA0B5TokenOGSSF",
+            "moduleName": "Highlight",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:9Highlight13JsonTokenizerV",
+        "mangledName": "$s9Highlight13JsonTokenizerV",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Tokenizer",
+            "printedName": "Tokenizer",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "TToken",
+                "printedName": "TToken",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonToken",
+                    "printedName": "Highlight.JsonToken",
+                    "usr": "s:9Highlight9JsonTokenO"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:9Highlight9TokenizerP",
+            "mangledName": "$s9Highlight9TokenizerP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonTokenizerBehaviour",
+        "printedName": "JsonTokenizerBehaviour",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "strict",
+            "printedName": "strict",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerBehaviour.Type) -> Highlight.JsonTokenizerBehaviour",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerBehaviour",
+                    "printedName": "Highlight.JsonTokenizerBehaviour",
+                    "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerBehaviour.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerBehaviour",
+                        "printedName": "Highlight.JsonTokenizerBehaviour",
+                        "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight22JsonTokenizerBehaviourO6strictyA2CmF",
+            "mangledName": "$s9Highlight22JsonTokenizerBehaviourO6strictyA2CmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "lenient",
+            "printedName": "lenient",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerBehaviour.Type) -> Highlight.JsonTokenizerBehaviour",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerBehaviour",
+                    "printedName": "Highlight.JsonTokenizerBehaviour",
+                    "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerBehaviour.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerBehaviour",
+                        "printedName": "Highlight.JsonTokenizerBehaviour",
+                        "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight22JsonTokenizerBehaviourO7lenientyA2CmF",
+            "mangledName": "$s9Highlight22JsonTokenizerBehaviourO7lenientyA2CmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Function",
+            "name": "==",
+            "printedName": "==(_:_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizerBehaviour",
+                "printedName": "Highlight.JsonTokenizerBehaviour",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "JsonTokenizerBehaviour",
+                "printedName": "Highlight.JsonTokenizerBehaviour",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight22JsonTokenizerBehaviourO2eeoiySbAC_ACtFZ",
+            "mangledName": "$s9Highlight22JsonTokenizerBehaviourO2eeoiySbAC_ACtFZ",
+            "moduleName": "Highlight",
+            "static": true,
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "hashValue",
+            "printedName": "hashValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:9Highlight22JsonTokenizerBehaviourO9hashValueSivp",
+            "mangledName": "$s9Highlight22JsonTokenizerBehaviourO9hashValueSivp",
+            "moduleName": "Highlight",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:9Highlight22JsonTokenizerBehaviourO9hashValueSivg",
+                "mangledName": "$s9Highlight22JsonTokenizerBehaviourO9hashValueSivg",
+                "moduleName": "Highlight",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Function",
+            "name": "hash",
+            "printedName": "hash(into:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Hasher",
+                "printedName": "Swift.Hasher",
+                "paramValueOwnership": "InOut",
+                "usr": "s:s6HasherV"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight22JsonTokenizerBehaviourO4hash4intoys6HasherVz_tF",
+            "mangledName": "$s9Highlight22JsonTokenizerBehaviourO4hash4intoys6HasherVz_tF",
+            "moduleName": "Highlight",
+            "implicit": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:9Highlight22JsonTokenizerBehaviourO",
+        "mangledName": "$s9Highlight22JsonTokenizerBehaviourO",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "JsonTokenizerError",
+        "printedName": "JsonTokenizerError",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "invalidSymbol",
+            "printedName": "invalidSymbol",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerError.Type) -> (Swift.Character?, Swift.Character?) -> Highlight.JsonTokenizerError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Character?, Swift.Character?) -> Highlight.JsonTokenizerError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Tuple",
+                        "printedName": "(expected: Swift.Character?, actual: Swift.Character?)",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Optional",
+                            "printedName": "Swift.Character?",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "Character",
+                                "printedName": "Swift.Character",
+                                "usr": "s:SJ"
+                              }
+                            ],
+                            "usr": "s:Sq"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Optional",
+                            "printedName": "Swift.Character?",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "Character",
+                                "printedName": "Swift.Character",
+                                "usr": "s:SJ"
+                              }
+                            ],
+                            "usr": "s:Sq"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight18JsonTokenizerErrorO13invalidSymbolyACSJSg_AEtcACmF",
+            "mangledName": "$s9Highlight18JsonTokenizerErrorO13invalidSymbolyACSJSg_AEtcACmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "expectedSymbol",
+            "printedName": "expectedSymbol",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerError.Type) -> Highlight.JsonTokenizerError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerError",
+                    "printedName": "Highlight.JsonTokenizerError",
+                    "usr": "s:9Highlight18JsonTokenizerErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight18JsonTokenizerErrorO14expectedSymbolyA2CmF",
+            "mangledName": "$s9Highlight18JsonTokenizerErrorO14expectedSymbolyA2CmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "unexpectedSymbol",
+            "printedName": "unexpectedSymbol",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerError.Type) -> (Swift.String) -> Highlight.JsonTokenizerError",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> Highlight.JsonTokenizerError",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Tuple",
+                        "printedName": "(description: Swift.String)",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight18JsonTokenizerErrorO16unexpectedSymbolyACSS_tcACmF",
+            "mangledName": "$s9Highlight18JsonTokenizerErrorO16unexpectedSymbolyACSS_tcACmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "unenclosedQuotationMarks",
+            "printedName": "unenclosedQuotationMarks",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerError.Type) -> Highlight.JsonTokenizerError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerError",
+                    "printedName": "Highlight.JsonTokenizerError",
+                    "usr": "s:9Highlight18JsonTokenizerErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight18JsonTokenizerErrorO24unenclosedQuotationMarksyA2CmF",
+            "mangledName": "$s9Highlight18JsonTokenizerErrorO24unenclosedQuotationMarksyA2CmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "invalidProperty",
+            "printedName": "invalidProperty",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.JsonTokenizerError.Type) -> Highlight.JsonTokenizerError",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "JsonTokenizerError",
+                    "printedName": "Highlight.JsonTokenizerError",
+                    "usr": "s:9Highlight18JsonTokenizerErrorO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.JsonTokenizerError.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "JsonTokenizerError",
+                        "printedName": "Highlight.JsonTokenizerError",
+                        "usr": "s:9Highlight18JsonTokenizerErrorO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight18JsonTokenizerErrorO15invalidPropertyyA2CmF",
+            "mangledName": "$s9Highlight18JsonTokenizerErrorO15invalidPropertyyA2CmF",
+            "moduleName": "Highlight"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:9Highlight18JsonTokenizerErrorO",
+        "mangledName": "$s9Highlight18JsonTokenizerErrorO",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Error",
+            "printedName": "Error",
+            "usr": "s:s5ErrorP",
+            "mangledName": "$ss5ErrorP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Syntax",
+        "printedName": "Syntax",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "json",
+            "printedName": "json",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.Syntax.Type) -> Highlight.Syntax",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Syntax",
+                    "printedName": "Highlight.Syntax",
+                    "usr": "s:9Highlight6SyntaxO"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.Syntax.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Syntax",
+                        "printedName": "Highlight.Syntax",
+                        "usr": "s:9Highlight6SyntaxO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight6SyntaxO4jsonyA2CmF",
+            "mangledName": "$s9Highlight6SyntaxO4jsonyA2CmF",
+            "moduleName": "Highlight"
+          },
+          {
+            "kind": "Var",
+            "name": "other",
+            "printedName": "other",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(Highlight.Syntax.Type) -> (Swift.String) -> Highlight.Syntax",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.String) -> Highlight.Syntax",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Syntax",
+                        "printedName": "Highlight.Syntax",
+                        "usr": "s:9Highlight6SyntaxO"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Tuple",
+                        "printedName": "(identifier: Swift.String)",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "Highlight.Syntax.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Syntax",
+                        "printedName": "Highlight.Syntax",
+                        "usr": "s:9Highlight6SyntaxO"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "s:9Highlight6SyntaxO5otheryACSS_tcACmF",
+            "mangledName": "$s9Highlight6SyntaxO5otheryACSS_tcACmF",
+            "moduleName": "Highlight"
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:9Highlight6SyntaxO",
+        "mangledName": "$s9Highlight6SyntaxO",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SyntaxHighlightProvider",
+        "printedName": "SyntaxHighlightProvider",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "highlight",
+            "printedName": "highlight(_:as:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSAttributedString",
+                "printedName": "Foundation.NSAttributedString",
+                "usr": "c:objc(cs)NSAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Syntax",
+                "printedName": "Highlight.Syntax",
+                "usr": "s:9Highlight6SyntaxO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight06SyntaxA8ProviderP9highlight_2asSo18NSAttributedStringCSS_AA0B0OtF",
+            "mangledName": "$s9Highlight06SyntaxA8ProviderP9highlight_2asSo18NSAttributedStringCSS_AA0B0OtF",
+            "moduleName": "Highlight",
+            "genericSig": "<τ_0_0 where τ_0_0 : Highlight.SyntaxHighlightProvider>",
+            "sugared_genericSig": "<Self where Self : Highlight.SyntaxHighlightProvider>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "highlight",
+            "printedName": "highlight(_:as:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "NSMutableAttributedString",
+                "printedName": "Foundation.NSMutableAttributedString",
+                "usr": "c:objc(cs)NSMutableAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Syntax",
+                "printedName": "Highlight.Syntax",
+                "usr": "s:9Highlight6SyntaxO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight06SyntaxA8ProviderP9highlight_2asySo25NSMutableAttributedStringC_AA0B0OtF",
+            "mangledName": "$s9Highlight06SyntaxA8ProviderP9highlight_2asySo25NSMutableAttributedStringC_AA0B0OtF",
+            "moduleName": "Highlight",
+            "genericSig": "<τ_0_0 where τ_0_0 : Highlight.SyntaxHighlightProvider>",
+            "sugared_genericSig": "<Self where Self : Highlight.SyntaxHighlightProvider>",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "highlight",
+            "printedName": "highlight(_:as:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "NSAttributedString",
+                "printedName": "Foundation.NSAttributedString",
+                "usr": "c:objc(cs)NSAttributedString"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Syntax",
+                "printedName": "Highlight.Syntax",
+                "usr": "s:9Highlight6SyntaxO"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight06SyntaxA8ProviderPAAE9highlight_2asSo18NSAttributedStringCSS_AA0B0OtF",
+            "mangledName": "$s9Highlight06SyntaxA8ProviderPAAE9highlight_2asSo18NSAttributedStringCSS_AA0B0OtF",
+            "moduleName": "Highlight",
+            "genericSig": "<τ_0_0 where τ_0_0 : Highlight.SyntaxHighlightProvider>",
+            "sugared_genericSig": "<Self where Self : Highlight.SyntaxHighlightProvider>",
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:9Highlight06SyntaxA8ProviderP",
+        "mangledName": "$s9Highlight06SyntaxA8ProviderP",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "Highlight"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Tokenizer",
+        "printedName": "Tokenizer",
+        "children": [
+          {
+            "kind": "AssociatedType",
+            "name": "TToken",
+            "printedName": "TToken",
+            "declKind": "AssociatedType",
+            "usr": "s:9Highlight9TokenizerP6TTokenQa",
+            "mangledName": "$s9Highlight9TokenizerP6TTokenQa",
+            "moduleName": "Highlight",
+            "protocolReq": true
+          },
+          {
+            "kind": "Function",
+            "name": "tokenize",
+            "printedName": "tokenize(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[τ_0_0.TToken]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.TToken"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:9Highlight9TokenizerP8tokenizeySay6TTokenQzGSSF",
+            "mangledName": "$s9Highlight9TokenizerP8tokenizeySay6TTokenQzGSSF",
+            "moduleName": "Highlight",
+            "genericSig": "<τ_0_0 where τ_0_0 : Highlight.Tokenizer>",
+            "sugared_genericSig": "<Self where Self : Highlight.Tokenizer>",
+            "protocolReq": true,
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "s:9Highlight9TokenizerP",
+        "mangledName": "$s9Highlight9TokenizerP",
+        "moduleName": "Highlight",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/ts-michal.kalinowski\/Downloads\/Highlight-master\/Sources\/Highlight\/DefaultJsonSyntaxHighlightingTheme.swift",
+      "kind": "IntegerLiteral",
+      "offset": 165,
+      "length": 2,
+      "value": "13"
+    }
+  ]
+}

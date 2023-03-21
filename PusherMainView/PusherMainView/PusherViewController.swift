@@ -5,7 +5,7 @@ import FCM
 public final class PusherViewController: NSViewController {
     @IBOutlet private var deviceTokenTextField: NSTextField!
     @IBOutlet private var collapseIdTextField: NSTextField!
-    @IBOutlet private var payloadTextView: NSTextView!
+    @IBOutlet private var payloadTextView: JSONTextView!
     @IBOutlet private var appOrProjectIDTextField: NSTextField!
     @IBOutlet private var priorityTextField: NSTextField!
     @IBOutlet private var sandBoxCheckBox: NSButton!
@@ -204,6 +204,14 @@ extension PusherViewController: PusherInteractable {
         #if DEBUG
         NSLog("\(errorState.error) for \(errorState.actionType)")
         #endif
+
+        guard let pushTesterError = errorState.error as? PushTesterError,
+              case let PushTesterError.invalidJson(error) = pushTesterError,
+              let errorIndex = error.userInfo["NSJSONSerializationErrorIndex"] as? Int else {
+            return
+        }
+
+        payloadTextView.highlightError(at: errorIndex)
     }
 }
 

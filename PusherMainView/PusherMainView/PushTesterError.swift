@@ -1,5 +1,5 @@
 import Foundation
 
 enum PushTesterError: Error {
-    case invalidJson
+    case invalidJson(NSError)
 }
