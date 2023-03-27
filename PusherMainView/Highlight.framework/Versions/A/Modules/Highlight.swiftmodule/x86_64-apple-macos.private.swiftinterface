@@ -1,0 +1,100 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target x86_64-apple-macos10.13 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Highlight
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AppKit
+import CoreGraphics
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+public typealias Color = AppKit.NSColor
+public struct DefaultJsonSyntaxHighlightingTheme : Highlight.JsonSyntaxHighlightingTheme {
+  public init(fontSize size: CoreFoundation.CGFloat = 13)
+  public var memberKeyColor: Highlight.Color
+  public var whitespaceColor: Highlight.Color
+  public var whitespaceFont: Highlight.Font
+  public var operatorColor: Highlight.Color
+  public var operatorFont: Highlight.Font
+  public var numericValueColor: Highlight.Color
+  public var numericValueFont: Highlight.Font
+  public var stringValueColor: Highlight.Color
+  public var stringValueFont: Highlight.Font
+  public var literalColor: Highlight.Color
+  public var literalFont: Highlight.Font
+  public var unknownColor: Highlight.Color
+  public var unknownFont: Highlight.Font
+}
+public typealias Font = AppKit.NSFont
+open class JsonSyntaxHighlightProvider : Highlight.SyntaxHighlightProvider {
+  public static let shared: Highlight.JsonSyntaxHighlightProvider
+  public init(theme: Highlight.JsonSyntaxHighlightingTheme? = nil)
+  open var theme: Highlight.JsonSyntaxHighlightingTheme
+  open func highlight(_ attributedText: Foundation.NSMutableAttributedString, as syntax: Highlight.Syntax)
+  open func highlight(_ attributedText: Foundation.NSMutableAttributedString, as syntax: Highlight.Syntax, behaviour: Highlight.JsonTokenizerBehaviour)
+  open func highlightJson(_ attributedText: Foundation.NSMutableAttributedString, tokens: [Highlight.JsonToken])
+  @objc deinit
+}
+public protocol JsonSyntaxHighlightingTheme {
+  var whitespaceColor: Highlight.Color { get }
+  var whitespaceFont: Highlight.Font { get }
+  var memberKeyColor: Highlight.Color { get }
+  var operatorColor: Highlight.Color { get }
+  var operatorFont: Highlight.Font { get }
+  var numericValueColor: Highlight.Color { get }
+  var numericValueFont: Highlight.Font { get }
+  var stringValueColor: Highlight.Color { get }
+  var stringValueFont: Highlight.Font { get }
+  var literalColor: Highlight.Color { get }
+  var literalFont: Highlight.Font { get }
+  var unknownColor: Highlight.Color { get }
+  var unknownFont: Highlight.Font { get }
+}
+public enum JsonToken {
+  case memberKey(Foundation.NSRange)
+  case whitespace(Foundation.NSRange)
+  case `operator`(Foundation.NSRange)
+  case stringValue(Foundation.NSRange)
+  case numericValue(Foundation.NSRange)
+  case literal(Foundation.NSRange)
+  case unknown(Foundation.NSRange, Highlight.JsonTokenizerError)
+}
+public struct JsonTokenizer : Highlight.Tokenizer {
+  public typealias TToken = Highlight.JsonToken
+  public init(behaviour: Highlight.JsonTokenizerBehaviour)
+  public var behaviour: Highlight.JsonTokenizerBehaviour
+  public func tokenize(_ text: Swift.String) -> [Highlight.JsonToken]
+}
+public enum JsonTokenizerBehaviour {
+  case strict
+  case lenient
+  public static func == (a: Highlight.JsonTokenizerBehaviour, b: Highlight.JsonTokenizerBehaviour) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum JsonTokenizerError : Swift.Error {
+  case invalidSymbol(expected: Swift.Character?, actual: Swift.Character?)
+  case expectedSymbol
+  case unexpectedSymbol(description: Swift.String)
+  case unenclosedQuotationMarks
+  case invalidProperty
+}
+public enum Syntax {
+  case json
+  case other(identifier: Swift.String)
+}
+public protocol SyntaxHighlightProvider {
+  func highlight(_ text: Swift.String, as syntax: Highlight.Syntax) -> Foundation.NSAttributedString
+  func highlight(_ attributedText: Foundation.NSMutableAttributedString, as syntax: Highlight.Syntax)
+}
+extension Highlight.SyntaxHighlightProvider {
+  public func highlight(_ text: Swift.String, as syntax: Highlight.Syntax) -> Foundation.NSAttributedString
+}
+public protocol Tokenizer {
+  associatedtype TToken
+  func tokenize(_ text: Swift.String) -> [Self.TToken]
+}
+extension Highlight.JsonTokenizerBehaviour : Swift.Equatable {}
+extension Highlight.JsonTokenizerBehaviour : Swift.Hashable {}

@@ -2,14 +2,16 @@ import Foundation
 
 extension String {
     /// - Returns: true if the JSON is valid, `false` otherwise.
-    var isValidJSON: Bool {
-        guard let jsonData = data(using: .utf8),
-              let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: [])
-        else {
-            return false
+    func validateJSON() throws {
+        let jsonData = data(using: .utf8) ?? Data()
+        do {
+            try JSONSerialization.jsonObject(with: jsonData, options: [])
+        } catch {
+            let nsError = error as NSError
+            var userInfo = nsError.userInfo
+            userInfo[NSLocalizedDescriptionKey] = userInfo[NSDebugDescriptionErrorKey]
+            throw NSError(domain: nsError.domain, code: nsError.code, userInfo: userInfo)
         }
-
-        return JSONSerialization.isValidJSONObject(jsonObject)
     }
 
     var isDefaultPayload: Bool {

@@ -264,10 +264,12 @@ extension PusherStore: PusherInteracting {
 
         case .push(let data,
                    let completion):
-            guard data.payload.isValidJSON else {
-                router.show(message: "error.json.file.is.incorrect".localized,
+            do {
+                try data.payload.validateJSON()
+            } catch {
+                router.show(message: "\("error.json.file.is.incorrect".localized)\n\(error.localizedDescription)",
                             window: NSApplication.shared.windows.first)
-                reduce(result: .failure(PushTesterError.invalidJson, actionType))
+                reduce(result: .failure(PushTesterError.invalidJson(error as NSError), actionType))
                 return
             }
             push(data: data,

@@ -9,6 +9,7 @@ Pod::Spec.new do |spec|
   spec.framework    = 'Cocoa'
   spec.dependency 'APNS'
   spec.dependency 'FCM'
+  spec.vendored_framework = 'Highlight.framework'
   spec.homepage     = 'https://github.com/rakutentech/macos-push-tester'
   spec.source       = { :git => 'https://github.com/rakutentech/macos-push-tester.git' }
   spec.osx.deployment_target  = '10.13'
