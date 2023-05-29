@@ -4,9 +4,9 @@ import Quick
 import Nimble
 @testable import PusherMainView
 
-// swiftlint:disable type_body_length
-// swiftlint:disable function_body_length
+// swiftlint:disable:next type_body_length
 final class PusherStoreSpec: QuickSpec {
+    // swiftlint:disable:next function_body_length
     override func spec() {
         var router = RouterMock()
         let viewController = NSViewController()

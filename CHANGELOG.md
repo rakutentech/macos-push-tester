@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Features
 - Add JSON syntax coloring and validation (SDKCF-6431)
 
+### Fixes
+- Fixed build issues on Xcode 14.3
+
 ## [1.5.0] - 2023-03-14
 
 ### Features
