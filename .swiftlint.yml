@@ -2,18 +2,19 @@ included:
   - APNS
   - pusher
   - PusherMainView
-
-disabled_rules:
-- identifier_name
-- function_parameter_count
-- cyclomatic_complexity
+  - FCM
 
 opt_in_rules:
 - empty_count
 - empty_string
 
-excluded:
-- Pods
+
+disabled_rules:
+- identifier_name
+- function_parameter_count
+- nesting
+- todo
+- blanket_disable_command
 
 line_length:
     warning: 150
@@ -40,7 +41,11 @@ file_length:
     ignore_comment_only_lines: true
 
 cyclomatic_complexity:
-    warning: 15
+    warning: 25
     error: 25
+
+large_tuple:
+    warning: 3
+    error: 3
 
 reporter: "xcode"
