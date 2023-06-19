@@ -120,7 +120,7 @@ final class PusherStore {
 
                 // Update the timestamp for Live Activity notification payload
                 // Note: if the timestamp is not the current time, then the push won't be received on the device
-                if data.liveActivity {
+                if data.pushType == APNsPushType.liveactivity {
                     payload.update(with: Timestamp.current)
                 }
 
@@ -130,7 +130,7 @@ final class PusherStore {
                                         priority: data.priority,
                                         collapseID: data.collapseID,
                                         inSandbox: data.sandbox,
-                                        liveActivity: data.liveActivity,
+                                        pushType: data.pushType,
                                         completion: { [weak self] result in
                                             self?.handlePushResult(result, calling: completion)
                                         })

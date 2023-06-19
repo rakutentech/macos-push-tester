@@ -3,9 +3,10 @@
 "cancel" = "Cancel";
 "close" = "Close";
 "enter.device.token" = "Enter a device token";
-"enter.apns.collapse.id" = "Enter APNS Collapse ID";
+"enter.apns.collapse.id" = "Enter APNs Collapse ID";
 "enter.your.app.bundle.id" = "Enter your app bundle ID";
-"enter.apns.priority" = "Enter APNS priority";
+"enter.apns.priority" = "Enter APNs priority";
+"enter.apns.push.type" = "Enter APNs push type";
 "enter.fcm.project.id" = "Enter Firebase Project ID";
 "enter.fcm.server.key" = "Enter Server Key";
 
@@ -14,8 +15,8 @@
 "please.enter.key.id" = "Please enter Key ID";
 "please.enter.an app.bundle.id" = "Please enter an app bundle ID";
 "please.enter.firebase.project.id" = "Please enter a Firebase Project ID";
-"please.select.an.apns.method" = "Please select an APNS method";
-"please.select.an.apns.certificate" = "Please select an APNS Certificate";
+"please.select.an.apns.method" = "Please select an APNs method";
+"please.select.an.apns.certificate" = "Please select an APNs Certificate";
 "please.enter.a.device.token" = "Please enter a Device Token";
 "please.enter.a.server.key" = "Please enter a Server Key";
 "choose.identity" = "Choose the identity to use for delivering notifications: \n(Issued by Apple in the Provisioning Portal)";
