@@ -5,7 +5,7 @@ enum HeaderFieldConstants {
 }
 
 public enum APNsPushType {
-    public static let liveactivity = "liveactivity"
+    public static let liveActivity = "liveactivity"
 }
 
 extension URLRequest {

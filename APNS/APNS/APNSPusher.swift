@@ -85,7 +85,7 @@ public final class APNSPusher: NSObject, APNSPushable {
         }
 
         var payload = payload
-        if pushType == APNsPushType.liveactivity {
+        if pushType == APNsPushType.liveActivity {
             payload["timestamp"] = Date().timeIntervalSince1970
         }
 
@@ -106,7 +106,7 @@ public final class APNSPusher: NSObject, APNSPushable {
 
         request.add(pushType: pushType)
 
-        if pushType == APNsPushType.liveactivity {
+        if pushType == APNsPushType.liveActivity {
             let suffix = ".push-type.liveactivity"
             if !(correctTopic?.hasSuffix(suffix) ?? true) {
                 correctTopic = correctTopic?.appending(suffix)
