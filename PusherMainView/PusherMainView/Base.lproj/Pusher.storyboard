@@ -11,13 +11,13 @@
             <objects>
                 <viewController storyboardIdentifier="PusherViewController" id="XfG-lQ-9wD" customClass="PusherViewController" customModule="PusherMainView" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="500" height="683"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="686"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="un2-So-heS">
-                                <rect key="frame" x="0.0" y="0.0" width="500" height="683"/>
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="686"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s8c-0S-uY8">
-                                        <rect key="frame" x="169" y="657" width="162" height="16"/>
+                                        <rect key="frame" x="169" y="660" width="162" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Send Push Notification to:" id="YXa-GK-g4N">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -25,10 +25,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <stackView distribution="equalCentering" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pet-Fs-B0L">
-                                        <rect key="frame" x="20" y="629" width="460" height="20"/>
+                                        <rect key="frame" x="20" y="636" width="460" height="16"/>
                                         <subviews>
                                             <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ozQ-IO-Xuj">
-                                                <rect key="frame" x="18" y="3" width="93" height="18"/>
+                                                <rect key="frame" x="18" y="-1" width="93" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="iOS Device" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8EV-gQ-YHz">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -38,7 +38,7 @@
                                                 </connections>
                                             </button>
                                             <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wYK-KR-0MI">
-                                                <rect key="frame" x="166" y="3" width="119" height="18"/>
+                                                <rect key="frame" x="166" y="-1" width="119" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Android Device" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="reP-a5-v6u">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -48,7 +48,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zee-HU-n3M">
-                                                <rect key="frame" x="331" y="3" width="109" height="18"/>
+                                                <rect key="frame" x="331" y="-1" width="109" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="iOS Simulator" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kda-ow-312">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -71,11 +71,11 @@
                                         </customSpacing>
                                     </stackView>
                                     <customView verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="3AL-Oj-nwN">
-                                        <rect key="frame" x="20" y="597" width="460" height="24"/>
+                                        <rect key="frame" x="20" y="604" width="460" height="24"/>
                                         <subviews>
-                                            <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f46-vh-scI" userLabel="APNS Certificate Radio Button">
-                                                <rect key="frame" x="18" y="3" width="128" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="APNS Certificate" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="7Vt-r7-OTc">
+                                            <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f46-vh-scI" userLabel="APNs Certificate Radio Button">
+                                                <rect key="frame" x="18" y="3" width="127" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="APNs Certificate" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="7Vt-r7-OTc">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -84,8 +84,8 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ttU-Tn-M4j" userLabel="APNS Auth Token Radio Button">
-                                                <rect key="frame" x="339" y="3" width="101" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="APNS Token" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="gUr-5H-z8y">
+                                                <rect key="frame" x="341" y="3" width="99" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="APNs Token" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="gUr-5H-z8y">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -105,7 +105,7 @@
                                         </constraints>
                                     </customView>
                                     <customView verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Xfq-t5-fsa">
-                                        <rect key="frame" x="20" y="568" width="460" height="21"/>
+                                        <rect key="frame" x="20" y="575" width="460" height="21"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tlw-Fe-Wpy" userLabel="Server Key Text Field">
                                                 <rect key="frame" x="0.0" y="0.0" width="376" height="21"/>
@@ -136,7 +136,7 @@
                                         </constraints>
                                     </customView>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9fc-I7-7eG" userLabel="Device Token Text Field">
-                                        <rect key="frame" x="20" y="539" width="460" height="21"/>
+                                        <rect key="frame" x="20" y="546" width="460" height="21"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="2EO-2B-8B4">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -144,7 +144,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qxe-qT-Lqe">
-                                        <rect key="frame" x="241" y="515" width="19" height="16"/>
+                                        <rect key="frame" x="241" y="522" width="19" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Or" id="mvn-Rz-XZo">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -152,10 +152,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <customView verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="FJP-q7-OGw">
-                                        <rect key="frame" x="20" y="481" width="460" height="26"/>
+                                        <rect key="frame" x="20" y="488" width="460" height="26"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8vp-KJ-t7U">
-                                                <rect key="frame" x="166" y="-1" width="128" height="32"/>
+                                                <rect key="frame" x="167" y="-1" width="127" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Select a device" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FLM-Ee-YQn">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -174,7 +174,7 @@
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="249" verticalCompressionResistancePriority="749" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvz-5c-Eka" userLabel="Push Json Text View">
-                                        <rect key="frame" x="20" y="285" width="460" height="188"/>
+                                        <rect key="frame" x="20" y="292" width="460" height="188"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="cRx-BA-Y7B">
                                             <rect key="frame" x="0.0" y="0.0" width="460" height="188"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -203,10 +203,10 @@
                                         </scroller>
                                     </scrollView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="bFS-SZ-dN4">
-                                        <rect key="frame" x="20" y="227" width="460" height="50"/>
+                                        <rect key="frame" x="20" y="264" width="460" height="20"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l8u-BE-8hp">
-                                                <rect key="frame" x="-7" y="-7" width="138" height="62"/>
+                                                <rect key="frame" x="-7" y="-7" width="138" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Load a JSON File" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Brw-1c-qyQ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -224,10 +224,10 @@
                                         </constraints>
                                     </customView>
                                     <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="drn-pF-WxF">
-                                        <rect key="frame" x="20" y="92" width="460" height="127"/>
+                                        <rect key="frame" x="20" y="88" width="460" height="168"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8SA-5i-DSf" userLabel="APNS Collapse Id Text Field">
-                                                <rect key="frame" x="0.0" y="94" width="460" height="21"/>
+                                                <rect key="frame" x="0.0" y="135" width="460" height="21"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="aNh-Ux-ihh">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -235,7 +235,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pzN-ym-vza" userLabel="App Bundle ID Text Field">
-                                                <rect key="frame" x="0.0" y="53" width="460" height="21"/>
+                                                <rect key="frame" x="0.0" y="94" width="460" height="21"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="T3F-rN-9Zx">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -243,8 +243,16 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3lO-hU-z0r" userLabel="APNS Priority Text Field">
-                                                <rect key="frame" x="0.0" y="12" width="460" height="21"/>
+                                                <rect key="frame" x="0.0" y="53" width="460" height="21"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="qaQ-TM-2d6">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dgC-eb-Ggy" userLabel="APNS Push Type Text Field">
+                                                <rect key="frame" x="0.0" y="12" width="460" height="21"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="onR-dp-hiw">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -256,15 +264,17 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f27-o8-ZxL">
-                                        <rect key="frame" x="158" y="68" width="185" height="16"/>
+                                        <rect key="frame" x="212" y="64" width="77" height="16"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="blG-ra-9fI">
                                                 <rect key="frame" x="-2" y="-1" width="79" height="18"/>
@@ -273,28 +283,19 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4Z-03-8g1">
-                                                <rect key="frame" x="85" y="-1" width="100" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Live Activity" bezelStyle="regularSquare" imagePosition="left" inset="2" id="tT9-Se-2Zs">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                </buttonCell>
-                                            </button>
                                         </subviews>
                                         <visibilityPriorities>
-                                            <integer value="1000"/>
                                             <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
                                             <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="BoC-nl-vvG">
-                                        <rect key="frame" x="20" y="10" width="460" height="50"/>
+                                        <rect key="frame" x="20" y="10" width="460" height="46"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bbN-sK-axC">
-                                                <rect key="frame" x="180" y="-7" width="100" height="36"/>
+                                                <rect key="frame" x="181" y="-7" width="99" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Send Push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8Xr-cd-Qeb">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -365,10 +366,10 @@
                         <outlet property="deviceSettingsControls" destination="XdS-h4-cux" id="Mjw-RS-EHi"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="HxS-dj-CHM"/>
                         <outlet property="legacyFCMCheckbox" destination="Lbk-t7-SaY" id="u3O-1q-erE"/>
-                        <outlet property="liveActivityCheckBox" destination="e4Z-03-8g1" id="Zek-Ia-zw2"/>
                         <outlet property="loadJSONFileButton" destination="l8u-BE-8hp" id="kva-wA-wbg"/>
                         <outlet property="payloadTextView" destination="OgG-Ak-can" id="sR4-xB-tKA"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="8C5-81-SNr"/>
+                        <outlet property="pushTypeTextField" destination="dgC-eb-Ggy" id="Buy-fT-gr0"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="BNx-MA-bP2"/>
                         <outlet property="sendToAndroidDeviceButton" destination="wYK-KR-0MI" id="oSV-lm-VOj"/>
                         <outlet property="sendToiOSDeviceButton" destination="ozQ-IO-Xuj" id="IGk-1F-CCg"/>
@@ -382,9 +383,9 @@
                         <outlet property="apnsButtonsContainer" destination="3AL-Oj-nwN" id="OTU-8U-ymy"/>
                         <outlet property="collapseIdTextField" destination="8SA-5i-DSf" id="qr2-de-Grt"/>
                         <outlet property="deviceTokenTextField" destination="9fc-I7-7eG" id="AD7-Tv-4eH"/>
-                        <outlet property="liveActivityCheckBox" destination="e4Z-03-8g1" id="hiW-Y5-WKw"/>
                         <outlet property="orLabel" destination="qxe-qT-Lqe" id="mye-OB-plI"/>
                         <outlet property="priorityTextField" destination="3lO-hU-z0r" id="zMa-xp-xR9"/>
+                        <outlet property="pushTypeTextField" destination="dgC-eb-Ggy" id="bOC-vK-khm"/>
                         <outlet property="sandBoxCheckBox" destination="blG-ra-9fI" id="Bx5-C6-8nr"/>
                         <outlet property="selectDeviceButtonContainer" destination="FJP-q7-OGw" id="t6R-Zq-34L"/>
                         <outlet property="serverKeyTextFieldContainter" destination="Xfq-t5-fsa" id="c2i-VL-3zg"/>

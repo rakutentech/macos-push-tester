@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Features
 - Add JSON syntax coloring and validation (SDKCF-6431)
+- Handle properly apns-push-type by adding a push type textfield (SDKCF-6629)
 
 ### Fixes
 - Fixed build issues on Xcode 14.3

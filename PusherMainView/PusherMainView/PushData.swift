@@ -1,4 +1,5 @@
 import Foundation
+import APNS
 
 enum PushData: Equatable {
     case apns(_ data: APNSPushData)
@@ -22,7 +23,7 @@ struct APNSPushData: Equatable {
     let priority: Int
     let collapseID: String?
     let sandbox: Bool
-    let liveActivity: Bool
+    let pushType: String
 }
 
 struct FCMPushData: Equatable {

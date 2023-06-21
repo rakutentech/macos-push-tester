@@ -153,7 +153,7 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 priority: 0,
                                                                                 collapseID: nil,
                                                                                 sandbox: true,
-                                                                                liveActivity: false)),
+                                                                                pushType: "alert")),
                                                               completion: { _ in
                                                               }))
 
@@ -175,7 +175,7 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 priority: 0,
                                                                                 collapseID: nil,
                                                                                 sandbox: true,
-                                                                                liveActivity: false)),
+                                                                                pushType: "alert")),
                                                               completion: { _ in
                                                               }))
 
@@ -250,7 +250,7 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 priority: 0,
                                                                                 collapseID: nil,
                                                                                 sandbox: true,
-                                                                                liveActivity: false)),
+                                                                                pushType: "alert")),
                                                               completion: { success in
                                                                   failure = !success
                                                               }))
@@ -270,7 +270,7 @@ final class PusherStoreSpec: QuickSpec {
                                                                                 priority: 0,
                                                                                 collapseID: nil,
                                                                                 sandbox: true,
-                                                                                liveActivity: false)),
+                                                                                pushType: "alert")),
                                                              completion: { aSuccess in
                                                                  success = aSuccess
                                                              }))
