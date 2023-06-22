@@ -4,12 +4,14 @@ import APNS
 enum ActionType {
     case configure
     case devicesList(fromViewController: NSViewController)
+    case pushTypesList(fromViewController: NSViewController)
     case deviceToken(String)
     case chooseAuthToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ fileURL: URL) -> Void)
     case browsingJSONFiles(fromViewController: NSViewController, completion: (_ fileURL: URL, _ text: String) -> Void)
     case selectDevice(device: APNSServiceDevice)
+    case selectPushType(pushType: String)
     case chooseiOSSimulator
     case chooseiOSDevice
     case chooseAndroidDevice(useLegacyFCM: Bool)
@@ -36,6 +38,9 @@ extension ActionType: Equatable {
         case (let .devicesList(lhsViewController), let .devicesList(rhsViewController)):
             return lhsViewController == rhsViewController
 
+        case (let .pushTypesList(lhsViewController), let .pushTypesList(rhsViewController)):
+            return lhsViewController == rhsViewController
+
         case (let .deviceToken(lhsString), let .deviceToken(rhsString)):
             return lhsString == rhsString
 
@@ -53,6 +58,9 @@ extension ActionType: Equatable {
 
         case (let .selectDevice(lhsAPNSServiceDevice), let .selectDevice(rhsAPNSServiceDevice)):
             return lhsAPNSServiceDevice == rhsAPNSServiceDevice
+
+        case (let .selectPushType(lhsPushType), let .selectPushType(rhsPushType)):
+            return lhsPushType == rhsPushType
 
         case (.chooseiOSSimulator, .chooseiOSSimulator):
             return true

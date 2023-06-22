@@ -35,6 +35,7 @@ final class PusherStore {
     public private(set) var authToken: AuthToken?
     private var subscribers: [PusherInteractable] = []
     private var state: PusherState = PusherState(deviceTokenString: "",
+                                                 pushType: "",
                                                  serverKeyString: "",
                                                  appOrProjectID: "",
                                                  certificateRadioState: .off,
@@ -220,6 +221,10 @@ extension PusherStore: PusherInteracting {
             router.presentDevicesList(from: fromViewController, pusherStore: self)
             reduce(result: .success(actionType))
 
+        case .pushTypesList(let fromViewController):
+            router.presentPushTypesList(from: fromViewController, pusherStore: self)
+            reduce(result: .success(actionType))
+
         case .deviceToken:
             state = reducer.reduce(actionType: actionType, state: state)
             reduce(result: .success(actionType))
@@ -277,6 +282,9 @@ extension PusherStore: PusherInteracting {
             reduce(result: .success(actionType))
 
         case .selectDevice, .cancelAuthToken:
+            reduce(result: .success(actionType))
+
+        case .selectPushType:
             reduce(result: .success(actionType))
 
         case .chooseIdentity(let fromViewController):

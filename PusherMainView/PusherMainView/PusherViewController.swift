@@ -10,6 +10,7 @@ public final class PusherViewController: NSViewController {
     @IBOutlet private var priorityTextField: NSTextField!
     @IBOutlet private var sandBoxCheckBox: NSButton!
     @IBOutlet private var pushTypeTextField: NSTextField!
+    @IBOutlet private var selectPushTypeButton: NSButton!
     @IBOutlet private var apnsCertificateRadioButton: NSButton!
     @IBOutlet private var apnsAuthTokenRadioButton: NSButton!
     @IBOutlet private var loadJSONFileButton: NSButton!
@@ -61,6 +62,7 @@ public final class PusherViewController: NSViewController {
         appOrProjectIDTextField.placeholderString = "enter.your.app.bundle.id".localized
         priorityTextField.placeholderString = "enter.apns.priority".localized
         pushTypeTextField.placeholderString = "enter.apns.push.type".localized
+        selectPushTypeButton.title = "select.push.type".localized
         serverKeyTextField.placeholderString = "enter.fcm.server.key".localized
 
         priorityTextField.stringValue = "10"
@@ -175,11 +177,16 @@ public final class PusherViewController: NSViewController {
     @IBAction func setLegacyFCM(_ sender: Any) {
         pusherStore.dispatch(actionType: .chooseAndroidDevice(useLegacyFCM: legacyFCMCheckbox.state == .on))
     }
+
+    @IBAction func selectPushType(_ sender: Any) {
+        pusherStore.dispatch(actionType: .pushTypesList(fromViewController: self))
+    }
 }
 
 extension PusherViewController: PusherInteractable {
     func newState(state: PusherState) {
         deviceTokenTextField.stringValue = state.deviceTokenString
+        pushTypeTextField.stringValue = state.pushType
         appOrProjectIDTextField.stringValue = state.appOrProjectID
         serverKeyTextField.stringValue = state.serverKeyString
         apnsCertificateRadioButton.state = state.certificateRadioState
@@ -247,11 +254,12 @@ extension PusherViewController: NSTextViewDelegate {
     @IBOutlet private weak var collapseIdTextField: NSTextField!
     @IBOutlet private weak var sandBoxCheckBox: NSButton!
     @IBOutlet private weak var pushTypeTextField: NSTextField!
+    @IBOutlet private weak var selectPushTypeButton: NSButton!
     @IBOutlet private weak var serverKeyTextFieldContainter: NSView!
 
     private var iOSControls: [NSView] {
         [deviceTokenTextField, orLabel, selectDeviceButtonContainer, apnsButtonsContainer,
-         priorityTextField, collapseIdTextField, sandBoxCheckBox, pushTypeTextField]
+         priorityTextField, collapseIdTextField, sandBoxCheckBox, pushTypeTextField, selectPushTypeButton]
     }
     private var androidControls: [NSView] {
         [deviceTokenTextField, serverKeyTextFieldContainter, collapseIdTextField]

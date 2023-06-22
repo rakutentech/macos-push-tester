@@ -2,6 +2,7 @@ import Foundation
 
 protocol Routing {
     func presentDevicesList(from fromViewController: NSViewController, pusherStore: PusherInteracting)
+    func presentPushTypesList(from fromViewController: NSViewController, pusherStore: PusherInteracting)
     func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting)
     func show(message: String, window: NSWindow?)
     func browseFiles(from fromViewController: NSViewController, completion: @escaping (_ p8FileURL: URL) -> Void)
@@ -23,6 +24,14 @@ extension Router: Routing {
         guard let viewController = DevicesViewController.create(pusherStore: pusherStore) else {
             return
         }
+        presentAsSheet(viewController, from: fromViewController)
+    }
+
+    func presentPushTypesList(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
+        guard let viewController = InterfaceFactory<PushTypesViewController>.create(for: "Pusher") else {
+            return
+        }
+        viewController.pusherStore = pusherStore
         presentAsSheet(viewController, from: fromViewController)
     }
 

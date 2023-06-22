@@ -44,6 +44,44 @@ final class PusherStoreSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: fileURL)
             }
 
+            context("When a selectPushType action is dispatched") {
+                context("and the push type is empty") {
+                    it("should return an empty push type") {
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .selectPushType(pushType: ""))
+
+                        expect(observer.pusherState?.pushType).toEventually(equal(""))
+                    }
+                }
+
+                context("and the push type is alert") {
+                    it("should return an alert push type") {
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .selectPushType(pushType: "alert"))
+
+                        expect(observer.pusherState?.pushType).toEventually(equal("alert"))
+                    }
+                }
+
+                context("and the push type is background") {
+                    it("should return a background push type") {
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .selectPushType(pushType: "background"))
+
+                        expect(observer.pusherState?.pushType).toEventually(equal("background"))
+                    }
+                }
+
+                context("and the push type is liveactivity") {
+                    it("should return a liveactivity push type") {
+                        store.subscribe(observer)
+                        store.dispatch(actionType: .selectPushType(pushType: "liveactivity"))
+
+                        expect(observer.pusherState?.pushType).toEventually(equal("liveactivity"))
+                    }
+                }
+            }
+
             context("When a saveFileAs action is dispatched") {
                 context("When the file URL is invalid") {
                     it("should return an error") {
