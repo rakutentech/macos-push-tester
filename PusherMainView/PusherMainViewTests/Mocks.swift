@@ -58,6 +58,9 @@ class RouterMock: Routing {
     func presentDevicesList(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
     }
 
+    func presentPushTypesList(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
+    }
+
     func presentAuthTokenAlert(from fromViewController: NSViewController, pusherStore: PusherInteracting) {
     }
 

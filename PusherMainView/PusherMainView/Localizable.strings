@@ -7,6 +7,7 @@
 "enter.your.app.bundle.id" = "Enter your app bundle ID";
 "enter.apns.priority" = "Enter APNs priority";
 "enter.apns.push.type" = "Enter APNs push type";
+"select.push.type" = "Select";
 "enter.fcm.project.id" = "Enter Firebase Project ID";
 "enter.fcm.server.key" = "Enter Server Key";
 

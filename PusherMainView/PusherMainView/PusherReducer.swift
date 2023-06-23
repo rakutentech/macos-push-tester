@@ -9,6 +9,9 @@ struct PusherReducer {
             newState.deviceTokenString = device.token
             newState.appOrProjectID = device.appID
 
+        case .selectPushType(let pushType):
+            newState.pushType = pushType
+
         case .deviceToken(let deviceToken):
             newState.deviceTokenString = deviceToken
 

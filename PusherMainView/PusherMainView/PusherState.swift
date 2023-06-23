@@ -2,6 +2,7 @@ import Foundation
 
 struct PusherState: Equatable {
     var deviceTokenString: String
+    var pushType: String
     var serverKeyString: String
     var appOrProjectID: String
     var certificateRadioState: NSControl.StateValue
