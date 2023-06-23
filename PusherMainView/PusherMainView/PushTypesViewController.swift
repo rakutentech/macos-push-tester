@@ -28,14 +28,6 @@ final class PushTypesViewController: NSViewController {
 
     // MARK: - Life Cycle
 
-    override func viewDidAppear() {
-        super.viewDidAppear()
-    }
-
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -51,7 +43,7 @@ final class PushTypesViewController: NSViewController {
 
 extension PushTypesViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return pushTypes.count
+        pushTypes.count
     }
 }
 
@@ -63,17 +55,15 @@ extension PushTypesViewController: NSTableViewDelegate {
             return nil
         }
 
-        switch identifier.rawValue {
-        case "name":
+        if identifier.rawValue == "name" {
             cell.textField?.stringValue = pushTypes[row]
-        default: ()
         }
 
         return cell
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        guard tableView.selectedRow != -1 else {
+        guard tableView.selectedRow != NSNotFound else {
             return
         }
         let pushType = pushTypes[tableView.selectedRow]

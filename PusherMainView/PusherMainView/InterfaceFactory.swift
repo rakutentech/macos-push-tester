@@ -6,10 +6,9 @@ struct InterfaceFactory<T: NSObjectProtocol> {
         let bundle = Bundle(for: aClass.self)
         let storyboard = NSStoryboard(name: storyboardName, bundle: bundle)
         let absoluteIdentifier = NSStringFromClass(aClass)
-        let module = String(String(reflecting: T.self).prefix { $0 != "." })
-        let identifier = absoluteIdentifier[module.count + 1..<absoluteIdentifier.count]
 
-        guard let viewController = storyboard.instantiateController(withIdentifier: identifier) as? T else {
+        guard let identifier = absoluteIdentifier.components(separatedBy: ".").last,
+              let viewController = storyboard.instantiateController(withIdentifier: identifier) as? T else {
             return nil
         }
         return viewController
