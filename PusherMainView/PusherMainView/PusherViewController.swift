@@ -58,10 +58,12 @@ public final class PusherViewController: NSViewController {
         deviceTokenTextField.placeholderString = "enter.device.token".localized
         deviceTokenTextField.delegate = self
 
+        pushTypeTextField.placeholderString = "enter.apns.push.type".localized
+        pushTypeTextField.delegate = self
+
         collapseIdTextField.placeholderString = "enter.apns.collapse.id".localized
         appOrProjectIDTextField.placeholderString = "enter.your.app.bundle.id".localized
         priorityTextField.placeholderString = "enter.apns.priority".localized
-        pushTypeTextField.placeholderString = "enter.apns.push.type".localized
         selectPushTypeButton.title = "select.push.type".localized
         serverKeyTextField.placeholderString = "enter.fcm.server.key".localized
 
@@ -227,11 +229,19 @@ extension PusherViewController: PusherInteractable {
 
 extension PusherViewController: NSTextFieldDelegate {
     public func controlTextDidChange(_ notification: Notification) {
-        guard notification.object as? NSTextField == deviceTokenTextField else {
-            return
+        let textfield = notification.object as? NSTextField
+
+        switch textfield {
+        case deviceTokenTextField:
+            let deviceToken = deviceTokenTextField.stringValue
+            pusherStore.dispatch(actionType: .deviceToken(deviceToken))
+
+        case pushTypeTextField:
+            let pushType = pushTypeTextField.stringValue
+            pusherStore.dispatch(actionType: .pushType(pushType))
+
+        default: ()
         }
-        let deviceToken = deviceTokenTextField.stringValue
-        pusherStore.dispatch(actionType: .deviceToken(deviceToken))
     }
 }
 

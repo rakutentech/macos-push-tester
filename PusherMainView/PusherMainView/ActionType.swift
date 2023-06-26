@@ -6,6 +6,7 @@ enum ActionType {
     case devicesList(fromViewController: NSViewController)
     case pushTypesList(fromViewController: NSViewController)
     case deviceToken(String)
+    case pushType(String)
     case chooseAuthToken(fromViewController: NSViewController)
     case alert(message: String, fromWindow: NSWindow?)
     case browsingFiles(fromViewController: NSViewController, completion: (_ fileURL: URL) -> Void)
@@ -41,7 +42,7 @@ extension ActionType: Equatable {
         case (let .pushTypesList(lhsViewController), let .pushTypesList(rhsViewController)):
             return lhsViewController == rhsViewController
 
-        case (let .deviceToken(lhsString), let .deviceToken(rhsString)):
+        case (let .deviceToken(lhsString), let .deviceToken(rhsString)), (let .pushType(lhsString), let .pushType(rhsString)):
             return lhsString == rhsString
 
         case (let .chooseAuthToken(lhsViewController), let .chooseAuthToken(rhsViewController)):
