@@ -225,7 +225,7 @@ extension PusherStore: PusherInteracting {
             router.presentPushTypesList(from: fromViewController, pusherStore: self)
             reduce(result: .success(actionType))
 
-        case .deviceToken:
+        case .deviceToken, .pushType:
             state = reducer.reduce(actionType: actionType, state: state)
             reduce(result: .success(actionType))
 
