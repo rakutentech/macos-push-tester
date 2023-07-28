@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [1.6.0] - 2023-07-27
+
 ### Features
 - Add JSON syntax coloring and validation (SDKCF-6431)
 - Handle properly apns-push-type by adding a push type textfield (SDKCF-6629)
